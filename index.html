@@ -19,6 +19,12 @@
       content="default-src 'self'; connect-src https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
 <meta name="referrer" content="no-referrer">
 
+<!-- Bật sớm nhất có thể (trước khi trang vẽ) để .reveal ẩn đúng ngay từ đầu,
+     tránh hiện ra rồi biến mất (flash) khi hiệu ứng cuộn bắt đầu chạy. Nếu
+     JS bị chặn/lỗi, class này không được thêm → mọi nội dung .reveal vẫn
+     hiển thị bình thường (CSS mặc định là hiện), không mất nội dung. -->
+<script>document.documentElement.classList.add('js-ready');</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@500;600;700;800&amp;display=swap">
@@ -247,6 +253,111 @@ table { border-collapse: collapse; }
     transition-duration: .01ms !important;
   }
 }
+
+/* =========================================================================
+   2b. MOTION — hiệu ứng "hiện dần khi cuộn tới" kiểu các trang cao cấp.
+   Mặc định LUÔN hiện (opacity:1) — chỉ chuyển sang trạng thái ẩn-để-hiện-dần
+   khi <html> đã có class "js-ready" (gắn bằng script nhỏ ở đầu <head>).
+   Nhờ vậy nếu JS lỗi/bị chặn, toàn bộ nội dung .reveal vẫn hiển thị bình
+   thường — không bao giờ mất nội dung vì animation.
+   ========================================================================= */
+.reveal { opacity: 1; transform: none; }
+html.js-ready .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.16,.8,.24,1), transform .7s cubic-bezier(.16,.8,.24,1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+html.js-ready .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* Item con trong lưới/list — so le nhẹ theo thứ tự để trông có "nhịp" */
+.about-points .about-point:nth-child(1) { --reveal-delay: 0s; }
+.about-points .about-point:nth-child(2) { --reveal-delay: .08s; }
+.agenda-list  .agenda-item:nth-child(1) { --reveal-delay: 0s; }
+.agenda-list  .agenda-item:nth-child(2) { --reveal-delay: .06s; }
+.agenda-list  .agenda-item:nth-child(3) { --reveal-delay: .12s; }
+.agenda-list  .agenda-item:nth-child(4) { --reveal-delay: .18s; }
+.agenda-list  .agenda-item:nth-child(5) { --reveal-delay: .24s; }
+.agenda-list  .agenda-item:nth-child(6) { --reveal-delay: .3s; }
+.speakers-grid .speaker:nth-child(1) { --reveal-delay: 0s; }
+.speakers-grid .speaker:nth-child(2) { --reveal-delay: .1s; }
+.speakers-grid .speaker:nth-child(3) { --reveal-delay: .2s; }
+.docs-grid .doc:nth-child(1) { --reveal-delay: 0s; }
+.docs-grid .doc:nth-child(2) { --reveal-delay: .1s; }
+.docs-grid .doc:nth-child(3) { --reveal-delay: .2s; }
+.faq-list .faq-item:nth-child(1) { --reveal-delay: 0s; }
+.faq-list .faq-item:nth-child(2) { --reveal-delay: .08s; }
+.faq-list .faq-item:nth-child(3) { --reveal-delay: .16s; }
+.metric-strip .metric:nth-child(1) { --reveal-delay: 0s; }
+.metric-strip .metric:nth-child(2) { --reveal-delay: .08s; }
+.metric-strip .metric:nth-child(3) { --reveal-delay: .16s; }
+.metric-strip .metric:nth-child(4) { --reveal-delay: .24s; }
+.contact-grid .contact-item:nth-child(1) { --reveal-delay: 0s; }
+.contact-grid .contact-item:nth-child(2) { --reveal-delay: .08s; }
+.contact-grid .contact-item:nth-child(3) { --reveal-delay: .16s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, html.js-ready .reveal, html.js-ready .reveal.is-visible {
+    opacity: 1 !important; transform: none !important; transition: none !important;
+  }
+}
+
+/* Hero: chuỗi hiện dần lúc tải trang (không cần cuộn, không cần IntersectionObserver) */
+@keyframes heroRise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+html.js-ready .hero-badge,
+html.js-ready .hero-title,
+html.js-ready .hero-lead,
+html.js-ready .hero-facts,
+html.js-ready .hero-cta-wrap {
+  opacity: 0;
+  animation: heroRise .8s cubic-bezier(.16,.8,.24,1) forwards;
+}
+html.js-ready .hero-badge     { animation-delay: .05s; }
+html.js-ready .hero-title     { animation-delay: .15s; }
+html.js-ready .hero-lead      { animation-delay: .28s; }
+html.js-ready .hero-facts     { animation-delay: .40s; }
+html.js-ready .hero-cta-wrap  { animation-delay: .52s; }
+@media (prefers-reduced-motion: reduce) {
+  html.js-ready .hero-badge, html.js-ready .hero-title, html.js-ready .hero-lead,
+  html.js-ready .hero-facts, html.js-ready .hero-cta-wrap { opacity: 1; animation: none; }
+}
+
+/* Nút vàng: ánh sáng lướt qua khi hover — chi tiết nhỏ hay gặp ở landing page cao cấp */
+.btn-gold, .btn-solid-gold {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-gold::after, .btn-solid-gold::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: skewX(-20deg);
+  transition: left .55s ease;
+  pointer-events: none;
+}
+.btn-gold:hover::after, .btn-solid-gold:hover::after { left: 130%; }
+
+/* Thẻ card: nâng nhẹ lên khi hover, mượt hơn bản chỉ đổi màu viền */
+.card-hover { transition: border-color .25s, box-shadow .25s, transform .25s; }
+.card-hover:hover { transform: translateY(-4px); }
+
+/* Số liệu thống kê: JS sẽ điền dần từ 0, CSS chỉ cần đổi con trỏ để biết đang chờ */
+.metric-value[data-count] { font-variant-numeric: tabular-nums; }
+
+/* Biểu đồ tròn: mặc định LUÔN ở đúng vị trí thật (--donut-target) — phòng
+   trường hợp JS lỗi/tắt thì biểu đồ vẫn đúng, chỉ là không có hiệu ứng vẽ dần.
+   Khi có JS (.js-ready): ẩn cung màu (đẩy ra ngoài bằng --donut-full) cho tới
+   khi thẻ .donut-card lọt vào khung nhìn (.is-visible) mới "vẽ" dần về đúng vị trí. */
+.donut-chart svg circle.donut-arc { stroke-dashoffset: var(--donut-target); }
+html.js-ready .donut-chart svg circle.donut-arc {
+  stroke-dashoffset: var(--donut-full, 390);
+  transition: stroke-dashoffset 1.1s cubic-bezier(.16,.8,.24,1);
+}
+html.js-ready .donut-card.is-visible .donut-chart svg circle.donut-arc { stroke-dashoffset: var(--donut-target); }
 
 /* =========================================================================
    3. UTILITIES
@@ -521,17 +632,28 @@ table { border-collapse: collapse; }
 
 .main-nav a {
   position: relative;
-  padding: 4px 0;
+  padding: 4px 0 6px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--slate-600);
-  border-bottom: 2px solid transparent;
-  transition: color .2s, border-color .2s;
+  transition: color .2s;
 }
 .main-nav a:hover { color: var(--gold); }
-.main-nav a.is-active { color: var(--gold); border-bottom-color: var(--gold); }
+.main-nav a.is-active { color: var(--gold); }
+/* Gạch chân chạy mượt từ trái sang phải, thay cho border-bottom đổi tức thì */
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: right .3s cubic-bezier(.16,.8,.24,1);
+}
+.main-nav a:hover::after,
+.main-nav a.is-active::after { right: 0; }
 
 .header-actions { display: flex; align-items: center; gap: 12px; }
 
@@ -1619,7 +1741,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
 <section class="section section-white" id="about">
   <div class="container">
     <div class="about-grid">
-      <div>
+      <div class="reveal">
         <div class="eyebrow eyebrow-marked"><span data-i18n="about.eyebrow">Regulatory Context &amp; Vital Significance</span></div>
         <h2 class="section-title" data-i18n="about.title">Eliminating the legal grey area, standardizing Vietnam's digital asset market</h2>
         <p class="about-lead" data-i18n="about.lead">
@@ -1630,12 +1752,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </p>
 
         <div class="about-points">
-          <div class="about-point card card-grey card-hover">
+          <div class="about-point card card-grey card-hover reveal">
             <span class="icon-box icon-box-white text-navy"><svg class="icon"><use href="#i-shield-check"></use></svg></span>
             <h3 data-i18n="about.point1.title">FATF Compliance &amp; Risk Mitigation</h3>
             <p data-i18n="about.point1.desc">Bringing Vietnam off the enhanced monitoring grey list through strict AML/CFT standards.</p>
           </div>
-          <div class="about-point card card-grey card-hover">
+          <div class="about-point card card-grey card-hover reveal">
             <span class="icon-box icon-box-white text-gold"><svg class="icon"><use href="#i-shield"></use></svg></span>
             <h3 data-i18n="about.point2.title">Safe Harbor for VASPs</h3>
             <p data-i18n="about.point2.desc">Legally protecting investor assets, establishing clear boundaries between permitted and prohibited assets.</p>
@@ -1644,7 +1766,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       </div>
 
       <div>
-        <div class="donut-card card card-grey">
+        <div class="donut-card card card-grey reveal">
           <div class="donut-head">
             <span data-i18n="about.donut.title">2026 Ecosystem Impact Allocation</span>
             <svg class="icon icon-sm"><use href="#i-pie"></use></svg>
@@ -1657,9 +1779,9 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
             <svg viewBox="0 0 160 160" role="img"
                  aria-label="Impact allocation: VASP licensing and charter capital 45 percent, anti-money laundering and tax 35 percent, data security and investor protection 20 percent">
               <circle cx="80" cy="80" r="62" stroke="#E2E8F0"></circle>
-              <circle cx="80" cy="80" r="62" stroke="#B8860B" stroke-dasharray="175.3 214.3" stroke-dashoffset="0"></circle>
-              <circle cx="80" cy="80" r="62" stroke="#1A365D" stroke-dasharray="136.4 253.2" stroke-dashoffset="-175.3"></circle>
-              <circle cx="80" cy="80" r="62" stroke="#94A3B8" stroke-dasharray="77.9 311.7" stroke-dashoffset="-311.7"></circle>
+              <circle class="donut-arc" cx="80" cy="80" r="62" stroke="#B8860B" stroke-dasharray="175.3 214.3" style="--donut-target:0"></circle>
+              <circle class="donut-arc" cx="80" cy="80" r="62" stroke="#1A365D" stroke-dasharray="136.4 253.2" style="--donut-target:-175.3"></circle>
+              <circle class="donut-arc" cx="80" cy="80" r="62" stroke="#94A3B8" stroke-dasharray="77.9 311.7" style="--donut-target:-311.7"></circle>
             </svg>
           </div>
 
@@ -1682,20 +1804,20 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     </div>
 
     <div class="metric-strip">
-      <div class="metric">
-        <span class="metric-value gold">150</span>
+      <div class="metric reveal">
+        <span class="metric-value gold" data-count-target="150">150</span>
         <span class="metric-label" data-i18n="about.metric1.label">Limited In-Person Seats</span>
       </div>
-      <div class="metric">
-        <span class="metric-value">1,000+</span>
+      <div class="metric reveal">
+        <span class="metric-value" data-count-target="1000" data-count-comma="1" data-count-suffix="+">1,000+</span>
         <span class="metric-label" data-i18n="about.metric2.label">Virtual Delegates</span>
       </div>
-      <div class="metric">
-        <span class="metric-value">04</span>
+      <div class="metric reveal">
+        <span class="metric-value" data-count-target="4" data-count-pad="2">04</span>
         <span class="metric-label" data-i18n="about.metric3.label">Key Sessions &amp; Panels</span>
       </div>
-      <div class="metric">
-        <span class="metric-value gold">200M</span>
+      <div class="metric reveal">
+        <span class="metric-value gold" data-count-target="200" data-count-suffix="M">200M</span>
         <span class="metric-label" data-i18n="about.metric4.label">Max Administrative Fine (VND)</span>
       </div>
     </div>
@@ -1707,7 +1829,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
      ========================================================================= -->
 <section class="section section-grey" id="agenda">
   <div class="container">
-    <div class="section-head section-head-split">
+    <div class="section-head section-head-split reveal">
       <div>
         <span class="eyebrow" data-i18n="agenda.eyebrow">Official Program Agenda</span>
         <h2 class="section-title" data-i18n="agenda.title">Thematic Conference Program</h2>
@@ -1719,7 +1841,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     </div>
 
     <div class="agenda-list">
-      <div class="agenda-item card card-hover">
+      <div class="agenda-item card card-hover reveal">
         <div class="agenda-time">
           <strong>09:00 – 09:30</strong>
           <span>30 MINS</span>
@@ -1738,7 +1860,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </div>
 
-      <div class="agenda-item card card-hover">
+      <div class="agenda-item card card-hover reveal">
         <div class="agenda-time">
           <strong class="gold">09:30 – 10:45</strong>
           <span>75 MINS</span>
@@ -1757,7 +1879,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </div>
 
-      <div class="agenda-item card card-hover">
+      <div class="agenda-item card card-hover reveal">
         <div class="agenda-time">
           <strong>10:45 – 12:00</strong>
           <span>75 MINS</span>
@@ -1776,7 +1898,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </div>
 
-      <div class="agenda-item card card-hover">
+      <div class="agenda-item card card-hover reveal">
         <div class="agenda-time">
           <strong class="muted">12:00 – 13:30</strong>
           <span>90 MINS</span>
@@ -1794,7 +1916,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </div>
 
-      <div class="agenda-item card card-hover">
+      <div class="agenda-item card card-hover reveal">
         <div class="agenda-time">
           <strong class="gold">13:30 – 16:30</strong>
           <span>180 MINS</span>
@@ -1813,7 +1935,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </div>
 
-      <div class="agenda-item card card-hover">
+      <div class="agenda-item card card-hover reveal">
         <div class="agenda-time">
           <strong class="muted">16:30 – 17:00</strong>
           <span>30 MINS</span>
@@ -1839,7 +1961,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
      ========================================================================= -->
 <section class="section section-white" id="speakers">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div>
         <span class="eyebrow" data-i18n="speakers.eyebrow">Specialized Advisory Board</span>
         <h2 class="section-title" data-i18n="speakers.title">Distinguished Advisory &amp; Keynote Speakers</h2>
@@ -1847,7 +1969,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     </div>
 
     <div class="speakers-grid">
-      <article class="speaker card card-grey card-hover">
+      <article class="speaker card card-grey card-hover reveal">
         <div>
           <div class="speaker-avatar" aria-hidden="true">
             DL
@@ -1867,7 +1989,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </article>
 
-      <article class="speaker card card-grey card-hover">
+      <article class="speaker card card-grey card-hover reveal">
         <div>
           <div class="speaker-avatar gold" aria-hidden="true">
             NT
@@ -1887,7 +2009,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </article>
 
-      <article class="speaker card card-grey card-hover">
+      <article class="speaker card card-grey card-hover reveal">
         <div>
           <div class="speaker-avatar" aria-hidden="true">
             LL
@@ -1915,7 +2037,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
      ========================================================================= -->
 <section class="section section-grey" id="matrix">
   <div class="container">
-    <div class="section-head section-head-split">
+    <div class="section-head section-head-split reveal">
       <div>
         <span class="eyebrow" data-i18n="matrix.eyebrow">Chapter IV Statutory Remedies</span>
         <h2 class="section-title" data-i18n="matrix.title">Administrative Penalty Matrix</h2>
@@ -1926,7 +2048,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       </div>
     </div>
 
-    <div class="table-wrap">
+    <div class="table-wrap reveal">
       <div class="table-scroll" tabindex="0" role="region" aria-label="Administrative penalty matrix">
         <table class="matrix-table">
           <thead>
@@ -2004,7 +2126,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     </div>
 
     <div id="references">
-      <div class="section-head">
+      <div class="section-head reveal">
         <div>
           <span class="eyebrow" data-i18n="docs.eyebrow">Official Gazette Repository &amp; Practitioner Guides</span>
           <h2 class="section-title" data-i18n="docs.title">Regulatory Library &amp; Compliance Handbook</h2>
@@ -2012,7 +2134,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       </div>
 
       <div class="docs-grid">
-        <article class="doc card">
+        <article class="doc card reveal">
           <div>
             <span class="icon-box icon-box-lg text-gold"><svg class="icon icon-lg"><use href="#i-file-pdf"></use></svg></span>
             <span class="tag tag-mono tag-gold" data-i18n="docs.d1.tag">Official Text</span>
@@ -2029,7 +2151,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
           </div>
         </article>
 
-        <article class="doc card">
+        <article class="doc card reveal">
           <div>
             <span class="icon-box icon-box-lg text-navy"><svg class="icon icon-lg"><use href="#i-book"></use></svg></span>
             <span class="tag tag-mono tag-navy" data-i18n="docs.d2.tag">Executive Summary</span>
@@ -2045,7 +2167,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
           </div>
         </article>
 
-        <article class="doc card">
+        <article class="doc card reveal">
           <div>
             <span class="icon-box icon-box-lg text-gold"><svg class="icon icon-lg"><use href="#i-checklist"></use></svg></span>
             <span class="tag tag-mono tag-gold" data-i18n="docs.d3.tag">Self-Audit Toolkit</span>
@@ -2070,7 +2192,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
      ========================================================================= -->
 <section class="registration" id="registration">
   <div class="registration-inner">
-    <div class="reg-card">
+    <div class="reg-card reveal">
       <div class="reg-head">
         <span class="eyebrow" data-i18n="reg.eyebrow">Delegate Accreditation Portal</span>
         <h2 class="section-title" data-i18n="reg.title">Secure Your Place</h2>
@@ -2228,7 +2350,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
      ========================================================================= -->
 <section class="section section-grey" id="contact">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div>
         <span class="eyebrow" data-i18n="faq.eyebrow">Frequently Asked Legal &amp; Regulatory Questions</span>
         <h2 class="section-title" data-i18n="faq.title">Decree 284 Regulatory Inquiries</h2>
@@ -2236,7 +2358,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     </div>
 
     <div class="faq-list">
-      <details class="faq-item">
+      <details class="faq-item reveal">
         <summary>
           <span class="faq-q">
             <span class="faq-num">01</span>
@@ -2252,7 +2374,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </details>
 
-      <details class="faq-item">
+      <details class="faq-item reveal">
         <summary>
           <span class="faq-q">
             <span class="faq-num">02</span>
@@ -2267,7 +2389,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
       </details>
 
-      <details class="faq-item">
+      <details class="faq-item reveal">
         <summary>
           <span class="faq-q">
             <span class="faq-num">03</span>
@@ -2284,21 +2406,21 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     </div>
 
     <div class="contact-grid">
-      <div class="contact-item">
+      <div class="contact-item reveal">
         <span class="icon-box text-gold"><svg class="icon"><use href="#i-pin"></use></svg></span>
         <div>
           <strong data-i18n="contact.venues.label">Reception Venues</strong>
           <p data-i18n="contact.venues.value">Central Convention Hall, Dist 1, Ho Chi Minh City / Hanoi Convention Center</p>
         </div>
       </div>
-      <div class="contact-item">
+      <div class="contact-item reveal">
         <span class="icon-box text-navy"><svg class="icon"><use href="#i-building"></use></svg></span>
         <div>
           <strong data-i18n="contact.secretariat.label">Standing Secretariat</strong>
           <p data-i18n="contact.secretariat.value">Joint Ministerial Taskforce on Legal &amp; Financial Technology, Hoan Kiem Dist, Hanoi</p>
         </div>
       </div>
-      <div class="contact-item">
+      <div class="contact-item reveal">
         <span class="icon-box text-gold"><svg class="icon"><use href="#i-phone"></use></svg></span>
         <div>
           <strong data-i18n="contact.hotline.label">Official Hotline</strong>
@@ -3004,6 +3126,67 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       });
     } catch (e) { /* Safari cũ không hỗ trợ addEventListener trên MediaQueryList — bỏ qua, không chặn trang */ }
   }
+
+  /* =======================================================================
+     MOTION — "hiện dần khi cuộn tới" (.reveal), đếm số thống kê, vẽ dần
+     biểu đồ tròn. Tất cả đều có sẵn giá trị đúng trong HTML từ đầu (không
+     phụ thuộc JS để hiển thị nội dung đúng) — JS ở đây chỉ làm đẹp thêm.
+     ======================================================================= */
+  (function initMotion() {
+    var revealEls = document.querySelectorAll('.reveal');
+    if (!revealEls.length) return;
+
+    var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    function formatCount(el, n) {
+      var suffix = el.getAttribute('data-count-suffix') || '';
+      var pad = parseInt(el.getAttribute('data-count-pad') || '0', 10);
+      var comma = el.getAttribute('data-count-comma') === '1';
+      var rounded = Math.round(n);
+      var s = comma ? rounded.toLocaleString('en-US') : String(rounded);
+      if (pad && s.length < pad) s = ('0000' + s).slice(-pad);
+      return s + suffix;
+    }
+
+    function animateCount(el) {
+      var target = parseFloat(el.getAttribute('data-count-target'));
+      if (isNaN(target)) return;
+      if (reduceMotion) { el.textContent = formatCount(el, target); return; }
+
+      var duration = 1200;
+      var startTime = null;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic — chậm dần về cuối, giống hiệu ứng đếm số hay gặp
+        el.textContent = formatCount(el, target * eased);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = formatCount(el, target);
+      }
+      requestAnimationFrame(step);
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+
+        var counter = entry.target.querySelector('[data-count-target]');
+        if (counter && !counter.hasAttribute('data-counted')) {
+          counter.setAttribute('data-counted', '1');
+          animateCount(counter);
+        }
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
+  })();
 
   /* =======================================================================
      ⚠️ BƯỚC BẮT BUỘC TRƯỚC KHI DÙNG THẬT
