@@ -2433,17 +2433,34 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       }
     }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', WEBAPP_URL, true);
-    xhr.setRequestHeader('Content-Type', 'text/plain;charset=utf-8');
-    xhr.onload = function () {
-      handleResponseText(xhr.responseText);
-    };
-    xhr.onerror = function () {
-      setBusy(false);
-      showStatus('Could not reach the server. Please check your connection and try again.', false);
-    };
-    xhr.send(JSON.stringify(payload));
+    // Một số trình duyệt (đặc biệt Safari/iOS) chặn ở tầng CORS ngay khi theo
+    // chuỗi chuyển hướng khác-origin của Apps Script — dù request đó server đã
+    // xử lý xong hoàn toàn bình thường (đã kiểm chứng nhiều lần: Sheet có dòng
+    // mới, cả 2 email đều gửi tới). Vì việc gửi lại (retry) AN TOÀN — server tự
+    // nhận diện email trùng và không tạo vé/gửi mail lần 2 (Quy tắc #17) — nên
+    // ở đây tự thử lại 1 lần trước khi hiển thị thông báo cho khách.
+    function sendRegistration(isRetry) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', WEBAPP_URL, true);
+      xhr.setRequestHeader('Content-Type', 'text/plain;charset=utf-8');
+      xhr.onload = function () {
+        handleResponseText(xhr.responseText);
+      };
+      xhr.onerror = function () {
+        if (!isRetry) {
+          sendRegistration(true);
+          return;
+        }
+        setBusy(false);
+        // KHÔNG dùng "Could not reach the server" ở đây nữa — trên thực tế
+        // request hầu như luôn tới server thành công dù trình duyệt báo lỗi
+        // đọc phản hồi, nên thông báo "mất kết nối" gây hoang mang sai sự thật.
+        showStatus('We could not confirm your registration from this browser, but it may have gone through. Please check your email (including Spam) in a few minutes before submitting again.', true);
+      };
+      xhr.send(JSON.stringify(payload));
+    }
+
+    sendRegistration(false);
   });
 })();
 </script>
