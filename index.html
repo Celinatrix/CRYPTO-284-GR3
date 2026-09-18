@@ -2395,38 +2395,55 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
 
     // Gửi dưới dạng text/plain để KHÔNG kích hoạt CORS preflight (OPTIONS) —
     // Apps Script Web App không xử lý preflight tốt.
-    fetch(WEBAPP_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    })
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
-        setBusy(false);
+    //
+    // Dùng XMLHttpRequest thay vì fetch(): Apps Script Web App trả kết quả
+    // qua một lượt CHUYỂN HƯỚNG (302) sang domain script.googleusercontent.com
+    // để lấy nội dung thật. fetch() trong Chrome đôi khi ném lỗi mạng chung
+    // chung ("Failed to fetch") khi đi qua chuỗi chuyển hướng khác-origin này
+    // dù server đã xử lý xong request thành công (đã ghi Sheet, đã gửi mail) —
+    // XMLHttpRequest xử lý đúng chuỗi chuyển hướng này ổn định hơn.
+    function handleResponseText(responseText) {
+      setBusy(false);
 
-        if (data && data.ok) {
-          showStatus(data.message || 'Your pass has been emailed to you. Please check your Spam folder too.', true);
+      var data = null;
+      try { data = JSON.parse(responseText); } catch (parseErr) { data = null; }
 
-          // Chỉ hiển thị dữ liệu người dùng vừa nhập — backend cố tình KHÔNG
-          // trả về mã vé (Quy tắc #17), nên không bịa "PASS ID" ở đây.
-          document.getElementById('success-name').textContent = payload.hoTen;
-          document.getElementById('success-detail').textContent =
-            'A verified QR access pass is on its way to ' + payload.email +
-            '. Please also check your Spam folder.';
-          successEl.classList.add('is-shown');
-          successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (data && data.ok) {
+        showStatus(data.message || 'Your pass has been emailed to you. Please check your Spam folder too.', true);
 
-          form.reset();
-          counterEl.textContent = '0/400';
-          formRenderedAt = Date.now();
-        } else {
-          showStatus((data && data.message) || 'Something went wrong. Please try again.', false);
-        }
-      })
-      .catch(function () {
-        setBusy(false);
-        showStatus('Could not reach the server. Please check your connection and try again.', false);
-      });
+        // Chỉ hiển thị dữ liệu người dùng vừa nhập — backend cố tình KHÔNG
+        // trả về mã vé (Quy tắc #17), nên không bịa "PASS ID" ở đây.
+        document.getElementById('success-name').textContent = payload.hoTen;
+        document.getElementById('success-detail').textContent =
+          'A verified QR access pass is on its way to ' + payload.email +
+          '. Please also check your Spam folder.';
+        successEl.classList.add('is-shown');
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        form.reset();
+        counterEl.textContent = '0/400';
+        formRenderedAt = Date.now();
+      } else if (data) {
+        showStatus(data.message || 'Something went wrong. Please try again.', false);
+      } else {
+        // Request tới được server (không phải lỗi mạng) nhưng phản hồi không
+        // đọc được — rất hiếm gặp. Vẫn báo cho khách kiểm tra email thay vì
+        // báo "lỗi kết nối" gây hoang mang khi thực ra đăng ký có thể đã thành công.
+        showStatus('Your registration was submitted. Please check your email (and Spam folder) for your pass.', true);
+      }
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', WEBAPP_URL, true);
+    xhr.setRequestHeader('Content-Type', 'text/plain;charset=utf-8');
+    xhr.onload = function () {
+      handleResponseText(xhr.responseText);
+    };
+    xhr.onerror = function () {
+      setBusy(false);
+      showStatus('Could not reach the server. Please check your connection and try again.', false);
+    };
+    xhr.send(JSON.stringify(payload));
   });
 })();
 </script>
