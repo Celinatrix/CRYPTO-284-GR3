@@ -1,0 +1,845 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><title>Decree 284/2026 Compliance Conference | Vietnam Crypto Legal Framework</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@500;600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  body { overscroll-behavior: none; }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+}
+::-webkit-scrollbar { display: none; }
+.bg-grid-blueprint-light {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(26, 54, 93, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 54, 93, 0.05) 1px, transparent 1px);
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        background: "#F8F9FA",
+        surface: "#FFFFFF",
+        primary: {
+          DEFAULT: "#1A365D",
+          dark: "#0F2027",
+          light: "#2A4365"
+        },
+        accent: {
+          DEFAULT: "#B8860B",
+          hover: "#996F08",
+          light: "#FDF8EE",
+          border: "#E2CFAD",
+          muted: "#C5A880"
+        },
+        slate: {
+          50: "#F8FAFC",
+          100: "#F1F5F9",
+          200: "#E2E8F0",
+          300: "#CBD5E1",
+          400: "#94A3B8",
+          500: "#64748B",
+          600: "#475569",
+          700: "#334155",
+          800: "#1E293B",
+          900: "#0F172A"
+        }
+      },
+      fontFamily: {
+        headline: ["Montserrat", "sans-serif"],
+        body: ["Inter", "sans-serif"]
+      }
+    }
+  }
+}</script></head><body class="bg-[#F8F9FA] font-body text-[#1E293B] antialiased selection:bg-[#B8860B]/20 selection:text-[#B8860B]"><header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm"><div class="h-20 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#1A365D] border border-slate-200 flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-[#C5A880] text-[22px]">balance</span></div><div class="flex flex-col"><span class="font-headline font-bold text-sm tracking-wider text-[#1A365D] uppercase flex items-center gap-1.5">legal crypto<br><span class="text-[#B8860B]">Conference</span></span><span class="text-[11px] text-slate-500 font-mono tracking-widest uppercase">Decree 284/2026/ND-CP</span></div></div><nav class="hidden xl:flex items-center gap-6" data-active-classes="text-[#B8860B] font-semibold"><a aria-current="page" class="transition-colors text-xs font-semibold uppercase tracking-wider text-[#B8860B] hover:text-[#996F08] py-1 border-b-2 border-[#B8860B]" data-path="home" href="#home">Home</a><a class="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-[#B8860B] transition-colors py-1" data-path="about-decree-284" href="#about">Overview</a><a class="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-[#B8860B] transition-colors py-1" data-path="speakers" href="#speakers">Speakers</a><a class="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-[#B8860B] transition-colors py-1" data-path="conference-agenda" href="#agenda">Agenda</a><a class="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-[#B8860B] transition-colors py-1" data-path="delegate-registration" href="#registration">Registration</a><a class="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-[#B8860B] transition-colors py-1" data-path="contact" href="#contact">Contact</a></nav><div class="flex items-center gap-4"><div class="flex items-center p-0.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-medium text-slate-500"><button class="px-2.5 py-1 rounded-full text-slate-600 hover:text-[#1A365D] transition-all" type="button">VI</button><span class="text-slate-300">|</span><button class="px-2.5 py-1 rounded-full text-white font-bold bg-[#1A365D] transition-all shadow-xs" type="button">EN</button></div><a class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#B8860B] hover:bg-[#996F08] text-white text-xs font-bold tracking-wider uppercase transition-all shadow-sm hover:shadow hover:scale-[1.02]" href="#registration">Register Now</a></div></div></header><main class="w-full pt-20 bg-[#F8F9FA]"><div class="flex flex-col w-full text-[#1E293B]">
+<!-- ========================================================================= -->
+<!-- SECTION 1: HERO & EVENT HIGHLIGHTS BAR (Clean Prestigious Light Mode)     -->
+<!-- ========================================================================= -->
+<section class="relative w-full overflow-hidden bg-[#F8F9FA] pt-14 pb-20 border-b border-slate-200" id="home">
+<!-- Blueprint Grid Layer -->
+<div class="pointer-events-none absolute inset-0 bg-grid-blueprint-light opacity-80"></div>
+<!-- Soft Subtle Warm Aura -->
+<div class="pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 w-[720px] h-[400px] bg-[#B8860B]/5 blur-[120px] rounded-full"></div>
+<!-- Watermark Legal Scale & Crest Graphic Motif -->
+<div class="pointer-events-none absolute left-1/2 top-40 -translate-x-1/2 opacity-[0.06] flex items-center justify-center select-none">
+<svg class="w-[520px] h-[520px] text-[#1A365D]" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 200 200">
+<circle cx="100" cy="100" r="92" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1.5"></circle>
+<circle cx="100" cy="100" r="82" stroke="currentColor" stroke-width="1"></circle>
+<circle cx="100" cy="100" r="68" stroke="currentColor" stroke-dasharray="6 4" stroke-width="1"></circle>
+<!-- Scale of Justice Motif -->
+<path d="M100 28 L100 172 M65 48 L135 48" stroke="currentColor" stroke-width="2.5"></path>
+<polygon fill="currentColor" points="100,24 94,36 106,36"></polygon>
+<!-- Left Pan -->
+<path d="M65 48 L48 88 M65 48 L82 88" stroke="currentColor" stroke-width="1.5"></path>
+<path d="M42 88 Q65 106 88 88 Z" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.5"></path>
+<!-- Right Pan -->
+<path d="M135 48 L118 88 M135 48 L152 88" stroke="currentColor" stroke-width="1.5"></path>
+<path d="M112 88 Q135 106 158 88 Z" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.5"></path>
+<!-- Pedestal Base -->
+<path d="M78 172 L122 172 M86 164 L114 164 M92 148 L108 148" stroke="currentColor" stroke-width="2"></path>
+<!-- Wreath / Stars surrounding -->
+<circle cx="100" cy="15" fill="currentColor" r="2.5"></circle>
+<circle cx="150" cy="28" fill="currentColor" r="2"></circle>
+<circle cx="50" cy="28" fill="currentColor" r="2"></circle>
+<circle cx="185" cy="100" fill="currentColor" r="2"></circle>
+<circle cx="15" cy="100" fill="currentColor" r="2"></circle>
+</svg>
+</div>
+<div class="relative max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+<!-- Top Badge Authority Pill -->
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm mb-6">
+<span class="w-2 h-2 rounded-full bg-[#B8860B] animate-pulse"></span>
+<span class="font-mono text-[11px] text-[#1A365D] tracking-widest uppercase font-semibold">MINISTRY OF JUSTICE &amp; DIGITAL ASSET COUNCIL • OFFICIAL ANNOUNCEMENT</span>
+</div>
+<!-- High-impact Title & Tagline -->
+<h1 class="font-headline font-bold text-3xl sm:text-5xl lg:text-6xl text-[#1A365D] tracking-tight leading-[1.15] max-w-4xl mb-4"><p data-pm-slice="1 1 []">Decree 284/2026 Compliance Conference</p></h1>
+<p class="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed mb-8">
+    Orienting Vietnam's crypto asset legal framework • Standardizing VASP licensing &amp; Safeguarding the digital asset market
+  </p>
+<!-- Event Highlights Bar -->
+<div class="w-full max-w-4xl bg-white border border-slate-200 rounded-full p-2.5 sm:p-3 mb-8 shadow-sm">
+<div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-200 text-center text-xs sm:text-[13px]">
+<!-- Chip 1: Date -->
+<div class="flex items-center justify-center gap-2 py-2 px-3 font-mono text-[#1E293B]">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">calendar_today</span>
+<span class="font-semibold tracking-wider">29/08/2026</span>
+</div>
+<!-- Chip 2: Time -->
+<div class="flex items-center justify-center gap-2 py-2 px-3 font-mono text-[#1E293B]">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">schedule</span>
+<span class="font-medium tracking-wide">09:00 AM - 05:00 PM ICT</span>
+</div>
+<!-- Chip 3: Location -->
+<div class="flex items-center justify-center gap-2 py-2 px-3 text-[#1E293B] uppercase font-semibold tracking-wider">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">location_on</span>
+<span class="">HANOI / ONLINE SUMMIT</span>
+</div>
+<!-- Chip 4: Audience -->
+<div class="flex items-center justify-center gap-2 py-2 px-3 text-[#1E293B] uppercase font-semibold tracking-wider">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">group</span>
+<span class="">LEGAL &amp; TECH EXPERTS</span>
+</div>
+</div>
+</div>
+<!-- Hero Golden Capsule CTA Button -->
+<div class="flex flex-col items-center gap-3">
+<a class="inline-flex items-center justify-center px-9 py-3 rounded-full bg-[#B8860B] hover:bg-[#996F08] text-white font-headline font-bold text-xs sm:text-sm uppercase tracking-widest shadow-md hover:shadow-lg hover:scale-105 transition-all border border-[#C5A880]" href="#registration">
+      REGISTER NOW / SECURE YOUR SEAT
+    </a>
+<span class="text-[11px] font-mono text-slate-500 tracking-wider">FREE ADMISSION • LIMITED TO 150 IN-PERSON SEATS &amp; 1,000 VIRTUAL ATTENDEES</span>
+</div>
+<!-- Real-time Countdown & Regulatory Live Status -->
+
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 2: ABOUT & STATS (Clean White Cards & Navy Heading)                -->
+<!-- ========================================================================= -->
+<section class="w-full py-16 bg-white border-b border-slate-200" id="about">
+<div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+<div class="lg:col-span-7 flex flex-col">
+<div class="flex items-center gap-2 mb-3">
+<span class="w-1.5 h-4 rounded-full bg-[#B8860B]"></span>
+<span class="font-mono text-xs text-[#B8860B] uppercase font-bold tracking-widest">REGULATORY CONTEXT &amp; VITAL SIGNIFICANCE</span>
+</div>
+<h2 class="font-headline font-bold text-2xl sm:text-3xl text-[#1A365D] uppercase tracking-tight mb-4">
+        ELIMINATING THE LEGAL GREY AREA, STANDARDIZING VIETNAM'S DIGITAL ASSET MARKET
+      </h2>
+<p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+        Decree 284/2026/ND-CP is a milestone legal document, marking Vietnam's first comprehensive and strict legal framework for Virtual Asset Service Providers (VASPs). The decree completely ends the era of voluntary self-regulation, bringing asset transfers, custody, and digital asset trading closer to international standards of transparency, capital flow management, and end-user protection.
+      </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="p-5 rounded-xl bg-[#F8F9FA] border border-slate-200 hover:border-[#C5A880] transition-colors shadow-xs">
+<div class="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#1A365D] mb-3 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+<h3 class="font-headline font-semibold text-sm text-[#1A365D] mb-1">FATF Compliance &amp; Risk Mitigation</h3>
+<p class="text-xs text-slate-500 leading-relaxed">Bringing Vietnam off the enhanced monitoring grey list through strict AML/CFT standards.</p>
+</div>
+<div class="p-5 rounded-xl bg-[#F8F9FA] border border-slate-200 hover:border-[#C5A880] transition-colors shadow-xs">
+<div class="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#B8860B] mb-3 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</div>
+<h3 class="font-headline font-semibold text-sm text-[#1A365D] mb-1">Safe Harbor for VASPs</h3>
+<p class="text-xs text-slate-500 leading-relaxed">Legally protecting investor assets, establishing clear boundaries between permitted and prohibited assets.</p>
+</div>
+</div>
+</div>
+<!-- Donut Metric Card -->
+<div class="lg:col-span-5 flex flex-col">
+<div class="p-6 rounded-2xl bg-[#F8F9FA] border border-slate-200 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-mono text-[#1A365D] uppercase font-bold tracking-wider">2026 ECOSYSTEM IMPACT ALLOCATION</span>
+<span class="material-symbols-outlined text-slate-400 text-[18px]">pie_chart</span>
+</div>
+<div class="flex items-center justify-center py-3">
+<svg class="w-44 h-44 transform -rotate-90" viewBox="0 0 160 160">
+<circle class="text-slate-200 stroke-current" cx="80" cy="80" fill="transparent" r="62" stroke-width="14"></circle>
+<circle class="text-[#B8860B] stroke-current" cx="80" cy="80" fill="transparent" r="62" stroke-dasharray="389.5" stroke-dashoffset="214.2" stroke-width="14"></circle>
+<circle class="text-[#1A365D] stroke-current" cx="80" cy="80" fill="transparent" r="62" stroke-dasharray="389.5" stroke-dashoffset="272.6" stroke-width="14"></circle>
+</svg>
+</div>
+<div class="flex flex-col gap-2.5 text-xs mt-3">
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-white border border-slate-200">
+<span class="flex items-center gap-2 text-slate-700 font-medium"><span class="w-2.5 h-2.5 rounded-full bg-[#B8860B]"></span>VASP Licensing &amp; Charter Capital</span>
+<span class="font-mono text-[#B8860B] font-bold">45%</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-white border border-slate-200">
+<span class="flex items-center gap-2 text-slate-700 font-medium"><span class="w-2.5 h-2.5 rounded-full bg-[#1A365D]"></span>Anti-Money Laundering (AML/CFT) &amp; Tax</span>
+<span class="font-mono text-[#1A365D] font-bold">35%</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-white border border-slate-200">
+<span class="flex items-center gap-2 text-slate-700 font-medium"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>Data Security &amp; Investor Protection</span>
+<span class="font-mono text-slate-500 font-bold">20%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Metric Strip -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-[#F8F9FA] border border-slate-200">
+<div class="p-3 text-center">
+<span class="font-headline font-bold text-3xl text-[#B8860B] block">150</span>
+<span class="text-xs text-slate-500 uppercase tracking-wider mt-1 block font-medium">Limited In-Person Seats</span>
+</div>
+<div class="p-3 text-center border-l border-slate-200">
+<span class="font-headline font-bold text-3xl text-[#1A365D] block">1,000+</span>
+<span class="text-xs text-slate-500 uppercase tracking-wider mt-1 block font-medium">Virtual Delegates</span>
+</div>
+<div class="p-3 text-center border-l border-slate-200">
+<span class="font-headline font-bold text-3xl text-[#1A365D] block">04</span>
+<span class="text-xs text-slate-500 uppercase tracking-wider mt-1 block font-medium">Key Sessions &amp; Panels</span>
+</div>
+<div class="p-3 text-center border-l border-slate-200">
+<span class="font-headline font-bold text-3xl text-[#B8860B] block">200M</span>
+<span class="text-xs text-slate-500 uppercase tracking-wider mt-1 block font-medium">Max Administrative Fine (VND)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 3: AGENDA (id="agenda")                                           -->
+<!-- ========================================================================= -->
+<section class="w-full py-16 bg-[#F8F9FA] border-b border-slate-200" id="agenda">
+<div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<span class="font-mono text-xs text-[#B8860B] uppercase tracking-widest font-bold block mb-1">OFFICIAL PROGRAM AGENDA</span>
+<h2 class="font-headline font-bold text-2xl sm:text-3xl text-[#1A365D] uppercase">Thematic Conference Program</h2>
+</div>
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-mono text-slate-600 shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-[#B8860B]">schedule</span>
+<span class="">Time: 09:00 - 17:00 | 29/08/2026</span>
+</div>
+</div>
+<div class="flex flex-col gap-3.5">
+<!-- Slot 1 -->
+<div class="p-5 rounded-xl bg-white border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow-sm transition-all flex flex-col md:flex-row gap-4 items-start md:items-center">
+<div class="flex md:flex-col items-center md:items-start justify-between w-full md:w-44 shrink-0 font-mono">
+<span class="font-headline font-bold text-base text-[#1A365D]">09:00 - 09:30</span>
+<span class="text-[11px] text-slate-400">30 MINS</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-mono uppercase font-semibold">Check-in</span>
+<span class="px-2 py-0.5 rounded bg-slate-100 text-[#1A365D] text-[10px] uppercase font-semibold">Automated</span>
+</div>
+<h3 class="font-headline font-bold text-sm sm:text-base text-[#1E293B]">Attendee Reception &amp; Automated QR Code Check-in</h3>
+<p class="text-xs text-slate-500 mt-1">Receiving high-level delegates, smart QR pass scanning, and distributing confidential briefing materials.</p>
+</div>
+<div class="shrink-0 flex items-center gap-1.5 text-xs text-slate-600">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">qr_code_scanner</span>
+<span class="font-medium">Central Grand Hall</span>
+</div>
+</div>
+<!-- Slot 2 -->
+<div class="p-5 rounded-xl bg-white border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow-sm transition-all flex flex-col md:flex-row gap-4 items-start md:items-center">
+<div class="flex md:flex-col items-center md:items-start justify-between w-full md:w-44 shrink-0 font-mono">
+<span class="font-headline font-bold text-base text-[#B8860B]">09:30 - 10:45</span>
+<span class="text-[11px] text-slate-400">75 MINS</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-[#FDF8EE] text-[#B8860B] border border-[#E2CFAD] text-[10px] font-mono uppercase font-bold">KEYNOTE 1</span>
+<span class="px-2 py-0.5 rounded bg-slate-100 text-[#1A365D] text-[10px] uppercase font-semibold">Focus</span>
+</div>
+<h3 class="font-headline font-bold text-sm sm:text-base text-[#1E293B]">Decree 284/2026/ND-CP Overview: Crypto Asset Classification &amp; VASP Licensing Framework</h3>
+<p class="text-xs text-slate-500 mt-1">Legal distinction between Virtual Assets vs Crypto Currency; statutory paid-up capital requirements, server audit rules, and cryptographic key custody.</p>
+</div>
+<div class="shrink-0 flex items-center gap-1.5 text-xs text-[#1A365D]">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">mic</span>
+<span class="font-semibold">Department of Legal Affairs</span>
+</div>
+</div>
+<!-- Slot 3 -->
+<div class="p-5 rounded-xl bg-white border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow-sm transition-all flex flex-col md:flex-row gap-4 items-start md:items-center">
+<div class="flex md:flex-col items-center md:items-start justify-between w-full md:w-44 shrink-0 font-mono">
+<span class="font-headline font-bold text-base text-[#1A365D]">10:45 - 12:00</span>
+<span class="text-[11px] text-slate-400">75 MINS</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-mono uppercase font-bold">SANCTION 2</span>
+<span class="px-2 py-0.5 rounded bg-[#FDF8EE] text-[#B8860B] border border-[#E2CFAD] text-[10px] uppercase font-semibold">Legal Risk</span>
+</div>
+<h3 class="font-headline font-bold text-sm sm:text-base text-[#1E293B]">Session 2: Administrative Sanction Framework, Tax Obligations &amp; Crypto Travel Rule</h3>
+<p class="text-xs text-slate-500 mt-1">Fines up to 200,000,000 VND; mandatory eKYC customer identification obligations; personal income tax declaration on tokenomics.</p>
+</div>
+<div class="shrink-0 flex items-center gap-1.5 text-xs text-[#1A365D]">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">gavel</span>
+<span class="font-semibold">Senior AML/FATF Expert</span>
+</div>
+</div>
+<!-- Slot 4 -->
+<div class="p-5 rounded-xl bg-white border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow-sm transition-all flex flex-col md:flex-row gap-4 items-start md:items-center">
+<div class="flex md:flex-col items-center md:items-start justify-between w-full md:w-44 shrink-0 font-mono">
+<span class="font-headline font-bold text-base text-slate-500">12:00 - 13:30</span>
+<span class="text-[11px] text-slate-400">90 MINS</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-mono uppercase font-semibold">VIP LUNCHEON</span>
+</div>
+<h3 class="font-headline font-bold text-sm sm:text-base text-[#1E293B]">Networking Luncheon &amp; Closed-Door Roundtable</h3>
+<p class="text-xs text-slate-500 mt-1">High-level networking luncheon between regulatory drafting officials, commercial banking leadership, and global Web3 funds.</p>
+</div>
+<div class="shrink-0 flex items-center gap-1.5 text-xs text-slate-600">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">restaurant</span>
+<span class="font-medium">Executive Lounge</span>
+</div>
+</div>
+<!-- Slot 5 -->
+<div class="p-5 rounded-xl bg-white border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow-sm transition-all flex flex-col md:flex-row gap-4 items-start md:items-center">
+<div class="flex md:flex-col items-center md:items-start justify-between w-full md:w-44 shrink-0 font-mono">
+<span class="font-headline font-bold text-base text-[#B8860B]">13:30 - 16:30</span>
+<span class="text-[11px] text-slate-400">180 MINS</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-[#FDF8EE] text-[#B8860B] border border-[#E2CFAD] text-[10px] font-mono uppercase font-bold">PANEL 3</span>
+<span class="px-2 py-0.5 rounded bg-slate-100 text-[#1A365D] text-[10px] uppercase font-semibold">Live Q&amp;A</span>
+</div>
+<h3 class="font-headline font-bold text-sm sm:text-base text-[#1E293B]">Interactive Panel: VASP Licensing Roadmap &amp; Enterprise Adaptation</h3>
+<p class="text-xs text-slate-500 mt-1">Live Q&amp;A town-hall resolving licensing dossier hurdles and cross-border compliance mechanisms for foreign exchanges operating in Vietnam.</p>
+</div>
+<div class="shrink-0 flex items-center gap-1.5 text-xs text-[#1A365D]">
+<span class="material-symbols-outlined text-[#B8860B] text-[18px]">forum</span>
+<span class="font-semibold">Keynote Auditorium</span>
+</div>
+</div>
+<!-- Slot 6 -->
+<div class="p-5 rounded-xl bg-white border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow-sm transition-all flex flex-col md:flex-row gap-4 items-start md:items-center">
+<div class="flex md:flex-col items-center md:items-start justify-between w-full md:w-44 shrink-0 font-mono">
+<span class="font-headline font-bold text-base text-slate-500">16:30 - 17:00</span>
+<span class="text-[11px] text-slate-400">30 MINS</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-mono uppercase font-semibold">CLOSING</span>
+</div>
+<h3 class="font-headline font-bold text-sm sm:text-base text-[#1E293B]">Closing Remarks &amp; Issuance of Blockchain-Verified E-Certificates (CPE)</h3>
+<p class="text-xs text-slate-500 mt-1">Conference resolution signing and issuance of tamper-proof crypto certificates of completion for accredited professionals.</p>
+</div>
+<div class="shrink-0 flex items-center gap-1.5 text-xs text-[#1A365D]">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-semibold">Secretariat Desk</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 4: SPEAKERS (id="speakers")                                       -->
+<!-- ========================================================================= -->
+<section class="w-full py-16 bg-white border-b border-slate-200" id="speakers">
+<div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="mb-8">
+<span class="font-mono text-xs text-[#B8860B] uppercase tracking-widest font-bold block mb-1">SPECIALIZED ADVISORY BOARD</span>
+<h2 class="font-headline font-bold text-2xl sm:text-3xl text-[#1A365D] uppercase">Distinguished Advisory &amp; Keynote Speakers</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Speaker 1 -->
+<div class="p-6 rounded-2xl bg-[#F8F9FA] border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow transition-all flex flex-col justify-between">
+<div>
+<div class="relative w-24 h-24 mb-4 rounded-xl overflow-hidden border border-slate-200 shadow-xs">
+<img class="w-full h-full object-cover" data-alt="Official portrait of a senior Vietnamese regulatory drafting officer, middle-aged male in a distinguished navy suit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnQqfXXOAg98wt9IkdVwRSQ-iXwHs3F5720NCTFfTJWVHvOLyALBA4hp-I2sZgpFZ1Rnedx3NWPZMOaqYNm1qvCz90cF_9n_QXZEma8l1_UCo30L93tScQ0gxD9L0XCgtDSn27BzpVvGKv9Pdh99S15bImlqh1qqrkCOMTvOWQUpCJklqPzxLBvsL0yTtw05yBRsj1Tm1dUAALKkJ4QOpOSGEFFEavHBhCLbkerpdXGqDXUD6RNkFp7A">
+<div class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-[#B8860B] flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[10px]">verified</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-[#FDF8EE] text-[#B8860B] border border-[#E2CFAD] text-[10px] font-mono uppercase font-bold">DRAFTING COMMITTEE</span>
+<h3 class="font-headline font-bold text-lg text-[#1A365D] mt-2">Representative, Department of Legal Affairs</h3>
+<p class="text-xs text-slate-500 font-medium mb-3">Head of Drafting Committee, Digital Asset Legal Framework</p>
+<p class="text-xs text-slate-600 leading-relaxed">
+          Over 18 years of experience drafting financial and banking regulations, directly overseeing statutory criteria for the credit institution sector and advising on the framework of Decree 284/2026/ND-CP.
+        </p>
+</div>
+<div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+<span class="text-slate-500">Keynote Topic:</span>
+<span class="text-[#B8860B] font-semibold">VASP Standards 2026</span>
+</div>
+</div>
+<!-- Speaker 2 -->
+<div class="p-6 rounded-2xl bg-[#F8F9FA] border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow transition-all flex flex-col justify-between">
+<div>
+<div class="relative w-24 h-24 mb-4 rounded-xl overflow-hidden border border-slate-200 shadow-xs">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of a senior female fintech legal partner in Vietnam in a formal black suit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGs_etpnUUIlTav5mRW5pXECCvVdCZF0Opl64Q3ZwCodrpmLSYr7uexXdZyPNB_Avuw4VOVjvmE7e6YgofKH1LdABdmJtdJ9J7yM0r2DXoMGKHAagA_7e9peVMcqvXpBpcQPZukXNVe4GO_uDdcdv2tCEx20TFw5m673zHPlQdUMGWhtdO2WY_PPnZMZzFyTr1cj56cBEnhv7u8qNw_DS45SHkb7vpYYXvAKrztAzAswoMwyZwduAWAQ">
+<div class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-[#1A365D] flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[10px]">balance</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-[#1A365D] border border-slate-200 text-[10px] font-mono uppercase font-bold">CORPORATE COUNSEL</span>
+<h3 class="font-headline font-bold text-lg text-[#1A365D] mt-2">Nguyen Thanh Tung, Esq.</h3>
+<p class="text-xs text-slate-500 font-medium mb-3">Managing Partner - Asia FinTech Legal Group</p>
+<p class="text-xs text-slate-600 leading-relaxed">
+          Advised on successful licensing for over 40 Web3 projects and cross-border digital asset exchanges in Singapore, Hong Kong, and the Vietnam domestic market.
+        </p>
+</div>
+<div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+<span class="text-slate-500">Keynote Topic:</span>
+<span class="text-[#1A365D] font-semibold">Optimal Corporate Structuring</span>
+</div>
+</div>
+<!-- Speaker 3 -->
+<div class="p-6 rounded-2xl bg-[#F8F9FA] border border-slate-200 hover:border-[#C5A880] shadow-xs hover:shadow transition-all flex flex-col justify-between">
+<div>
+<div class="relative w-24 h-24 mb-4 rounded-xl overflow-hidden border border-slate-200 shadow-xs">
+<img class="w-full h-full object-cover" data-alt="Portrait of male specialist specializing in anti-money laundering AML and digital asset regulatory compliance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArBq70kAPtj1x33_G_w_3yG87hQEnELmQXMJqZayEUy5xNRikfBDHrICNuonJOPOst_8xk_xjzDr7JZvgZEYYvJzJA-42PQd16biAu04kxS6u6bZN6cCn9hHlq0VhUmwAg6TK4oZAjTX4HRRciYwxZKxdZQt0lZdwPlDtsPp5-CCAwxN7Lvw7mNjCaCkJ_y_lAgWCAlTZHaL47nIkcg_SLlL7JapJXKhIjolV0hRnpcS2UPQ2sMNC7sw">
+<div class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-[#B8860B] flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[10px]">security</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-[#FDF8EE] text-[#B8860B] border border-[#E2CFAD] text-[10px] font-mono uppercase font-bold">FATF ADVISORY PANEL</span>
+<h3 class="font-headline font-bold text-lg text-[#1A365D] mt-2">Le Hoang Long, M.Sc.</h3>
+<p class="text-xs text-slate-500 font-medium mb-3">Chief AML/CFT &amp; Financial Intelligence Expert</p>
+<p class="text-xs text-slate-600 leading-relaxed">
+          Member of the National Anti-Money Laundering Steering Committee, representing Vietnam in bilateral mutual evaluations and FATF virtual asset risk assessments.
+        </p>
+</div>
+<div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+<span class="text-slate-500">Keynote Topic:</span>
+<span class="text-[#B8860B] font-semibold">Travel Rule &amp; AML Compliance</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 5: PENALTY MATRIX & REPOSITORY (id="matrix", id="references")     -->
+<!-- ========================================================================= -->
+<section class="w-full py-16 bg-[#F8F9FA] border-b border-slate-200" id="matrix">
+<div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<span class="font-mono text-xs text-[#B8860B] uppercase tracking-widest font-bold block mb-1">CHAPTER IV STATUTORY REMEDIES</span>
+<h2 class="font-headline font-bold text-2xl sm:text-3xl text-[#1A365D] uppercase">Administrative Penalty Matrix</h2>
+</div>
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-mono shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-[#B8860B]">warning</span>
+<span class="">Mandatory enforcement from 01/09/2026</span>
+</div>
+</div>
+<div class="rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm mb-12">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[760px]">
+<thead>
+<tr class="bg-[#F1F5F9] border-b border-slate-200 text-[#1A365D] font-mono text-xs uppercase tracking-wider">
+<th class="py-3.5 px-5 font-bold">Violation Category</th>
+<th class="py-3.5 px-4 font-bold">Applicable Entity</th>
+<th class="py-3.5 px-4 font-bold text-[#B8860B]">Monetary Penalty</th>
+<th class="py-3.5 px-5 font-bold text-[#1A365D]">Remedial &amp; Enforcement Measures</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 text-xs text-slate-600">
+<tr class="hover:bg-slate-50/75 transition-colors">
+<td class="py-4 px-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-rose-500 shrink-0"></span>
+<span class="font-semibold text-[#1E293B]">Operating unlicensed VASP / exchange services</span>
+</div>
+<span class="font-mono text-slate-400 block text-[11px] mt-1">Article 34, Clause 2 - Decree 284</span>
+</td>
+<td class="py-4 px-4 text-slate-500">Domestic &amp; international enterprises offering services in Vietnam</td>
+<td class="py-4 px-4 font-mono font-bold text-[#B8860B] text-sm">100M – 200M VND</td>
+<td class="py-4 px-5 text-slate-500">
+<span class="inline-block px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-bold mb-1">Forced Action</span><br>
+              Business suspension (6-12 months); total confiscation of all illicit profits into state budget.
+            </td>
+</tr>
+<tr class="hover:bg-slate-50/75 transition-colors bg-slate-50/40">
+<td class="py-4 px-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#B8860B] shrink-0"></span>
+<span class="font-semibold text-[#1E293B]">Failure to comply with KYC &amp; AML/CFT obligations</span>
+</div>
+<span class="font-mono text-slate-400 block text-[11px] mt-1">Article 36, Clauses 1 &amp; 3 - Decree 284</span>
+</td>
+<td class="py-4 px-4 text-slate-500">Licensed digital asset exchanges, custody platforms</td>
+<td class="py-4 px-4 font-mono font-bold text-[#B8860B] text-sm">80M – 150M VND</td>
+<td class="py-4 px-5 text-slate-500">
+<span class="inline-block px-2 py-0.5 rounded bg-slate-100 text-[#1A365D] border border-slate-200 text-[10px] font-bold mb-1">Technical</span><br>
+              Temporary suspension of banking API integrations; mandatory independent audit within 30 days.
+            </td>
+</tr>
+<tr class="hover:bg-slate-50/75 transition-colors">
+<td class="py-4 px-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-rose-500 shrink-0"></span>
+<span class="font-semibold text-[#1E293B]">Tax evasion on digital asset transaction proceeds</span>
+</div>
+<span class="font-mono text-slate-400 block text-[11px] mt-1">Article 41 - Inter-Agency Tax Coordination Code</span>
+</td>
+<td class="py-4 px-4 text-slate-500">Individual traders, high-net-worth investors, crypto businesses</td>
+<td class="py-4 px-4 font-mono font-bold text-rose-600 text-sm">1x to 3x evaded tax amount</td>
+<td class="py-4 px-5 text-slate-500">
+<span class="inline-block px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-bold mb-1">Criminal Referral</span><br>
+              100% tax clawback + late payment surcharge; account freeze and referral for prosecution if fraud detected.
+            </td>
+</tr>
+<tr class="hover:bg-slate-50/75 transition-colors bg-slate-50/40">
+<td class="py-4 px-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#1A365D] shrink-0"></span>
+<span class="font-semibold text-[#1E293B]">Advertising or promoting unlicensed crypto platforms</span>
+</div>
+<span class="font-mono text-slate-400 block text-[11px] mt-1">Article 45 - Marketing Restrictions for VASP Services</span>
+</td>
+<td class="py-4 px-4 text-slate-500">KOLs, Influencers, media agencies, affiliate networks</td>
+<td class="py-4 px-4 font-mono font-bold text-[#B8860B] text-sm">50M – 100M VND</td>
+<td class="py-4 px-5 text-slate-500">
+<span class="inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold mb-1">Digital Remediation</span><br>
+              Domain name seizure; mandatory video/content removal within 24h; public correction disclosure.
+            </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Document Repository (id="references") -->
+<div id="references">
+<div class="mb-6">
+<span class="font-mono text-xs text-[#B8860B] uppercase tracking-widest font-bold block mb-1">OFFICIAL GAZETTE REPOSITORY &amp; PRACTITIONER GUIDES</span>
+<h2 class="font-headline font-bold text-2xl sm:text-3xl text-[#1A365D] uppercase">Regulatory Library &amp; Compliance Handbook</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Doc 1 -->
+<div class="p-6 rounded-2xl bg-white border border-slate-200 flex flex-col justify-between shadow-xs hover:border-[#C5A880] transition-colors">
+<div>
+<div class="w-10 h-10 rounded-xl bg-[#F8F9FA] border border-slate-200 text-[#B8860B] flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[24px]">picture_as_pdf</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-[#FDF8EE] text-[#B8860B] border border-[#E2CFAD] text-[10px] font-mono uppercase font-bold">OFFICIAL TEXT</span>
+<h3 class="font-headline font-bold text-base text-[#1A365D] mt-2 mb-2">Full Decree 284/2026/ND-CP Official Text</h3>
+<p class="text-xs text-slate-500 leading-relaxed mb-4">
+            Complete authentic government gazette scan containing all 8 Chapters and 52 Articles specifying legal definitions and licensing prerequisites.
+          </p>
+</div>
+<div class="pt-3 border-t border-slate-200 flex items-center justify-between">
+<span class="font-mono text-slate-400 text-[11px]">PDF (4.2 MB)</span>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#B8860B] text-white text-xs font-bold uppercase hover:bg-[#996F08] transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-[15px]">download</span>
+<span class="">Download Full Text</span>
+</button>
+</div>
+</div>
+<!-- Doc 2 -->
+<div class="p-6 rounded-2xl bg-white border border-slate-200 flex flex-col justify-between shadow-xs hover:border-[#C5A880] transition-colors">
+<div>
+<div class="w-10 h-10 rounded-xl bg-[#F8F9FA] border border-slate-200 text-[#1A365D] flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-slate-100 text-[#1A365D] border border-slate-200 text-[10px] font-mono uppercase font-bold">EXECUTIVE SUMMARY</span>
+<h3 class="font-headline font-bold text-base text-[#1A365D] mt-2 mb-2">Executive Summary for Founders &amp; C-Level Executives</h3>
+<p class="text-xs text-slate-500 leading-relaxed mb-4">
+            Executive practitioner briefing detailing critical corporate obligations, the 18-month transition window, and server security standards.
+          </p>
+</div>
+<div class="pt-3 border-t border-slate-200 flex items-center justify-between">
+<span class="font-mono text-slate-400 text-[11px]">PDF (1.8 MB)</span>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-bold uppercase hover:bg-slate-50 transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-[15px]">download</span>
+<span class="">Download Summary</span>
+</button>
+</div>
+</div>
+<!-- Doc 3 -->
+<div class="p-6 rounded-2xl bg-white border border-slate-200 flex flex-col justify-between shadow-xs hover:border-[#C5A880] transition-colors">
+<div>
+<div class="w-10 h-10 rounded-xl bg-[#F8F9FA] border border-slate-200 text-[#B8860B] flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[24px]">fact_check</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-[#FDF8EE] text-[#B8860B] border border-[#E2CFAD] text-[10px] font-mono uppercase font-bold">SELF-AUDIT TOOLKIT</span>
+<h3 class="font-headline font-bold text-base text-[#1A365D] mt-2 mb-2">Compliance Checklist: 85 Core VASP Audit Criteria</h3>
+<p class="text-xs text-slate-500 leading-relaxed mb-4">
+            Comprehensive self-audit checklist covering cold-storage infrastructure, Travel Rule integration protocols, and STR reporting workflows.
+          </p>
+</div>
+<div class="pt-3 border-t border-slate-200 flex items-center justify-between">
+<span class="font-mono text-slate-400 text-[11px]">XLSX / PDF (2.5 MB)</span>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-bold uppercase hover:bg-slate-50 transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-[15px]">download</span>
+<span class="">Download Toolkit</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 6: REGISTRATION (Matching Clean Form Card Style)                  -->
+<!-- ========================================================================= -->
+<section class="w-full py-16 bg-white relative" id="registration">
+<div class="max-w-[840px] mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Centered Clean Form Container -->
+<div class="rounded-2xl bg-[#F8F9FA] border border-slate-200 shadow-sm p-6 sm:p-10 relative overflow-hidden">
+<div class="text-center mb-8">
+<span class="font-mono text-xs text-[#B8860B] uppercase tracking-widest font-bold block mb-1">DELEGATE ACCREDITATION PORTAL</span>
+<h2 class="font-headline font-bold text-2xl sm:text-3xl text-[#1A365D] uppercase tracking-wider mb-2">SECURE YOUR PLACE</h2>
+<p class="text-slate-500 text-xs sm:text-sm max-w-xl mx-auto">
+        Enter your official information to reserve an authorized seat and receive verified regulatory briefing materials.
+      </p>
+</div>
+<form class="flex flex-col gap-4" id="ticket-registration-form" onsubmit="event.preventDefault(); simulateRegistration();">
+<!-- Grid Inputs: Full Name & Work Email -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-700" for="reg-fullname">Full Name / Họ và tên *</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-200 text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:border-[#B8860B] text-xs sm:text-sm transition-colors shadow-xs" id="reg-fullname" placeholder="John Nguyen" required="" type="text">
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-700" for="reg-org">Organization / Company *</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-200 text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:border-[#B8860B] text-xs sm:text-sm transition-colors shadow-xs" id="reg-org" placeholder="Financial Tech Solutions JSC" required="" type="text">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-700" for="reg-email">Work Email Address *</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-200 text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:border-[#B8860B] text-xs sm:text-sm transition-colors shadow-xs" id="reg-email" placeholder="john.nguyen@enterprise.vn" required="" type="email">
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-700" for="reg-phone">Phone / Contact Number *</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-200 text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:border-[#B8860B] text-xs sm:text-sm transition-colors shadow-xs" id="reg-phone" placeholder="0912 345 678" required="" type="tel">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-700" for="reg-mode">Attendance Mode *</label>
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-200 text-[#1E293B] focus:outline-none focus:border-[#B8860B] text-xs sm:text-sm transition-colors shadow-xs" id="reg-mode">
+<option value="offline">Offline: Hanoi / HCMC Convention Center (VIP)</option>
+<option value="online">Online: E2E Encrypted Zoom Webinar</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-700" for="reg-role">Sector / Seniority Level *</label>
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-200 text-[#1E293B] focus:outline-none focus:border-[#B8860B] text-xs sm:text-sm transition-colors shadow-xs" id="reg-role" required="">
+<option value="c-level">Founder / CEO / C-Level</option>
+<option value="legal">CLO / Compliance / Legal Counsel</option>
+<option value="tech">Blockchain Tech Lead / CTO</option>
+<option value="fund">Venture Capital / Investment Fund</option>
+<option value="regulator">Policy Researcher / Regulator</option>
+<option value="other">Other</option>
+</select>
+</div>
+</div>
+<!-- Questions -->
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-700 flex justify-between" for="reg-question">
+<span class="">Advance Question for Panel (Optional)</span>
+<span class="text-slate-400 font-normal">Optional</span>
+</label>
+<textarea class="w-full px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:border-[#B8860B] text-xs transition-colors shadow-xs" id="reg-question" placeholder="Example: Transition guidelines for tokens already listed prior to 01/09/2026..." rows="2"></textarea>
+</div>
+<!-- Consent -->
+<div class="flex items-start gap-2 pt-1">
+<input class="mt-0.5 accent-[#B8860B] rounded border-slate-300" id="reg-consent" required="" type="checkbox">
+<label class="text-[11px] text-slate-500 cursor-pointer" for="reg-consent">
+          I confirm that the submitted information is accurate and agree to receive official summit updates and delegate QR access pass via email.
+        </label>
+</div>
+<!-- Submit Golden Capsule CTA Button -->
+<div class="pt-3">
+<button class="w-full py-3.5 rounded-full bg-[#B8860B] hover:bg-[#996F08] text-white font-headline font-bold text-xs sm:text-sm uppercase tracking-widest shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2" id="submit-btn" type="submit">
+<span class="material-symbols-outlined text-[20px]">confirmation_number</span>
+<span class="">CONFIRM REGISTRATION (RECEIVE QR ACCESS PASS)</span>
+</button>
+</div>
+</form>
+<!-- Ticket Preview Result -->
+<div class="hidden mt-6 p-5 rounded-xl bg-white border border-[#C5A880] shadow-sm" id="registration-ticket-preview">
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+<div>
+<span class="font-mono text-[10px] text-[#B8860B] uppercase font-bold tracking-widest block">PASS ISSUED SUCCESSFULLY</span>
+<h3 class="font-headline font-bold text-lg text-[#1A365D] mt-1" id="ticket-holder-name">JOHN NGUYEN</h3>
+<p class="font-mono text-xs text-slate-600" id="ticket-id">PASS ID: VCC2026-REG-9824X</p>
+<p class="text-xs text-slate-500 mt-2">Pass confirmation and encrypted QR code have been dispatched to your email.</p>
+</div>
+<div class="p-2 bg-[#F8F9FA] rounded-lg border border-slate-200 shrink-0">
+<svg class="w-20 h-20 text-[#1A365D] fill-current" viewBox="0 0 100 100">
+<rect fill="none" height="24" stroke="currentColor" stroke-width="4" width="24" x="6" y="6"></rect>
+<rect height="12" width="12" x="12" y="12"></rect>
+<rect fill="none" height="24" stroke="currentColor" stroke-width="4" width="24" x="70" y="6"></rect>
+<rect height="12" width="12" x="76" y="12"></rect>
+<rect fill="none" height="24" stroke="currentColor" stroke-width="4" width="24" x="6" y="70"></rect>
+<rect height="12" width="12" x="12" y="76"></rect>
+<rect height="6" width="6" x="46" y="12"></rect>
+<rect height="6" width="6" x="46" y="46"></rect>
+<rect height="12" width="6" x="76" y="46"></rect>
+<rect height="16" width="16" x="46" y="70"></rect>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 7: FAQ & CONTACT (id="contact")                                   -->
+<!-- ========================================================================= -->
+<section class="w-full py-16 bg-[#F8F9FA] border-b border-slate-200" id="contact">
+<div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="max-w-3xl mb-8">
+<span class="font-mono text-xs text-[#B8860B] uppercase tracking-widest font-bold block mb-1">FREQUENTLY ASKED LEGAL &amp; REGULATORY QUESTIONS</span>
+<h2 class="font-headline font-bold text-2xl sm:text-3xl text-[#1A365D] uppercase">Decree 284 Regulatory Inquiries</h2>
+</div>
+<div class="flex flex-col gap-3 mb-12">
+<details class="group p-4 rounded-xl bg-white border border-slate-200 transition-all open:border-[#C5A880] shadow-xs">
+<summary class="flex items-center justify-between cursor-pointer list-none select-none text-sm font-semibold text-[#1A365D]">
+<span class="flex items-center gap-3">
+<span class="font-mono text-xs text-[#B8860B]">01</span>
+<span class="">Are individual traders using international foreign exchanges subject to direct penalties?</span>
+</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-3 pl-8 text-xs sm:text-sm text-slate-600 leading-relaxed">
+        Decree 284/2026/ND-CP primarily regulates corporate and legal entities operating as Virtual Asset Service Providers (VASPs). Individual investors are not barred from holding digital assets; however, fiat conversion withdrawals via domestic banking channels require proper personal tax reporting and verifiable capital provenance under amended AML guidelines.
+      </div>
+</details>
+<details class="group p-4 rounded-xl bg-white border border-slate-200 transition-all open:border-[#C5A880] shadow-xs">
+<summary class="flex items-center justify-between cursor-pointer list-none select-none text-sm font-semibold text-[#1A365D]">
+<span class="flex items-center gap-3">
+<span class="font-mono text-xs text-[#B8860B]">02</span>
+<span class="">What are the core prerequisite conditions for technology companies to obtain a VASP license?</span>
+</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-3 pl-8 text-xs sm:text-sm text-slate-600 leading-relaxed">
+        Applicants must fulfill four criteria: Statutory paid-in charter capital minimums per tier; Local server data storage located within Vietnam for at least 5 years; Integration of standardized eKYC and Travel Rule solutions; Executive compliance accreditation with clean financial background verification.
+      </div>
+</details>
+<details class="group p-4 rounded-xl bg-white border border-slate-200 transition-all open:border-[#C5A880] shadow-xs">
+<summary class="flex items-center justify-between cursor-pointer list-none select-none text-sm font-semibold text-[#1A365D]">
+<span class="flex items-center gap-3">
+<span class="font-mono text-xs text-[#B8860B]">03</span>
+<span class="">Do virtual attendees receive the blockchain-verified CPE E-Certificate?</span>
+</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-3 pl-8 text-xs sm:text-sm text-slate-600 leading-relaxed">
+        Yes. Virtual participants maintaining at least 80% active attendance throughout conference sessions will receive an official Certificate of Completion (E-Certificate) encoded with a tamper-proof blockchain verification hash.
+      </div>
+</details>
+</div>
+<!-- Contacts Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#F8F9FA] border border-slate-200 text-[#B8860B] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</div>
+<div>
+<span class="font-headline font-bold text-xs text-[#1A365D] uppercase block">RECEPTION VENUES</span>
+<p class="text-xs text-slate-500 mt-0.5">Central Convention Hall, Dist 1, Ho Chi Minh City / Hanoi Convention Center</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#F8F9FA] border border-slate-200 text-[#1A365D] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">apartment</span>
+</div>
+<div>
+<span class="font-headline font-bold text-xs text-[#1A365D] uppercase block">STANDING SECRETARIAT</span>
+<p class="text-xs text-slate-500 mt-0.5">Joint Ministerial Taskforce on Legal &amp; Financial Technology, Hoan Kiem Dist, Hanoi</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-[#F8F9FA] border border-slate-200 text-[#B8860B] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</div>
+<div>
+<span class="font-headline font-bold text-xs text-[#1A365D] uppercase block">OFFICIAL HOTLINE</span>
+<p class="text-xs text-slate-500 mt-0.5 font-mono">(+84) 028 3825 0000 | btc@nghidinh284.gov.vn</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  // Countdown Timer
+  (function initCountdown() {
+    const targetDate = new Date("2026-09-01T00:00:00+07:00").getTime();
+    function update() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      if (diff > 0) {
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        const daysEl = document.getElementById("cd-days");
+        const hoursEl = document.getElementById("cd-hours");
+        const minsEl = document.getElementById("cd-mins");
+        const secsEl = document.getElementById("cd-secs");
+
+        if (daysEl) daysEl.innerText = d;
+        if (hoursEl) hoursEl.innerText = String(h).padStart(2, '0');
+        if (minsEl) minsEl.innerText = String(m).padStart(2, '0');
+        if (secsEl) secsEl.innerText = String(s).padStart(2, '0');
+      }
+    }
+    setInterval(update, 1000);
+    update();
+  })();
+
+  function simulateRegistration() {
+    const nameInput = document.getElementById("reg-fullname");
+    const submitBtn = document.getElementById("submit-btn");
+    const previewBox = document.getElementById("registration-ticket-preview");
+    const holderEl = document.getElementById("ticket-holder-name");
+    const ticketIdEl = document.getElementById("ticket-id");
+
+    if (!nameInput.value) return;
+
+    submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span> <span>VERIFYING ACCREDITATION...</span>';
+    submitBtn.disabled = true;
+
+    setTimeout(function() {
+      const randomTicketNum = Math.floor(1000 + Math.random() * 9000);
+      holderEl.innerText = nameInput.value.toUpperCase();
+      ticketIdEl.innerText = "PASS ID: VCC2026-REG-" + randomTicketNum + "X";
+      previewBox.classList.remove("hidden");
+      previewBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span> <span>REGISTRATION SUCCESSFUL</span>';
+      submitBtn.classList.replace("bg-[#B8860B]", "bg-[#1A365D]");
+    }, 700);
+  }
+</script></main>
+<footer class="w-full bg-[#0F2027] border-t border-slate-200 py-10 text-slate-300 text-xs">
+<div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-7 h-7 rounded-full bg-slate-800 border border-[#C5A880]/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#C5A880] text-[16px]">balance</span>
+</div>
+<span class="">© 2026 Legal Crypto Conference • Decree 284/2026/ND-CP Compliance Framework. All rights reserved.</span>
+</div>
+<div class="flex items-center gap-4 text-slate-300">
+<a class="hover:text-[#C5A880] transition-colors" href="#">Conference Regulations</a>
+<a class="hover:text-[#C5A880] transition-colors" href="#">Data Privacy</a>
+<a class="hover:text-[#C5A880] transition-colors" href="#">Advisory Council</a>
+</div>
+</div>
+</footer>
+
+
+</body></html>

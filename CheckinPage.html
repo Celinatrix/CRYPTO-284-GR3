@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+  CheckinPage.html
+  ============================================================
+  ĐÃ SỬA so với bản gốc (giả định bản gốc lưu PIN vào localStorage để
+  "nhớ" cho lần sau, và không có cơ chế tự khóa sau nhiều lần sai):
+
+    TRƯỚC (giả định):
+      localStorage.setItem('staffPin', pin); // tồn tại vĩnh viễn, mọi
+                                              // tab/trình duyệt khác đọc được
+
+    SAU:
+      - KHÔNG dùng localStorage. Dùng sessionStorage (chỉ tồn tại trong
+        1 tab, tự mất khi đóng tab) và TỰ XÓA sau 30 phút (Quy tắc #10).
+      - Giữ nguyên setXFrameOptionsMode(DEFAULT) ở doGet (0_WebApp.gs)
+        để chống nhúng trang này vào iframe của site khác (Quy tắc #18).
+  ============================================================
+-->
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check-in nhân viên</title>
+  <style>
+    :root { --navy: #14285a; --gold: #B8860B; --gold-hover: #996F08; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #F8F9FA;
+      margin: 0;
+      padding: 24px 16px;
+      color: #1E293B;
+    }
+    .card {
+      max-width: 420px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 1rem;
+      padding: 24px;
+    }
+    h1 {
+      color: var(--navy);
+      font-family: Montserrat, Arial, sans-serif;
+      font-size: 1.15rem;
+      margin-top: 0;
+      line-height: 1.4;
+    }
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin: 14px 0 4px;
+      color: #334155;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #E2E8F0;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    }
+    input:focus {
+      outline: 2px solid var(--gold);
+      outline-offset: 1px;
+      border-color: var(--gold);
+    }
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      border: none;
+      border-radius: 9999px;
+      background: var(--gold);
+      color: #fff;
+      font-weight: 700;
+      font-family: Montserrat, Arial, sans-serif;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    button:hover:not(:disabled) { background: var(--gold-hover); }
+    button:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    #result {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      padding: 10px 12px;
+      border-radius: 0.5rem;
+      display: none;
+    }
+    #result.ok { display: block; background: #e7f6ec; color: #1e7a34; }
+    #result.err { display: block; background: #ffdad6; color: #93000a; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Check-in — Hội thảo Nghị định 284/2026<br>Tiền điện tử &amp; Tài sản mã hóa</h1>
+
+    <label for="ticketCode">Mã vé</label>
+    <input id="ticketCode" type="text" value="<?= prefillCode ?>" autocomplete="off" inputmode="text">
+
+    <!-- Token lấy từ QR, không cần nhân viên gõ tay -->
+    <input id="ticketToken" type="hidden" value="<?= prefillToken ?>">
+
+    <label for="staffPin">PIN nhân viên</label>
+    <input id="staffPin" type="password" inputmode="numeric" autocomplete="off" maxlength="12">
+
+    <button id="submitBtn" type="button" onclick="doCheckIn()">Xác nhận check-in</button>
+    <div id="result" role="status" aria-live="polite"></div>
+  </div>
+
+  <script>
+    // ----- Quy tắc #10: KHÔNG dùng localStorage cho PIN. -----
+    // Nếu cần "nhớ" PIN để nhân viên không phải gõ lại liên tục trong ca
+    // trực, dùng sessionStorage (tự mất khi đóng tab) VÀ tự hết hạn sau
+    // 30 phút, kiểm tra lại mỗi khi trang được mở.
+    (function restorePinIfFresh() {
+      try {
+        var saved = sessionStorage.getItem('staffPinTemp');
+        var savedAt = Number(sessionStorage.getItem('staffPinTempAt') || 0);
+        var THIRTY_MIN = 30 * 60 * 1000;
+        if (saved && Date.now() - savedAt < THIRTY_MIN) {
+          document.getElementById('staffPin').value = saved;
+        } else {
+          sessionStorage.removeItem('staffPinTemp');
+          sessionStorage.removeItem('staffPinTempAt');
+        }
+      } catch (err) {
+        // sessionStorage có thể bị trình duyệt chặn (chế độ ẩn danh...) — bỏ qua, không chặn trang.
+      }
+    })();
+
+    function showResult(message, ok) {
+      var resultEl = document.getElementById('result');
+      // Chỉ dùng textContent — KHÔNG dùng innerHTML với dữ liệu server trả về (Quy tắc #15).
+      resultEl.textContent = message;
+      resultEl.className = ok ? 'ok' : 'err';
+      resultEl.style.display = 'block';
+    }
+
+    function doCheckIn() {
+      var btn = document.getElementById('submitBtn');
+      var pin = document.getElementById('staffPin').value.trim();
+      var code = document.getElementById('ticketCode').value.trim();
+      var token = document.getElementById('ticketToken').value.trim();
+
+      document.getElementById('result').style.display = 'none';
+
+      if (!pin || !code) {
+        showResult('Vui lòng nhập đủ Mã vé và PIN.', false);
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Đang xử lý…';
+
+      // Lưu tạm PIN vào sessionStorage kèm mốc thời gian, tự hết hạn sau 30 phút (Quy tắc #10)
+      try {
+        sessionStorage.setItem('staffPinTemp', pin);
+        sessionStorage.setItem('staffPinTempAt', String(Date.now()));
+      } catch (err) { /* bỏ qua nếu bị chặn */ }
+
+      google.script.run
+        .withSuccessHandler(function (res) {
+          btn.disabled = false;
+          btn.textContent = 'Xác nhận check-in';
+          showResult(res.message, !!res.ok);
+          if (res.ok) {
+            document.getElementById('ticketCode').value = '';
+            document.getElementById('ticketToken').value = '';
+          }
+        })
+        .withFailureHandler(function () {
+          btn.disabled = false;
+          btn.textContent = 'Xác nhận check-in';
+          showResult('Có lỗi xảy ra, vui lòng thử lại.', false);
+        })
+        .checkIn({ ticketCode: code, token: token, pin: pin });
+    }
+  </script>
+</body>
+</html>

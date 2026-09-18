@@ -1,0 +1,504 @@
+<!--
+  registration-section.html
+  ============================================================
+  DÁN THẲNG khối bên dưới (từ <section id="dang-ky"> đến hết) vào vị trí
+  mong muốn trong landing page. File này CHỈ chứa 1 section (không phải
+  trang HTML đầy đủ) vì mục đích là chèn vào trang có sẵn.
+
+  ⚠️ VIỆC BẠN CẦN LÀM TRƯỚC KHI DÙNG:
+  1) Thay WEBAPP_URL bên dưới (trong thẻ <script>) bằng URL Web App
+     Apps Script thật (dạng https://script.google.com/macros/s/.../exec).
+
+  2) Thêm 2 thẻ <meta> sau vào phần <head> của TOÀN BỘ landing page
+     (không phải trong section này) — Quy tắc bảo mật #18:
+
+       <meta http-equiv="Content-Security-Policy"
+             content="default-src 'self'; connect-src https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
+       <meta name="referrer" content="no-referrer">
+
+     Ghi chú giới hạn: GitHub Pages phục vụ file tĩnh nên không thể tự
+     đặt HTTP response header — đây là lý do dùng thẻ <meta> CSP thay vì
+     header "Content-Security-Policy" thật (kém an toàn hơn header một
+     chút vì không chặn được response trước khi HTML được parse, nhưng
+     là lựa chọn duy nhất khả thi trên GitHub Pages).
+
+  3) Bật "Enforce HTTPS" trong Settings → Pages của repo GitHub (Quy tắc #19).
+  ============================================================
+-->
+<section id="dang-ky" aria-labelledby="dang-ky-title">
+  <style>
+    #dang-ky {
+      --dk-navy: #14285a;
+      --dk-navy-dark: #0F2027;
+      --dk-gold: #B8860B;
+      --dk-gold-hover: #996F08;
+      --dk-error: #ba1a1a;
+      --dk-error-bg: #ffdad6;
+      --dk-border: #E2E8F0;
+      --dk-text: #1E293B;
+      --dk-text-muted: #64748B;
+      --dk-bg: #F8F9FA;
+      --dk-surface: #FFFFFF;
+
+      box-sizing: border-box;
+      background: var(--dk-bg);
+      padding: 4rem 1rem;
+      font-family: Inter, -apple-system, Segoe UI, Arial, sans-serif;
+      color: var(--dk-text);
+    }
+    #dang-ky *, #dang-ky *::before, #dang-ky *::after { box-sizing: border-box; }
+
+    #dang-ky .dk-wrap { max-width: 720px; margin: 0 auto; }
+
+    #dang-ky h2.dk-title {
+      font-family: Montserrat, Arial, sans-serif;
+      color: var(--dk-navy);
+      font-size: 1.875rem;
+      font-weight: 700;
+      text-align: center;
+      margin: 0 0 0.5rem;
+    }
+    #dang-ky p.dk-subtitle {
+      text-align: center;
+      color: var(--dk-text-muted);
+      margin: 0 0 2rem;
+      font-size: 1rem;
+    }
+
+    /* 3 bước */
+    #dang-ky .dk-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    #dang-ky .dk-step {
+      background: var(--dk-surface);
+      border: 1px solid var(--dk-border);
+      border-radius: 1rem;
+      padding: 1.25rem 1rem;
+      text-align: center;
+    }
+    #dang-ky .dk-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      background: var(--dk-navy);
+      color: #fff;
+      font-weight: 700;
+      font-family: Montserrat, Arial, sans-serif;
+      margin-bottom: 0.5rem;
+    }
+    #dang-ky .dk-step-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--dk-text);
+    }
+
+    @media (max-width: 640px) {
+      #dang-ky .dk-steps { grid-template-columns: 1fr; }
+      #dang-ky h2.dk-title { font-size: 1.5rem; }
+      #dang-ky { padding: 2.5rem 1rem; }
+    }
+
+    /* Form card */
+    #dang-ky .dk-card {
+      background: var(--dk-surface);
+      border: 1px solid var(--dk-border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      #dang-ky .dk-card { padding: 2rem; }
+    }
+
+    #dang-ky .dk-field { margin-bottom: 1.25rem; }
+    #dang-ky label.dk-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #334155;
+      margin-bottom: 0.375rem;
+    }
+    #dang-ky .dk-required { color: var(--dk-error); }
+
+    #dang-ky input[type="text"],
+    #dang-ky input[type="email"],
+    #dang-ky input[type="tel"],
+    #dang-ky select,
+    #dang-ky textarea {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--dk-border);
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--dk-text);
+      background: #fff;
+    }
+    #dang-ky textarea { resize: vertical; min-height: 90px; }
+
+    #dang-ky input:focus-visible,
+    #dang-ky select:focus-visible,
+    #dang-ky textarea:focus-visible {
+      outline: 2px solid var(--dk-gold);
+      outline-offset: 1px;
+      border-color: var(--dk-gold);
+    }
+
+    #dang-ky input[aria-invalid="true"],
+    #dang-ky select[aria-invalid="true"],
+    #dang-ky textarea[aria-invalid="true"] {
+      border-color: var(--dk-error);
+    }
+
+    #dang-ky .dk-error-msg {
+      display: none;
+      color: var(--dk-error);
+      font-size: 0.8rem;
+      margin-top: 0.35rem;
+    }
+    #dang-ky .dk-error-msg.dk-show { display: block; }
+
+    #dang-ky .dk-counter {
+      font-size: 0.75rem;
+      color: var(--dk-text-muted);
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+
+    #dang-ky .dk-checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+    #dang-ky .dk-checkbox-row input[type="checkbox"] {
+      margin-top: 0.2rem;
+      width: 1.1rem;
+      height: 1.1rem;
+      flex-shrink: 0;
+    }
+    #dang-ky .dk-checkbox-row label {
+      font-size: 0.85rem;
+      color: var(--dk-text);
+      line-height: 1.5;
+    }
+
+    /* Honeypot — ẩn khỏi người dùng thật nhưng vẫn "thấy được" bởi bot đơn giản
+       (không dùng display:none để tránh vài trình đọc màn hình/bot bỏ qua theo cách khác) */
+    #dang-ky .dk-hp {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      left: -9999px;
+    }
+
+    #dang-ky button.dk-submit {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: none;
+      border-radius: 9999px;
+      background: var(--dk-gold);
+      color: #fff;
+      font-family: Montserrat, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    #dang-ky button.dk-submit:hover:not(:disabled) {
+      background: var(--dk-gold-hover);
+      transform: scale(1.01);
+    }
+    #dang-ky button.dk-submit:focus-visible {
+      outline: 3px solid var(--dk-navy);
+      outline-offset: 2px;
+    }
+    #dang-ky button.dk-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    #dang-ky .dk-form-status {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      display: none;
+    }
+    #dang-ky .dk-form-status.dk-ok { display: block; background: #e7f6ec; color: #1e7a34; }
+    #dang-ky .dk-form-status.dk-err { display: block; background: var(--dk-error-bg); color: #93000a; }
+  </style>
+
+  <div class="dk-wrap">
+    <h2 class="dk-title" id="dang-ky-title">Đăng ký tham dự</h2>
+    <p class="dk-subtitle">Hội thảo Nghị định 284/2026 — Tiền điện tử &amp; Tài sản mã hóa · 29/08/2026 · 08:00–12:30</p>
+
+    <div class="dk-steps">
+      <div class="dk-step">
+        <div class="dk-step-num">1</div>
+        <div class="dk-step-label">Điền form đăng ký</div>
+      </div>
+      <div class="dk-step">
+        <div class="dk-step-num">2</div>
+        <div class="dk-step-label">Nhận vé qua email</div>
+      </div>
+      <div class="dk-step">
+        <div class="dk-step-num">3</div>
+        <div class="dk-step-label">Quét QR tại quầy</div>
+      </div>
+    </div>
+
+    <div class="dk-card">
+      <form id="dk-form" novalidate>
+        <div class="dk-field">
+          <label class="dk-label" for="dk-hoTen">Họ và tên <span class="dk-required">*</span></label>
+          <input type="text" id="dk-hoTen" name="hoTen" maxlength="60" autocomplete="name"
+                 aria-describedby="dk-err-hoTen" required>
+          <div class="dk-error-msg" id="dk-err-hoTen" role="alert"></div>
+        </div>
+
+        <div class="dk-field">
+          <label class="dk-label" for="dk-email">Email <span class="dk-required">*</span></label>
+          <input type="email" id="dk-email" name="email" maxlength="100" autocomplete="email"
+                 aria-describedby="dk-err-email" required>
+          <div class="dk-error-msg" id="dk-err-email" role="alert"></div>
+        </div>
+
+        <div class="dk-field">
+          <label class="dk-label" for="dk-sdt">Số điện thoại <span class="dk-required">*</span></label>
+          <input type="tel" id="dk-sdt" name="soDienThoai" maxlength="12" autocomplete="tel"
+                 placeholder="09xxxxxxxx hoặc +84xxxxxxxxx"
+                 aria-describedby="dk-err-sdt" required>
+          <div class="dk-error-msg" id="dk-err-sdt" role="alert"></div>
+        </div>
+
+        <div class="dk-field">
+          <label class="dk-label" for="dk-donvi">Đơn vị công tác</label>
+          <input type="text" id="dk-donvi" name="donVi" maxlength="100" autocomplete="organization"
+                 aria-describedby="dk-err-donvi">
+          <div class="dk-error-msg" id="dk-err-donvi" role="alert"></div>
+        </div>
+
+        <div class="dk-field">
+          <label class="dk-label" for="dk-tucach">Tư cách tham dự <span class="dk-required">*</span></label>
+          <select id="dk-tucach" name="tuCach" aria-describedby="dk-err-tucach" required>
+            <option value="" disabled selected>-- Chọn tư cách tham dự --</option>
+            <option value="Cá nhân đầu tư crypto">Cá nhân đầu tư crypto</option>
+            <option value="Doanh nghiệp fintech">Doanh nghiệp fintech</option>
+            <option value="Luật sư/tư vấn pháp lý">Luật sư/tư vấn pháp lý</option>
+            <option value="Sinh viên/Nhà nghiên cứu">Sinh viên/Nhà nghiên cứu</option>
+            <option value="Báo chí/Truyền thông">Báo chí/Truyền thông</option>
+            <option value="Khác">Khác</option>
+          </select>
+          <div class="dk-error-msg" id="dk-err-tucach" role="alert"></div>
+        </div>
+
+        <div class="dk-field">
+          <label class="dk-label" for="dk-cauhoi">Câu hỏi gửi trước cho luật sư</label>
+          <textarea id="dk-cauhoi" name="cauHoi" maxlength="500" aria-describedby="dk-err-cauhoi dk-counter-cauhoi"></textarea>
+          <div class="dk-counter" id="dk-counter-cauhoi">0/500</div>
+          <div class="dk-error-msg" id="dk-err-cauhoi" role="alert"></div>
+        </div>
+
+        <div class="dk-checkbox-row">
+          <input type="checkbox" id="dk-dongy" name="dongY" required aria-describedby="dk-err-dongy">
+          <label for="dk-dongy">
+            Tôi đồng ý với <strong>điều khoản tham dự</strong> và cho phép ban tổ chức
+            xử lý dữ liệu cá nhân của tôi để phục vụ việc đăng ký và check-in sự kiện. <span class="dk-required">*</span>
+          </label>
+        </div>
+        <div class="dk-error-msg" id="dk-err-dongy" role="alert"></div>
+
+        <!-- Honeypot field: người dùng thật KHÔNG thấy field này nên sẽ luôn để trống.
+             Bot quét form tự động thường điền vào mọi input tìm thấy. (Quy tắc #13) -->
+        <div class="dk-hp" aria-hidden="true">
+          <label for="dk-website">Website (để trống)</label>
+          <input type="text" id="dk-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="dk-submit" id="dk-submit-btn">Đăng ký</button>
+        <div class="dk-form-status" id="dk-form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ⚠️ THAY URL NÀY BẰNG URL WEB APP THẬT SAU KHI DEPLOY APPS SCRIPT
+    var WEBAPP_URL = 'https://script.google.com/macros/s/DÁN_DEPLOYMENT_ID_THẬT/exec';
+
+    var form = document.getElementById('dk-form');
+    var submitBtn = document.getElementById('dk-submit-btn');
+    var statusEl = document.getElementById('dk-form-status');
+    var cauHoiEl = document.getElementById('dk-cauhoi');
+    var counterEl = document.getElementById('dk-counter-cauhoi');
+
+    // Quy tắc #13: ghi lại thời điểm form được hiển thị, dùng để chống bot
+    // (nếu submit chưa tới 3 giây từ lúc này, backend sẽ coi là nghi ngờ bot).
+    var formRenderedAt = Date.now();
+
+    // Đếm ký tự cho ô "Câu hỏi gửi trước"
+    cauHoiEl.addEventListener('input', function () {
+      counterEl.textContent = cauHoiEl.value.length + '/500';
+    });
+
+    // ----- Các hàm validate PHÍA CLIENT — chỉ để trải nghiệm tốt hơn.
+    // Server (doPost) LUÔN validate lại toàn bộ, không tin dữ liệu từ đây (Quy tắc #6). -----
+    var NAME_REGEX = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ\s-]{2,60}$/;
+    var EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var PHONE_REGEX = /^(0|\+84)(3|5|7|8|9)\d{8}$/;
+    var TU_CACH_OPTIONS = [
+      'Cá nhân đầu tư crypto', 'Doanh nghiệp fintech', 'Luật sư/tư vấn pháp lý',
+      'Sinh viên/Nhà nghiên cứu', 'Báo chí/Truyền thông', 'Khác'
+    ];
+
+    function setFieldError(inputId, errorId, message) {
+      var input = document.getElementById(inputId);
+      var errEl = document.getElementById(errorId);
+      if (message) {
+        input.setAttribute('aria-invalid', 'true');
+        // Chỉ dùng textContent — KHÔNG dùng innerHTML với dữ liệu bất kỳ (kể cả thông báo tĩnh này).
+        errEl.textContent = message;
+        errEl.classList.add('dk-show');
+      } else {
+        input.removeAttribute('aria-invalid');
+        errEl.textContent = '';
+        errEl.classList.remove('dk-show');
+      }
+      return !message;
+    }
+
+    function validateForm() {
+      var ok = true;
+
+      var hoTen = document.getElementById('dk-hoTen').value.trim();
+      if (!hoTen || !NAME_REGEX.test(hoTen)) {
+        ok = setFieldError('dk-hoTen', 'dk-err-hoTen', 'Họ tên phải từ 2-60 ký tự, chỉ gồm chữ cái, khoảng trắng, dấu gạch nối.') && ok;
+      } else {
+        setFieldError('dk-hoTen', 'dk-err-hoTen', '');
+      }
+
+      var email = document.getElementById('dk-email').value.trim();
+      if (!email || email.length > 100 || !EMAIL_REGEX.test(email)) {
+        ok = setFieldError('dk-email', 'dk-err-email', 'Vui lòng nhập email hợp lệ (tối đa 100 ký tự).') && ok;
+      } else {
+        setFieldError('dk-email', 'dk-err-email', '');
+      }
+
+      var phone = document.getElementById('dk-sdt').value.trim();
+      if (!phone || !PHONE_REGEX.test(phone)) {
+        ok = setFieldError('dk-sdt', 'dk-err-sdt', 'Số điện thoại di động Việt Nam không hợp lệ (VD: 0912345678).') && ok;
+      } else {
+        setFieldError('dk-sdt', 'dk-err-sdt', '');
+      }
+
+      var donVi = document.getElementById('dk-donvi').value.trim();
+      if (donVi.length > 100) {
+        ok = setFieldError('dk-donvi', 'dk-err-donvi', 'Đơn vị công tác tối đa 100 ký tự.') && ok;
+      } else {
+        setFieldError('dk-donvi', 'dk-err-donvi', '');
+      }
+
+      var tuCach = document.getElementById('dk-tucach').value;
+      if (TU_CACH_OPTIONS.indexOf(tuCach) === -1) {
+        ok = setFieldError('dk-tucach', 'dk-err-tucach', 'Vui lòng chọn tư cách tham dự.') && ok;
+      } else {
+        setFieldError('dk-tucach', 'dk-err-tucach', '');
+      }
+
+      var cauHoi = cauHoiEl.value.trim();
+      if (cauHoi.length > 500) {
+        ok = setFieldError('dk-cauhoi', 'dk-err-cauhoi', 'Câu hỏi tối đa 500 ký tự.') && ok;
+      } else {
+        setFieldError('dk-cauhoi', 'dk-err-cauhoi', '');
+      }
+
+      var dongY = document.getElementById('dk-dongy').checked;
+      var dongYErr = document.getElementById('dk-err-dongy');
+      if (!dongY) {
+        dongYErr.textContent = 'Bạn cần đồng ý điều khoản và xử lý dữ liệu cá nhân để tiếp tục.';
+        dongYErr.classList.add('dk-show');
+        ok = false;
+      } else {
+        dongYErr.textContent = '';
+        dongYErr.classList.remove('dk-show');
+      }
+
+      return ok;
+    }
+
+    function showFormStatus(message, isOk) {
+      statusEl.textContent = message; // textContent — không dùng innerHTML (Quy tắc #15)
+      statusEl.className = 'dk-form-status ' + (isOk ? 'dk-ok' : 'dk-err');
+    }
+
+    form.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      statusEl.className = 'dk-form-status';
+      statusEl.textContent = '';
+
+      // Quy tắc #19: bắt buộc HTTPS (trừ localhost khi đang phát triển)
+      var isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+      if (location.protocol !== 'https:' && !isLocalhost) {
+        showFormStatus('Kết nối không an toàn (không phải HTTPS). Vui lòng truy cập lại qua địa chỉ https://', false);
+        return;
+      }
+
+      if (!validateForm()) {
+        showFormStatus('Vui lòng kiểm tra lại các trường được đánh dấu lỗi bên trên.', false);
+        return;
+      }
+
+      var payload = {
+        hoTen: document.getElementById('dk-hoTen').value.trim(),
+        email: document.getElementById('dk-email').value.trim(),
+        soDienThoai: document.getElementById('dk-sdt').value.trim(),
+        donVi: document.getElementById('dk-donvi').value.trim(),
+        tuCach: document.getElementById('dk-tucach').value,
+        cauHoi: cauHoiEl.value.trim(),
+        dongY: document.getElementById('dk-dongy').checked === true,
+        website: document.getElementById('dk-website').value, // honeypot — người thật luôn để trống
+        formRenderedAt: formRenderedAt
+      };
+
+      // Khóa nút để chống bấm nhiều lần (Quy tắc chức năng #3)
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang gửi…';
+
+      // Gửi bằng text/plain để KHÔNG kích hoạt CORS preflight (OPTIONS) —
+      // Apps Script Web App không hỗ trợ preflight tốt.
+      fetch(WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Đăng ký';
+          if (data && data.ok) {
+            showFormStatus(data.message || 'Đã gửi vé về email của bạn. Kiểm tra cả thư mục Spam.', true);
+            form.reset();
+            counterEl.textContent = '0/500';
+          } else {
+            showFormStatus((data && data.message) || 'Có lỗi xảy ra, vui lòng thử lại.', false);
+          }
+        })
+        .catch(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Đăng ký';
+          showFormStatus('Không thể kết nối tới máy chủ. Vui lòng kiểm tra mạng và thử lại.', false);
+        });
+    });
+  })();
+  </script>
+</section>

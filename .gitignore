@@ -1,0 +1,55 @@
+# ============================================================
+# .gitignore — Quy tắc bảo mật #2 (Xóa Git Secrets)
+# ============================================================
+
+# Cấu hình clasp (chứa scriptId, đôi khi cả thông tin xác thực cục bộ)
+.clasp.json
+.clasprc.json
+
+# File biến môi trường / secrets cục bộ (nếu có dùng khi phát triển)
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# Log, cache, file tạm
+*.log
+.DS_Store
+node_modules/
+
+# ============================================================
+# HƯỚNG DẪN QUÉT REPO BẰNG GITLEAKS (Quy tắc #2)
+# ============================================================
+# 1) Cài đặt (một lần):
+#      brew install gitleaks        # macOS
+#      hoặc tải binary tại: https://github.com/gitleaks/gitleaks/releases
+#
+# 2) Quét toàn bộ lịch sử commit của repo:
+#      gitleaks detect --source . --verbose
+#
+# 3) Quét trước khi commit (khuyến nghị thêm vào pre-commit hook):
+#      gitleaks protect --staged --verbose
+#
+# ============================================================
+# NẾU LỠ COMMIT BÍ MẬT (PIN, Sheet ID, HMAC secret...) LÊN GIT:
+# ============================================================
+# 1) ĐỔI KHÓA NGAY LẬP TỨC — bí mật đã lộ coi như không còn an toàn dù
+#    có xóa khỏi lịch sử hay không:
+#      - Sheet ID: tạo Sheet mới (hoặc thay đổi quyền chia sẻ + rotate),
+#        cập nhật lại Script Properties qua setupSecrets().
+#      - PIN nhân viên: đổi PIN mới, chạy lại setupSecrets() với PIN mới.
+#      - HMAC_SECRET: sinh lại UUID mới trong setupSecrets() — LƯU Ý:
+#        các vé đã phát hành trước đó sẽ có token không còn khớp, cần
+#        thông báo lại hoặc chấp nhận check-in thủ công cho các vé cũ.
+#
+# 2) XÓA BÍ MẬT KHỎI LỊCH SỬ GIT (sau khi đã đổi khóa ở bước 1):
+#      - Dùng git filter-repo (khuyến nghị, thay cho filter-branch cũ):
+#          git filter-repo --path <file_chứa_secret> --invert-paths
+#      - Hoặc dùng BFG Repo-Cleaner:
+#          bfg --delete-files <file_chứa_secret>
+#      - Sau đó bắt buộc force-push:
+#          git push origin --force --all
+#      - Thông báo cho mọi thành viên trong nhóm clone lại repo (lịch sử
+#        cũ trên máy họ vẫn còn chứa secret cho tới khi họ pull lại).
