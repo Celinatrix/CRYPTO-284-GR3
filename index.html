@@ -1108,10 +1108,14 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
 }
 .consent-row label { font-size: 11px; line-height: 1.6; color: var(--slate-500); cursor: pointer; }
 
-/* Trường bẫy bot (honeypot) — ẩn với người thật, bot tự động sẽ điền vào */
+/* Trường bẫy bot (honeypot) — ẩn với người thật, bot tự động sẽ điền vào.
+   top+left đưa hẳn ra ngoài màn hình (không chỉ 1 chiều) để trình duyệt
+   khó autofill hơn — Chrome/trình quản lý mật khẩu có thể vẫn tự điền
+   field ẩn nếu tên field trùng mẫu quen thuộc như "website"/"url". */
 .honeypot {
   position: absolute;
   left: -9999px;
+  top: -9999px;
   width: 1px; height: 1px;
   overflow: hidden;
 }
@@ -2024,10 +2028,14 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="field-error" id="err-consent" role="alert"></div>
 
-        <!-- Honeypot (Quy tắc #13): người thật không nhìn thấy nên luôn để trống -->
+        <!-- Honeypot (Quy tắc #13): người thật không nhìn thấy nên luôn để trống.
+             id/name cố tình đặt KHÔNG giống mẫu quen thuộc ("website", "url"...)
+             để trình duyệt/trình quản lý mật khẩu khó nhận diện mà tự động điền —
+             field bị autofill nhầm sẽ khiến server tưởng là bot, âm thầm bỏ qua
+             đăng ký hợp lệ mà không báo lỗi gì (Quy tắc #17 cố tình không lộ). -->
         <div class="honeypot" aria-hidden="true">
-          <label for="reg-website">Website (leave empty)</label>
-          <input type="text" id="reg-website" name="website" tabindex="-1" autocomplete="off">
+          <label for="reg-hp-field">Leave this field empty</label>
+          <input type="text" id="reg-hp-field" name="hp_confirm_7f3x" tabindex="-1" autocomplete="off">
         </div>
 
         <button class="btn-gold reg-submit" id="reg-submit" type="submit">
@@ -2379,7 +2387,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       tuCach: val('reg-role'),
       cauHoi: cauHoi,
       dongY: document.getElementById('reg-consent').checked === true,
-      website: document.getElementById('reg-website').value, // honeypot
+      website: document.getElementById('reg-hp-field').value, // honeypot — key JSON giữ nguyên "website" để khớp backend
       formRenderedAt: formRenderedAt
     };
 
