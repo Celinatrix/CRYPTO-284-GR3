@@ -1,0 +1,162 @@
+/* =============================================================================
+   animations.css
+   ============================================================================
+   Hiệu ứng chuyển động phong cách Awwwards — GSAP 3 + ScrollTrigger + SplitText
+   + Lenis (xem animations.js).
+
+   QUY TẮC CỦA FILE NÀY (khớp yêu cầu):
+   - KHÔNG có khai báo color / background-color / font-* / kích thước cố định
+     nào làm thay đổi giao diện gốc — chỉ có transform / opacity / clip-path /
+     filter và các thuộc tính bố cục TẠM THỜI phục vụ animation (position,
+     z-index... của riêng các phần tử mới thêm: preloader, custom cursor,
+     thanh progress agenda) không đổi bố cục các phần tử gốc.
+   - Mọi phần tử được GSAP điều khiển đều có TRẠNG THÁI MẶC ĐỊNH = hiển thị đầy
+     đủ, đúng vị trí cuối cùng. Trạng thái "ẩn để hiện dần" chỉ được gán bằng
+     gsap.set()/gsap.fromTo() lúc runtime trong animations.js — nghĩa là nếu
+     GSAP/CDN lỗi hoặc JS bị chặn, trang KHÔNG bao giờ bị kẹt ẩn nội dung.
+   - File độc lập: xoá <link rel="stylesheet" href="animations.css">,
+     animations.js, và 4 dòng <script src=".../gsap|ScrollTrigger|SplitText|
+     lenis..."> trong index.html là gỡ sạch toàn bộ hệ thống này, trang trở lại
+     đúng như trước khi thêm (hiệu ứng .reveal/.js-ready cũ trong index.html
+     không nằm trong file này, không bị ảnh hưởng).
+   ============================================================================ */
+
+/* -----------------------------------------------------------------------
+   1) PRELOADER — dùng lại logo/crest đã có (không thêm ảnh mới).
+   Gắn vào: đầu trang, trước khi hero-title chạy stagger.
+   ----------------------------------------------------------------------- */
+#site-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  /* Lưới an toàn bằng CSS thuần: dù JS lỗi/không chạy hàm ẩn, preloader vẫn
+     tự mờ đi và không còn chặn click sau 2.2s — không bao giờ kẹt màn hình. */
+  animation: preloaderAutoHide .6s ease forwards;
+  animation-delay: 2.2s;
+}
+#site-preloader .preloader-crest {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: var(--gold-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  clip-path: inset(0% round 999px);
+}
+#site-preloader .preloader-crest svg { width: 32px; height: 32px; }
+@keyframes preloaderAutoHide { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+/* JS không chạy được (bị chặn hoàn toàn) → ẩn preloader ngay, không chờ animation-delay */
+html:not(.js-ready) #site-preloader { display: none; }
+
+/* -----------------------------------------------------------------------
+   2) HERO — khối nội dung "co lại + bo góc" khi cuộn qua (thay cho hiệu ứng
+   scale ảnh hero, vì trang này không có ảnh lớn trong hero). Áp dụng vào
+   chính section .hero hiện có (không thêm phần tử bọc mới).
+   Gắn vào: #home (.hero)
+   ----------------------------------------------------------------------- */
+.hero { will-change: transform, border-radius; transform-origin: center top; }
+
+/* -----------------------------------------------------------------------
+   3) ABOUT-LEAD — đoạn giới thiệu lớn, từng từ mờ→rõ theo scroll (scrub).
+   Gắn vào: #about .about-lead
+   ----------------------------------------------------------------------- */
+.about-lead .split-word { display: inline-block; }
+
+/* -----------------------------------------------------------------------
+   4) AGENDA — thanh tiến trình dọc chạy theo scroll (chỉ desktop).
+   Gắn vào: #agenda .agenda-list
+   ----------------------------------------------------------------------- */
+.agenda-progress-track {
+  position: absolute;
+  left: -14px; /* nằm trong khoảng đệm 16px của .container — không đụng layout các item */
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--slate-200);
+  display: none;
+}
+.agenda-progress-fill {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 0%;
+  background: var(--gold);
+}
+html.agenda-timeline-on .agenda-list { position: relative; }
+html.agenda-timeline-on .agenda-progress-track { display: block; }
+
+/* -----------------------------------------------------------------------
+   5) CARD HOVER — "ảnh" trong thẻ (icon/avatar, vì trang không dùng ảnh
+   chụp) phóng to nhẹ khi hover, cộng thêm cho hiệu ứng nhấc thẻ đã có sẵn.
+   Gắn vào: mọi .card-hover (about-point, agenda-item, speaker, doc)
+   ----------------------------------------------------------------------- */
+.icon-box, .speaker-avatar {
+  transition: transform .35s cubic-bezier(.16,.8,.24,1);
+}
+.card-hover:hover .icon-box,
+.card-hover:hover .speaker-avatar { transform: scale(1.08); }
+
+/* -----------------------------------------------------------------------
+   6) FAQ ACCORDION — GSAP tự animate chiều cao khi mở/đóng, thay cho hiệu
+   ứng bật tức thì mặc định của <details>.
+   Gắn vào: #contact .faq-item
+   ----------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------
+   7) FOOTER REVEAL — nội dung trang trượt lên để lộ footer cố định phía
+   dưới (chỉ bật ở desktop — animations.js tự thêm/xoá class này).
+   Gắn vào: <main id="site-main"> + <footer class="site-footer">
+   ----------------------------------------------------------------------- */
+html.footer-reveal-on #site-main {
+  position: relative;
+  z-index: 1;
+  background: var(--bg); /* màu ĐÃ CÓ sẵn trong biến gốc — không phải màu mới */
+}
+html.footer-reveal-on .site-footer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 0;
+}
+
+/* -----------------------------------------------------------------------
+   8) CUSTOM CURSOR — chấm tròn nhỏ theo màu nhấn (--gold) đã có sẵn.
+   Chỉ hiện trên thiết bị có chuột thật (animations.js tự kiểm tra
+   (hover: hover) and (pointer: fine), tắt hẳn trên cảm ứng/reduced-motion).
+   ----------------------------------------------------------------------- */
+#custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  border-radius: 999px;
+  background: var(--gold);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width .25s ease, height .25s ease, opacity .2s ease, background-color .25s ease;
+  opacity: 0;
+}
+html.has-custom-cursor #custom-cursor { opacity: .9; }
+html.has-custom-cursor #custom-cursor.is-hover { width: 36px; height: 36px; opacity: .3; }
+/* Ẩn con trỏ hệ thống chỉ khi custom cursor thực sự đang chạy */
+html.has-custom-cursor, html.has-custom-cursor a, html.has-custom-cursor button {
+  cursor: none;
+}
+
+/* -----------------------------------------------------------------------
+   Tôn trọng "giảm chuyển động": tắt sạch mọi hiệu ứng trong file này,
+   đưa các phần tử phụ trợ (preloader/cursor/footer-reveal) về vô hại.
+   ----------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #site-preloader { display: none !important; }
+  #custom-cursor { display: none !important; }
+  html.has-custom-cursor, html.has-custom-cursor a, html.has-custom-cursor button { cursor: auto !important; }
+  html.footer-reveal-on #site-main,
+  html.footer-reveal-on .site-footer { position: static !important; z-index: auto !important; }
+  .agenda-progress-track { display: none !important; }
+}
