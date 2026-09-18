@@ -47,22 +47,22 @@ function doPost(e) {
     // ----- Quy tắc #7: giới hạn kích thước payload -----
     const rawBody = (e && e.postData && e.postData.contents) ? e.postData.contents : '';
     if (Utilities.newBlob(rawBody).getBytes().length > MAX_PAYLOAD_BYTES_) {
-      return jsonResponse_(false, 'Dữ liệu gửi lên không hợp lệ.');
+      return jsonResponse_(false, 'Invalid request data.');
     }
 
     // ----- Quy tắc #16: không có upload — từ chối mọi request kèm file/base64 -----
     if (/data:.*;base64,/i.test(rawBody) || (e.postData && /multipart/i.test(e.postData.type || ''))) {
-      return jsonResponse_(false, 'Dữ liệu gửi lên không hợp lệ.');
+      return jsonResponse_(false, 'Invalid request data.');
     }
 
     let data;
     try {
       data = JSON.parse(rawBody);
     } catch (parseErr) {
-      return jsonResponse_(false, 'Dữ liệu gửi lên không hợp lệ.');
+      return jsonResponse_(false, 'Invalid request data.');
     }
     if (!data || typeof data !== 'object') {
-      return jsonResponse_(false, 'Dữ liệu gửi lên không hợp lệ.');
+      return jsonResponse_(false, 'Invalid request data.');
     }
 
     // ----- Quy tắc #9: chỉ đọc field trong whitelist -----
@@ -74,7 +74,7 @@ function doPost(e) {
     // ----- Quy tắc #13: honeypot + thời gian điền form -----
     if (!checkHoneypot_(input)) {
       // Nghi là bot: giả vờ thành công (không lộ cho bot biết bị chặn) nhưng KHÔNG lưu gì cả.
-      return jsonResponse_(true, 'Đã gửi vé về email của bạn. Kiểm tra cả thư mục Spam.');
+      return jsonResponse_(true, 'Your pass has been emailed to you. Please check your Spam folder too.');
     }
 
     // ----- Quy tắc #6, #7: validate lại TOÀN BỘ ở server -----
@@ -90,7 +90,7 @@ function doPost(e) {
       return jsonResponse_(false, rate.message);
     }
 
-    const SAME_SUCCESS_MESSAGE = 'Đã gửi vé về email của bạn. Kiểm tra cả thư mục Spam.';
+    const SAME_SUCCESS_MESSAGE = 'Your pass has been emailed to you. Please check your Spam folder too.';
 
     // ----- Kiểm tra trùng email -----
     const sheet = getSheet_(SHEET_NAME_DANGKY);
@@ -104,13 +104,14 @@ function doPost(e) {
     // TÁI SỬ DỤNG genTicket() và sendConfirmEmail() đã có sẵn trong project
     const ticket = genTicket(clean);
     sendConfirmEmail(clean, ticket);
+    notifyAdminNewRegistration_(clean, ticket);
 
     return jsonResponse_(true, SAME_SUCCESS_MESSAGE);
 
   } catch (err) {
     // Quy tắc #17: không lộ stack trace ra ngoài; chỉ log nội bộ cho dev xem trong Executions.
     console.error('doPost error: ' + (err && err.stack ? err.stack : err));
-    return jsonResponse_(false, 'Có lỗi xảy ra, vui lòng thử lại sau.');
+    return jsonResponse_(false, 'Something went wrong. Please try again later.');
   }
 }
 
@@ -148,7 +149,7 @@ function validateInput_(input) {
   const hoTen = String(input.hoTen || '').trim().replace(/\s+/g, ' ');
   const nameRegex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ\s-]{2,60}$/;
   if (!hoTen || !nameRegex.test(hoTen)) {
-    errors.push('Họ và tên không hợp lệ.');
+    errors.push('Full name must be 2–60 characters — letters, spaces and hyphens only.');
   } else {
     clean.hoTen = hoTen;
   }
@@ -157,7 +158,7 @@ function validateInput_(input) {
   const email = String(input.email || '').trim().toLowerCase();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || email.length > 100 || !emailRegex.test(email)) {
-    errors.push('Email không hợp lệ.');
+    errors.push('Please enter a valid email address (max 100 characters).');
   } else {
     clean.email = email;
   }
@@ -166,7 +167,7 @@ function validateInput_(input) {
   const phone = String(input.soDienThoai || '').trim();
   const phoneRegex = /^(0|\+84)(3|5|7|8|9)\d{8}$/;
   if (!phone || !phoneRegex.test(phone)) {
-    errors.push('Số điện thoại không hợp lệ.');
+    errors.push('Enter a valid Vietnamese mobile number, e.g. 0912345678 or +84912345678.');
   } else {
     clean.soDienThoai = phone;
   }
@@ -174,7 +175,7 @@ function validateInput_(input) {
   // Đơn vị công tác: không bắt buộc, tối đa 100 ký tự
   const donVi = String(input.donVi || '').trim();
   if (donVi.length > 100) {
-    errors.push('Đơn vị công tác quá dài (tối đa 100 ký tự).');
+    errors.push('Organization name must be 100 characters or fewer.');
   } else {
     clean.donVi = donVi;
   }
@@ -182,7 +183,7 @@ function validateInput_(input) {
   // Tư cách tham dự: phải nằm đúng trong whitelist (dropdown)
   const tuCach = String(input.tuCach || '').trim();
   if (TU_CACH_OPTIONS_.indexOf(tuCach) === -1) {
-    errors.push('Tư cách tham dự không hợp lệ.');
+    errors.push('Please select a valid sector / capacity.');
   } else {
     clean.tuCach = tuCach;
   }
@@ -190,14 +191,14 @@ function validateInput_(input) {
   // Câu hỏi gửi trước: không bắt buộc, tối đa 500 ký tự
   const cauHoi = String(input.cauHoi || '').trim();
   if (cauHoi.length > 500) {
-    errors.push('Câu hỏi quá dài (tối đa 500 ký tự).');
+    errors.push('Question must be 500 characters or fewer.');
   } else {
     clean.cauHoi = cauHoi;
   }
 
   // Checkbox đồng ý: phải là boolean true thật sự (không nhận chuỗi "true")
   if (input.dongY !== true) {
-    errors.push('Bạn cần đồng ý điều khoản và xử lý dữ liệu cá nhân.');
+    errors.push('You must agree to the terms and personal data processing to continue.');
   }
 
   if (errors.length > 0) {
@@ -221,15 +222,15 @@ function rateLimit_(email) {
   const globalCount = Number(cache.get(globalKey) || 0) + 1;
   cache.put(globalKey, String(globalCount), 90);
   if (globalCount > 30) {
-    return { ok: false, message: 'Hệ thống đang quá tải, vui lòng thử lại sau ít phút.' };
+    return { ok: false, message: 'The system is busy right now. Please try again in a few minutes.' };
   }
 
   // Theo từng email: tối đa 3 lần / giờ
   const emailKey = 'reg_email_' + Utilities.base64EncodeWebSafe(email);
   const emailCount = Number(cache.get(emailKey) || 0) + 1;
   cache.put(emailKey, String(emailCount), 3600);
-  if (emailCount > 3) {
-    return { ok: false, message: 'Bạn đã gửi đăng ký quá nhiều lần. Vui lòng thử lại sau 1 giờ.' };
+  if (emailCount > 10) {
+    return { ok: false, message: 'You have submitted too many registrations. Please try again in 1 hour.' };
   }
 
   return { ok: true };

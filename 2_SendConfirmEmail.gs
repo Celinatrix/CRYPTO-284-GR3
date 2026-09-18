@@ -34,55 +34,84 @@ function sendConfirmEmail(clean, ticket) {
   const safe = {
     hoTen: escapeHtml_(clean.hoTen),
     email: escapeHtml_(clean.email),
-    donVi: escapeHtml_(clean.donVi || '(không cung cấp)'),
+    donVi: escapeHtml_(clean.donVi || '(not provided)'),
     tuCach: escapeHtml_(clean.tuCach),
-    cauHoi: escapeHtml_(clean.cauHoi || '(không có)'),
+    cauHoi: escapeHtml_(clean.cauHoi || '(none)'),
     phone: escapeHtml_(maskedPhone),
-    eventName: escapeHtml_(EVENT_NAME),
+    eventName: escapeHtml_(EVENT_NAME_EN),
     eventDate: escapeHtml_(EVENT_DATE_TEXT),
     ticketCode: escapeHtml_(ticket.code)
   };
 
   // Quy tắc #5: KHÔNG đưa dữ liệu cá nhân (họ tên, email, SĐT...) vào tiêu đề email
-  const subject = 'Xác nhận đăng ký — ' + EVENT_NAME;
+  const subject = 'Registration Confirmed — ' + EVENT_NAME_EN;
 
   const htmlBody =
     '<div style="font-family:Inter,Arial,sans-serif;max-width:560px;margin:0 auto;color:#1E293B;">' +
-      '<h2 style="color:#14285a;font-family:Montserrat,Arial,sans-serif;">Xin chào ' + safe.hoTen + ',</h2>' +
-      '<p>Bạn đã đăng ký thành công tham dự <strong>' + safe.eventName + '</strong>.</p>' +
+      '<h2 style="color:#14285a;font-family:Montserrat,Arial,sans-serif;">Hello ' + safe.hoTen + ',</h2>' +
+      '<p>You have successfully registered to attend <strong>' + safe.eventName + '</strong>.</p>' +
 
-      '<h3 style="color:#14285a;">Tóm tắt thông tin đã đăng ký</h3>' +
+      '<h3 style="color:#14285a;">Registration Summary</h3>' +
       '<table style="width:100%;border-collapse:collapse;font-size:14px;">' +
-        '<tr><td style="padding:4px 0;color:#64748B;">Họ và tên</td><td style="padding:4px 0;">' + safe.hoTen + '</td></tr>' +
+        '<tr><td style="padding:4px 0;color:#64748B;">Full Name</td><td style="padding:4px 0;">' + safe.hoTen + '</td></tr>' +
         '<tr><td style="padding:4px 0;color:#64748B;">Email</td><td style="padding:4px 0;">' + safe.email + '</td></tr>' +
-        '<tr><td style="padding:4px 0;color:#64748B;">Số điện thoại</td><td style="padding:4px 0;">' + safe.phone + '</td></tr>' +
-        '<tr><td style="padding:4px 0;color:#64748B;">Đơn vị công tác</td><td style="padding:4px 0;">' + safe.donVi + '</td></tr>' +
-        '<tr><td style="padding:4px 0;color:#64748B;">Tư cách tham dự</td><td style="padding:4px 0;">' + safe.tuCach + '</td></tr>' +
-        '<tr><td style="padding:4px 0;color:#64748B;">Câu hỏi gửi trước</td><td style="padding:4px 0;">' + safe.cauHoi + '</td></tr>' +
+        '<tr><td style="padding:4px 0;color:#64748B;">Phone Number</td><td style="padding:4px 0;">' + safe.phone + '</td></tr>' +
+        '<tr><td style="padding:4px 0;color:#64748B;">Organization</td><td style="padding:4px 0;">' + safe.donVi + '</td></tr>' +
+        '<tr><td style="padding:4px 0;color:#64748B;">Sector / Capacity</td><td style="padding:4px 0;">' + safe.tuCach + '</td></tr>' +
+        '<tr><td style="padding:4px 0;color:#64748B;">Advance Question</td><td style="padding:4px 0;">' + safe.cauHoi + '</td></tr>' +
       '</table>' +
 
-      '<h3 style="color:#14285a;">Mã vé của bạn</h3>' +
+      '<h3 style="color:#14285a;">Your Ticket</h3>' +
       '<p style="font-family:monospace;font-size:20px;font-weight:bold;color:#14285a;">' + safe.ticketCode + '</p>' +
-      '<p>Vui lòng xuất trình mã QR bên dưới tại quầy check-in:</p>' +
-      '<img src="cid:qrCodeImage" alt="Mã QR check-in" style="width:220px;height:220px;" />' +
+      '<p>Please present the QR code below at the check-in desk:</p>' +
+      '<img src="cid:qrCodeImage" alt="Check-in QR code" style="width:220px;height:220px;" />' +
 
-      '<h3 style="color:#14285a;">Thông tin hội thảo</h3>' +
-      '<p>' + safe.eventName + '<br/>Thời gian: ' + safe.eventDate + '</p>' +
+      '<h3 style="color:#14285a;">Event Information</h3>' +
+      '<p>' + safe.eventName + '<br/>Date &amp; Time: ' + safe.eventDate + '</p>' +
 
-      '<h3 style="color:#14285a;">Hướng dẫn check-in</h3>' +
-      '<p>Vui lòng có mặt trước giờ khai mạc 15–30 phút, xuất trình mã QR trên ' +
-      '(mở trực tiếp email hoặc chụp màn hình) tại quầy đón tiếp để được quét check-in.</p>' +
+      '<h3 style="color:#14285a;">Check-in Instructions</h3>' +
+      '<p>Please arrive 15–30 minutes before the opening session and present the QR code above ' +
+      '(open the email directly or show a screenshot) at the reception desk to be checked in.</p>' +
 
-      '<p><a href="' + calendarLink + '" style="color:#B8860B;">Thêm sự kiện vào Google Calendar</a></p>' +
+      '<p><a href="' + calendarLink + '" style="color:#B8860B;">Add this event to Google Calendar</a></p>' +
 
-      '<p style="color:#94A3B8;font-size:12px;margin-top:24px;">Đây là email tự động, vui lòng không trả lời trực tiếp email này.</p>' +
+      '<p style="color:#94A3B8;font-size:12px;margin-top:24px;">This is an automated email — please do not reply directly.</p>' +
     '</div>';
 
-  GmailApp.sendEmail(clean.email, subject, 'Vui lòng xem email này ở định dạng HTML để xem đầy đủ thông tin và mã QR.', {
+  GmailApp.sendEmail(clean.email, subject, 'Please view this email in HTML format to see the full details and QR code.', {
     htmlBody: htmlBody,
     inlineImages: { qrCodeImage: qrBlob },
-    name: EVENT_NAME
+    name: EVENT_NAME_EN
   });
+}
+
+/**
+ * notifyAdminNewRegistration_(clean, ticket)
+ * ------------------------------------------------------------
+ * Gửi email thông báo ngắn cho ADMIN_EMAIL (Config.gs) mỗi khi có đăng
+ * ký mới thành công. Đây chỉ là tiện ích thông báo, KHÔNG phải bước bắt
+ * buộc của luồng đăng ký — nếu gửi lỗi (vd hết quota Gmail), doPost()
+ * vẫn phải trả "thành công" cho khách vì vé đã ghi Sheet và email khách
+ * đã gửi rồi. Vì vậy hàm này tự bọc try/catch, không throw ra ngoài.
+ */
+function notifyAdminNewRegistration_(clean, ticket) {
+  try {
+    const subject = '🎟️ Đăng ký mới — ' + clean.hoTen + ' (' + ticket.code + ')';
+    const body =
+      'Có 1 đăng ký mới cho ' + EVENT_NAME + ':\n\n' +
+      'Họ và tên: ' + clean.hoTen + '\n' +
+      'Email: ' + clean.email + '\n' +
+      'Số điện thoại: ' + clean.soDienThoai + '\n' +
+      'Đơn vị công tác: ' + (clean.donVi || '(không cung cấp)') + '\n' +
+      'Tư cách tham dự: ' + clean.tuCach + '\n' +
+      'Câu hỏi gửi trước: ' + (clean.cauHoi || '(không có)') + '\n' +
+      'Mã vé: ' + ticket.code + '\n' +
+      'Thời gian: ' + new Date().toLocaleString('vi-VN');
+
+    GmailApp.sendEmail(ADMIN_EMAIL, subject, body);
+  } catch (err) {
+    console.error('notifyAdminNewRegistration_ error: ' + (err && err.stack ? err.stack : err));
+  }
 }
 
 /**
@@ -110,6 +139,6 @@ function buildCalendarLink_() {
   // 08:00–12:30 ngày 20/09/2026 giờ Việt Nam (UTC+7) = 01:00–05:30 UTC
   const start = '20260920T010000Z';
   const end = '20260920T053000Z';
-  const text = encodeURIComponent(EVENT_NAME);
+  const text = encodeURIComponent(EVENT_NAME_EN);
   return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + text + '&dates=' + start + '/' + end;
 }

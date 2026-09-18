@@ -18,6 +18,7 @@ credentials.json
 *.log
 .DS_Store
 node_modules/
+.claude/
 
 # ============================================================
 # HƯỚNG DẪN QUÉT REPO BẰNG GITLEAKS (Quy tắc #2)
