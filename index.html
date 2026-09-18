@@ -77,7 +77,106 @@
   --container: 1240px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+
+  --header-bg: rgba(255, 255, 255, .95);
+  --zebra-bg:      rgba(248, 250, 252, .6);
+  --row-hover-bg:  rgba(241, 245, 249, .7);
 }
+
+/* =========================================================================
+   1b. DARK PALETTE — áp dụng theo prefers-color-scheme của hệ thống, hoặc
+   theo lựa chọn thủ công của người dùng (thuộc tính data-theme trên <html>,
+   lưu lại qua localStorage). Giữ nguyên vai trò từng token — chỉ đổi giá
+   trị — nên toàn bộ CSS phía dưới (đều dùng var(--...)) tự động ăn theo,
+   không cần sửa lại từng rule.
+   ========================================================================= */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy:        #6E9BD1;
+    --navy-dark:   #0F2027;
+    --navy-light:  #8FB4E0;
+
+    --gold:        #D9A63D;
+    --gold-hover:  #E8BE63;
+    --gold-light:  #2E2410;
+    --gold-border: #5C4A22;
+    --gold-muted:  #B99F6E;
+
+    --bg:          #0B1220;
+    --surface:     #141C30;
+
+    --slate-50:  #1A2338;
+    --slate-100: #1E2A42;
+    --slate-200: #2C3A56;
+    --slate-300: #3E4E6E;
+    --slate-400: #7C8AA8;
+    --slate-500: #9AA7C2;
+    --slate-600: #B7C1D9;
+    --slate-700: #D3DAEA;
+    --slate-800: #EDF1F8;
+
+    --rose-50:  #3A1620;
+    --rose-200: #5C2430;
+    --rose-500: #FB7185;
+    --rose-600: #FCA5B1;
+    --rose-700: #FDA4AF;
+
+    --ok-bg:     #0F2A1F;
+    --ok-border: #1F5C3E;
+    --ok-text:   #4ADE80;
+    --err-bg:     #3A1620;
+    --err-border: #5C2430;
+    --err-text:   #FCA5B1;
+
+    --header-bg: rgba(11, 18, 32, .85);
+    --zebra-bg:      rgba(255, 255, 255, .03);
+    --row-hover-bg:  rgba(255, 255, 255, .06);
+  }
+}
+:root[data-theme="dark"] {
+  --navy:        #6E9BD1;
+  --navy-dark:   #0F2027;
+  --navy-light:  #8FB4E0;
+
+  --gold:        #D9A63D;
+  --gold-hover:  #E8BE63;
+  --gold-light:  #2E2410;
+  --gold-border: #5C4A22;
+  --gold-muted:  #B99F6E;
+
+  --bg:          #0B1220;
+  --surface:     #141C30;
+
+  --slate-50:  #1A2338;
+  --slate-100: #1E2A42;
+  --slate-200: #2C3A56;
+  --slate-300: #3E4E6E;
+  --slate-400: #7C8AA8;
+  --slate-500: #9AA7C2;
+  --slate-600: #B7C1D9;
+  --slate-700: #D3DAEA;
+  --slate-800: #EDF1F8;
+
+  --rose-50:  #3A1620;
+  --rose-200: #5C2430;
+  --rose-500: #FB7185;
+  --rose-600: #FCA5B1;
+  --rose-700: #FDA4AF;
+
+  --ok-bg:     #0F2A1F;
+  --ok-border: #1F5C3E;
+  --ok-text:   #4ADE80;
+  --err-bg:     #3A1620;
+  --err-border: #5C2430;
+  --err-text:   #FCA5B1;
+
+  --header-bg: rgba(11, 18, 32, .85);
+  --zebra-bg:      rgba(255, 255, 255, .03);
+  --row-hover-bg:  rgba(255, 255, 255, .06);
+}
+/* Chuyển theme mượt, không giật cục khi bấm nút */
+html { transition: background-color .2s; }
+body, .site-header, .card, .reg-card { transition: background-color .2s, border-color .2s, color .2s; }
 
 /* =========================================================================
    2. RESET & BASE
@@ -368,7 +467,7 @@ table { border-collapse: collapse; }
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
-  background: rgba(255, 255, 255, .95);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--slate-200);
@@ -467,6 +566,31 @@ table { border-collapse: collapse; }
   box-shadow: var(--shadow-xs);
 }
 
+/* Nút chuyển chế độ sáng/tối */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  flex: none;
+  border-radius: 999px;
+  border: 1px solid var(--slate-200);
+  background: var(--surface);
+  color: var(--navy);
+  cursor: pointer;
+  transition: background-color .2s, border-color .2s, color .2s;
+}
+.theme-toggle:hover { border-color: var(--gold-muted); color: var(--gold); }
+.theme-toggle .icon-moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun  { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun  { display: none; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: block; }
+}
+:root[data-theme="light"] .theme-toggle .icon-sun  { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
 .header-cta {
   display: none;
   padding: 10px 20px;
@@ -521,6 +645,8 @@ table { border-collapse: collapse; }
 .mobile-nav a:last-of-type { border-bottom: 0; }
 .mobile-nav a.is-active { color: var(--gold); }
 .mobile-nav .btn-gold { width: 100%; margin-top: 12px; }
+.mobile-nav-utils { display: flex; justify-content: center; padding: 12px 0 4px; }
+.mobile-nav-utils .lang-switch-mobile { display: flex; } /* ép hiện — .lang-switch mặc định ẩn dưới 640px */
 
 main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
 
@@ -961,8 +1087,8 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   border-top: 1px solid var(--slate-200);
 }
 .matrix-table tbody tr:first-child td { border-top: 0; }
-.matrix-table tbody tr:nth-child(even) { background: rgba(248, 250, 252, .6); }
-.matrix-table tbody tr:hover { background: rgba(241, 245, 249, .7); }
+.matrix-table tbody tr:nth-child(even) { background: var(--zebra-bg); }
+.matrix-table tbody tr:hover { background: var(--row-hover-bg); }
 
 .violation { display: flex; align-items: flex-start; gap: 8px; }
 .violation .dot { width: 8px; height: 8px; flex: none; margin-top: 6px; border-radius: 999px; }
@@ -1347,10 +1473,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 3v3.5M12 17.5V21M21 12h-3.5M6.5 12H3M18.4 5.6l-2.5 2.5M8.1 15.9l-2.5 2.5M18.4 18.4l-2.5-2.5M8.1 8.1 5.6 5.6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></symbol>
   </defs>
 </svg>
 
-<a class="skip-link" href="#registration">Skip to registration</a>
+<a class="skip-link" href="#registration" data-i18n="skip">Skip to registration</a>
 
 <!-- =========================================================================
      HEADER
@@ -1366,21 +1494,27 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     </a>
 
     <nav class="main-nav" id="main-nav" aria-label="Main">
-      <a href="#home" class="is-active">Home</a>
-      <a href="#about">Overview</a>
-      <a href="#speakers">Speakers</a>
-      <a href="#agenda">Agenda</a>
-      <a href="#registration">Registration</a>
-      <a href="#contact">Contact</a>
+      <a href="#home" class="is-active" data-i18n="nav.home">Home</a>
+      <a href="#about" data-i18n="nav.overview">Overview</a>
+      <a href="#speakers" data-i18n="nav.speakers">Speakers</a>
+      <a href="#agenda" data-i18n="nav.agenda">Agenda</a>
+      <a href="#registration" data-i18n="nav.registration">Registration</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
     </nav>
 
     <div class="header-actions">
-      <div class="lang-switch" role="group" aria-label="Language">
-        <button type="button" disabled title="Vietnamese version coming soon">VI</button>
+      <div class="lang-switch" role="group" aria-label="Language" id="lang-switch">
+        <button type="button" data-lang="vi">VI</button>
         <span class="sep" aria-hidden="true">|</span>
-        <button type="button" aria-current="true">EN</button>
+        <button type="button" data-lang="en" aria-current="true">EN</button>
+        <span class="sep" aria-hidden="true">|</span>
+        <button type="button" data-lang="zh">中文</button>
       </div>
-      <a class="header-cta" href="#registration">Register Now</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+        <svg class="icon icon-sun"><use href="#i-sun"></use></svg>
+        <svg class="icon icon-moon"><use href="#i-moon"></use></svg>
+      </button>
+      <a class="header-cta" href="#registration" data-i18n="nav.registerCta">Register Now</a>
       <button class="nav-toggle" id="nav-toggle" type="button"
               aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
         <svg class="icon icon-lg icon-open"><use href="#i-menu"></use></svg>
@@ -1390,14 +1524,23 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   </div>
 
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <a href="#home" class="is-active">Home</a>
-    <a href="#about">Overview</a>
-    <a href="#speakers">Speakers</a>
-    <a href="#agenda">Agenda</a>
-    <a href="#matrix">Penalty Matrix</a>
-    <a href="#registration">Registration</a>
-    <a href="#contact">Contact</a>
-    <a class="btn-gold" href="#registration">Register Now</a>
+    <a href="#home" class="is-active" data-i18n="nav.home">Home</a>
+    <a href="#about" data-i18n="nav.overview">Overview</a>
+    <a href="#speakers" data-i18n="nav.speakers">Speakers</a>
+    <a href="#agenda" data-i18n="nav.agenda">Agenda</a>
+    <a href="#matrix" data-i18n="nav.matrix">Penalty Matrix</a>
+    <a href="#registration" data-i18n="nav.registration">Registration</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+    <div class="mobile-nav-utils">
+      <div class="lang-switch lang-switch-mobile" role="group" aria-label="Language">
+        <button type="button" data-lang="vi">VI</button>
+        <span class="sep" aria-hidden="true">|</span>
+        <button type="button" data-lang="en">EN</button>
+        <span class="sep" aria-hidden="true">|</span>
+        <button type="button" data-lang="zh">中文</button>
+      </div>
+    </div>
+    <a class="btn-gold" href="#registration" data-i18n="nav.registerCta">Register Now</a>
   </nav>
 </header>
 
@@ -1432,12 +1575,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   <div class="hero-inner">
     <div class="hero-badge">
       <span class="dot" aria-hidden="true"></span>
-      <span>Ministry of Justice &amp; Digital Asset Council • Official Announcement</span>
+      <span data-i18n="hero.badge">Ministry of Justice &amp; Digital Asset Council • Official Announcement</span>
     </div>
 
-    <h1 class="hero-title">Decree 284/2026 Compliance Conference</h1>
+    <h1 class="hero-title" data-i18n="hero.title">Decree 284/2026 Compliance Conference</h1>
 
-    <p class="hero-lead">
+    <p class="hero-lead" data-i18n="hero.lead">
       Orienting Vietnam's crypto asset legal framework • Standardizing VASP licensing
       &amp; Safeguarding the digital asset market
     </p>
@@ -1454,18 +1597,18 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="hero-fact">
           <svg class="icon icon-sm"><use href="#i-pin"></use></svg>
-          <span class="hero-fact-caps">Hanoi / Online Summit</span>
+          <span class="hero-fact-caps" data-i18n="hero.location">Hanoi / Online Summit</span>
         </div>
         <div class="hero-fact">
           <svg class="icon icon-sm"><use href="#i-users"></use></svg>
-          <span class="hero-fact-caps">Legal &amp; Tech Experts</span>
+          <span class="hero-fact-caps" data-i18n="hero.audience">Legal &amp; Tech Experts</span>
         </div>
       </div>
     </div>
 
     <div class="hero-cta-wrap">
-      <a class="btn-gold hero-cta" href="#registration">Register Now / Secure Your Seat</a>
-      <span class="hero-note">Free admission • Limited to 150 in-person seats &amp; 1,000 virtual attendees</span>
+      <a class="btn-gold hero-cta" href="#registration" data-i18n="hero.cta">Register Now / Secure Your Seat</a>
+      <span class="hero-note" data-i18n="hero.note">Free admission • Limited to 150 in-person seats &amp; 1,000 virtual attendees</span>
     </div>
   </div>
 </section>
@@ -1477,9 +1620,9 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   <div class="container">
     <div class="about-grid">
       <div>
-        <div class="eyebrow eyebrow-marked"><span>Regulatory Context &amp; Vital Significance</span></div>
-        <h2 class="section-title">Eliminating the legal grey area, standardizing Vietnam's digital asset market</h2>
-        <p class="about-lead">
+        <div class="eyebrow eyebrow-marked"><span data-i18n="about.eyebrow">Regulatory Context &amp; Vital Significance</span></div>
+        <h2 class="section-title" data-i18n="about.title">Eliminating the legal grey area, standardizing Vietnam's digital asset market</h2>
+        <p class="about-lead" data-i18n="about.lead">
           Decree 284/2026/ND-CP is a milestone legal document, marking Vietnam's first comprehensive and strict
           legal framework for Virtual Asset Service Providers (VASPs). The decree completely ends the era of
           voluntary self-regulation, bringing asset transfers, custody, and digital asset trading closer to
@@ -1489,13 +1632,13 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <div class="about-points">
           <div class="about-point card card-grey card-hover">
             <span class="icon-box icon-box-white text-navy"><svg class="icon"><use href="#i-shield-check"></use></svg></span>
-            <h3>FATF Compliance &amp; Risk Mitigation</h3>
-            <p>Bringing Vietnam off the enhanced monitoring grey list through strict AML/CFT standards.</p>
+            <h3 data-i18n="about.point1.title">FATF Compliance &amp; Risk Mitigation</h3>
+            <p data-i18n="about.point1.desc">Bringing Vietnam off the enhanced monitoring grey list through strict AML/CFT standards.</p>
           </div>
           <div class="about-point card card-grey card-hover">
             <span class="icon-box icon-box-white text-gold"><svg class="icon"><use href="#i-shield"></use></svg></span>
-            <h3>Safe Harbor for VASPs</h3>
-            <p>Legally protecting investor assets, establishing clear boundaries between permitted and prohibited assets.</p>
+            <h3 data-i18n="about.point2.title">Safe Harbor for VASPs</h3>
+            <p data-i18n="about.point2.desc">Legally protecting investor assets, establishing clear boundaries between permitted and prohibited assets.</p>
           </div>
         </div>
       </div>
@@ -1503,7 +1646,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       <div>
         <div class="donut-card card card-grey">
           <div class="donut-head">
-            <span>2026 Ecosystem Impact Allocation</span>
+            <span data-i18n="about.donut.title">2026 Ecosystem Impact Allocation</span>
             <svg class="icon icon-sm"><use href="#i-pie"></use></svg>
           </div>
 
@@ -1522,15 +1665,15 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
 
           <div class="donut-legend">
             <div class="donut-legend-row">
-              <span><span class="swatch" style="background:#B8860B"></span>VASP Licensing &amp; Charter Capital</span>
+              <span><span class="swatch" style="background:#B8860B"></span><span data-i18n="about.donut.legend1">VASP Licensing &amp; Charter Capital</span></span>
               <span class="value" style="color:#B8860B">45%</span>
             </div>
             <div class="donut-legend-row">
-              <span><span class="swatch" style="background:#1A365D"></span>Anti-Money Laundering (AML/CFT) &amp; Tax</span>
+              <span><span class="swatch" style="background:#1A365D"></span><span data-i18n="about.donut.legend2">Anti-Money Laundering (AML/CFT) &amp; Tax</span></span>
               <span class="value" style="color:#1A365D">35%</span>
             </div>
             <div class="donut-legend-row">
-              <span><span class="swatch" style="background:#94A3B8"></span>Data Security &amp; Investor Protection</span>
+              <span><span class="swatch" style="background:#94A3B8"></span><span data-i18n="about.donut.legend3">Data Security &amp; Investor Protection</span></span>
               <span class="value" style="color:#64748B">20%</span>
             </div>
           </div>
@@ -1541,19 +1684,19 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     <div class="metric-strip">
       <div class="metric">
         <span class="metric-value gold">150</span>
-        <span class="metric-label">Limited In-Person Seats</span>
+        <span class="metric-label" data-i18n="about.metric1.label">Limited In-Person Seats</span>
       </div>
       <div class="metric">
         <span class="metric-value">1,000+</span>
-        <span class="metric-label">Virtual Delegates</span>
+        <span class="metric-label" data-i18n="about.metric2.label">Virtual Delegates</span>
       </div>
       <div class="metric">
         <span class="metric-value">04</span>
-        <span class="metric-label">Key Sessions &amp; Panels</span>
+        <span class="metric-label" data-i18n="about.metric3.label">Key Sessions &amp; Panels</span>
       </div>
       <div class="metric">
         <span class="metric-value gold">200M</span>
-        <span class="metric-label">Max Administrative Fine (VND)</span>
+        <span class="metric-label" data-i18n="about.metric4.label">Max Administrative Fine (VND)</span>
       </div>
     </div>
   </div>
@@ -1566,12 +1709,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   <div class="container">
     <div class="section-head section-head-split">
       <div>
-        <span class="eyebrow">Official Program Agenda</span>
-        <h2 class="section-title">Thematic Conference Program</h2>
+        <span class="eyebrow" data-i18n="agenda.eyebrow">Official Program Agenda</span>
+        <h2 class="section-title" data-i18n="agenda.title">Thematic Conference Program</h2>
       </div>
       <div class="info-pill">
         <svg class="icon icon-sm"><use href="#i-clock"></use></svg>
-        <span>Time: 08:00 – 12:30 | 20/09/2026</span>
+        <span data-i18n="agenda.pill">Time: 08:00 – 12:30 | 20/09/2026</span>
       </div>
     </div>
 
@@ -1583,15 +1726,15 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="agenda-body">
           <div class="agenda-tags">
-            <span class="tag tag-mono tag-slate">Check-in</span>
-            <span class="tag tag-navy">Automated</span>
+            <span class="tag tag-mono tag-slate" data-i18n="agenda.item1.tag1">Check-in</span>
+            <span class="tag tag-navy" data-i18n="agenda.item1.tag2">Automated</span>
           </div>
-          <h3>Attendee Reception &amp; Automated QR Code Check-in</h3>
-          <p>Receiving high-level delegates, smart QR pass scanning, and distributing confidential briefing materials.</p>
+          <h3 data-i18n="agenda.item1.title">Attendee Reception &amp; Automated QR Code Check-in</h3>
+          <p data-i18n="agenda.item1.desc">Receiving high-level delegates, smart QR pass scanning, and distributing confidential briefing materials.</p>
         </div>
         <div class="agenda-meta muted">
           <svg class="icon icon-sm"><use href="#i-qr"></use></svg>
-          <span>Central Grand Hall</span>
+          <span data-i18n="agenda.item1.meta">Central Grand Hall</span>
         </div>
       </div>
 
@@ -1602,15 +1745,15 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="agenda-body">
           <div class="agenda-tags">
-            <span class="tag tag-mono tag-gold">Keynote 1</span>
-            <span class="tag tag-navy">Focus</span>
+            <span class="tag tag-mono tag-gold" data-i18n="agenda.item2.tag1">Keynote 1</span>
+            <span class="tag tag-navy" data-i18n="agenda.item2.tag2">Focus</span>
           </div>
-          <h3>Decree 284/2026/ND-CP Overview: Crypto Asset Classification &amp; VASP Licensing Framework</h3>
-          <p>Legal distinction between Virtual Assets vs Crypto Currency; statutory paid-up capital requirements, server audit rules, and cryptographic key custody.</p>
+          <h3 data-i18n="agenda.item2.title">Decree 284/2026/ND-CP Overview: Crypto Asset Classification &amp; VASP Licensing Framework</h3>
+          <p data-i18n="agenda.item2.desc">Legal distinction between Virtual Assets vs Crypto Currency; statutory paid-up capital requirements, server audit rules, and cryptographic key custody.</p>
         </div>
         <div class="agenda-meta">
           <svg class="icon icon-sm"><use href="#i-mic"></use></svg>
-          <span>Department of Legal Affairs</span>
+          <span data-i18n="agenda.item2.meta">Department of Legal Affairs</span>
         </div>
       </div>
 
@@ -1621,15 +1764,15 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="agenda-body">
           <div class="agenda-tags">
-            <span class="tag tag-mono tag-navy">Sanction 2</span>
-            <span class="tag tag-gold">Legal Risk</span>
+            <span class="tag tag-mono tag-navy" data-i18n="agenda.item3.tag1">Sanction 2</span>
+            <span class="tag tag-gold" data-i18n="agenda.item3.tag2">Legal Risk</span>
           </div>
-          <h3>Session 2: Administrative Sanction Framework, Tax Obligations &amp; Crypto Travel Rule</h3>
-          <p>Fines up to 200,000,000 VND; mandatory eKYC customer identification obligations; personal income tax declaration on tokenomics.</p>
+          <h3 data-i18n="agenda.item3.title">Session 2: Administrative Sanction Framework, Tax Obligations &amp; Crypto Travel Rule</h3>
+          <p data-i18n="agenda.item3.desc">Fines up to 200,000,000 VND; mandatory eKYC customer identification obligations; personal income tax declaration on tokenomics.</p>
         </div>
         <div class="agenda-meta">
           <svg class="icon icon-sm"><use href="#i-gavel"></use></svg>
-          <span>Senior AML/FATF Expert</span>
+          <span data-i18n="agenda.item3.meta">Senior AML/FATF Expert</span>
         </div>
       </div>
 
@@ -1640,14 +1783,14 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="agenda-body">
           <div class="agenda-tags">
-            <span class="tag tag-mono tag-slate">VIP Luncheon</span>
+            <span class="tag tag-mono tag-slate" data-i18n="agenda.item4.tag1">VIP Luncheon</span>
           </div>
-          <h3>Networking Luncheon &amp; Closed-Door Roundtable</h3>
-          <p>High-level networking luncheon between regulatory drafting officials, commercial banking leadership, and global Web3 funds.</p>
+          <h3 data-i18n="agenda.item4.title">Networking Luncheon &amp; Closed-Door Roundtable</h3>
+          <p data-i18n="agenda.item4.desc">High-level networking luncheon between regulatory drafting officials, commercial banking leadership, and global Web3 funds.</p>
         </div>
         <div class="agenda-meta muted">
           <svg class="icon icon-sm"><use href="#i-restaurant"></use></svg>
-          <span>Executive Lounge</span>
+          <span data-i18n="agenda.item4.meta">Executive Lounge</span>
         </div>
       </div>
 
@@ -1658,15 +1801,15 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="agenda-body">
           <div class="agenda-tags">
-            <span class="tag tag-mono tag-gold">Panel 3</span>
-            <span class="tag tag-navy">Live Q&amp;A</span>
+            <span class="tag tag-mono tag-gold" data-i18n="agenda.item5.tag1">Panel 3</span>
+            <span class="tag tag-navy" data-i18n="agenda.item5.tag2">Live Q&amp;A</span>
           </div>
-          <h3>Interactive Panel: VASP Licensing Roadmap &amp; Enterprise Adaptation</h3>
-          <p>Live Q&amp;A town-hall resolving licensing dossier hurdles and cross-border compliance mechanisms for foreign exchanges operating in Vietnam.</p>
+          <h3 data-i18n="agenda.item5.title">Interactive Panel: VASP Licensing Roadmap &amp; Enterprise Adaptation</h3>
+          <p data-i18n="agenda.item5.desc">Live Q&amp;A town-hall resolving licensing dossier hurdles and cross-border compliance mechanisms for foreign exchanges operating in Vietnam.</p>
         </div>
         <div class="agenda-meta">
           <svg class="icon icon-sm"><use href="#i-forum"></use></svg>
-          <span>Keynote Auditorium</span>
+          <span data-i18n="agenda.item5.meta">Keynote Auditorium</span>
         </div>
       </div>
 
@@ -1677,14 +1820,14 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="agenda-body">
           <div class="agenda-tags">
-            <span class="tag tag-mono tag-slate">Closing</span>
+            <span class="tag tag-mono tag-slate" data-i18n="agenda.item6.tag1">Closing</span>
           </div>
-          <h3>Closing Remarks &amp; Issuance of Blockchain-Verified E-Certificates (CPE)</h3>
-          <p>Conference resolution signing and issuance of tamper-proof crypto certificates of completion for accredited professionals.</p>
+          <h3 data-i18n="agenda.item6.title">Closing Remarks &amp; Issuance of Blockchain-Verified E-Certificates (CPE)</h3>
+          <p data-i18n="agenda.item6.desc">Conference resolution signing and issuance of tamper-proof crypto certificates of completion for accredited professionals.</p>
         </div>
         <div class="agenda-meta">
           <svg class="icon icon-sm navy"><use href="#i-verified"></use></svg>
-          <span>Secretariat Desk</span>
+          <span data-i18n="agenda.item6.meta">Secretariat Desk</span>
         </div>
       </div>
     </div>
@@ -1698,8 +1841,8 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   <div class="container">
     <div class="section-head">
       <div>
-        <span class="eyebrow">Specialized Advisory Board</span>
-        <h2 class="section-title">Distinguished Advisory &amp; Keynote Speakers</h2>
+        <span class="eyebrow" data-i18n="speakers.eyebrow">Specialized Advisory Board</span>
+        <h2 class="section-title" data-i18n="speakers.title">Distinguished Advisory &amp; Keynote Speakers</h2>
       </div>
     </div>
 
@@ -1710,17 +1853,17 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
             DL
             <span class="speaker-badge"><svg class="icon"><use href="#i-check"></use></svg></span>
           </div>
-          <span class="tag tag-mono tag-gold">Drafting Committee</span>
-          <h3>Representative, Department of Legal Affairs</h3>
-          <p class="speaker-role">Head of Drafting Committee, Digital Asset Legal Framework</p>
-          <p class="speaker-bio">
+          <span class="tag tag-mono tag-gold" data-i18n="speakers.s1.tag">Drafting Committee</span>
+          <h3 data-i18n="speakers.s1.name">Representative, Department of Legal Affairs</h3>
+          <p class="speaker-role" data-i18n="speakers.s1.role">Head of Drafting Committee, Digital Asset Legal Framework</p>
+          <p class="speaker-bio" data-i18n="speakers.s1.bio">
             Over 18 years of experience drafting financial and banking regulations, directly overseeing statutory
             criteria for the credit institution sector and advising on the framework of Decree 284/2026/ND-CP.
           </p>
         </div>
         <div class="speaker-foot">
-          <span class="label">Keynote Topic:</span>
-          <span class="topic">VASP Standards 2026</span>
+          <span class="label" data-i18n="speakers.topicLabel">Keynote Topic:</span>
+          <span class="topic" data-i18n="speakers.s1.topic">VASP Standards 2026</span>
         </div>
       </article>
 
@@ -1730,17 +1873,17 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
             NT
             <span class="speaker-badge navy"><svg class="icon"><use href="#i-balance"></use></svg></span>
           </div>
-          <span class="tag tag-mono tag-navy">Corporate Counsel</span>
+          <span class="tag tag-mono tag-navy" data-i18n="speakers.s2.tag">Corporate Counsel</span>
           <h3>Nguyen Thanh Tung, Esq.</h3>
-          <p class="speaker-role">Managing Partner — Asia FinTech Legal Group</p>
-          <p class="speaker-bio">
+          <p class="speaker-role" data-i18n="speakers.s2.role">Managing Partner — Asia FinTech Legal Group</p>
+          <p class="speaker-bio" data-i18n="speakers.s2.bio">
             Advised on successful licensing for over 40 Web3 projects and cross-border digital asset exchanges in
             Singapore, Hong Kong, and the Vietnam domestic market.
           </p>
         </div>
         <div class="speaker-foot">
-          <span class="label">Keynote Topic:</span>
-          <span class="topic navy">Optimal Corporate Structuring</span>
+          <span class="label" data-i18n="speakers.topicLabel">Keynote Topic:</span>
+          <span class="topic navy" data-i18n="speakers.s2.topic">Optimal Corporate Structuring</span>
         </div>
       </article>
 
@@ -1750,17 +1893,17 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
             LL
             <span class="speaker-badge"><svg class="icon"><use href="#i-shield-check"></use></svg></span>
           </div>
-          <span class="tag tag-mono tag-gold">FATF Advisory Panel</span>
+          <span class="tag tag-mono tag-gold" data-i18n="speakers.s3.tag">FATF Advisory Panel</span>
           <h3>Le Hoang Long, M.Sc.</h3>
-          <p class="speaker-role">Chief AML/CFT &amp; Financial Intelligence Expert</p>
-          <p class="speaker-bio">
+          <p class="speaker-role" data-i18n="speakers.s3.role">Chief AML/CFT &amp; Financial Intelligence Expert</p>
+          <p class="speaker-bio" data-i18n="speakers.s3.bio">
             Member of the National Anti-Money Laundering Steering Committee, representing Vietnam in bilateral
             mutual evaluations and FATF virtual asset risk assessments.
           </p>
         </div>
         <div class="speaker-foot">
-          <span class="label">Keynote Topic:</span>
-          <span class="topic">Travel Rule &amp; AML Compliance</span>
+          <span class="label" data-i18n="speakers.topicLabel">Keynote Topic:</span>
+          <span class="topic" data-i18n="speakers.s3.topic">Travel Rule &amp; AML Compliance</span>
         </div>
       </article>
     </div>
@@ -1774,12 +1917,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   <div class="container">
     <div class="section-head section-head-split">
       <div>
-        <span class="eyebrow">Chapter IV Statutory Remedies</span>
-        <h2 class="section-title">Administrative Penalty Matrix</h2>
+        <span class="eyebrow" data-i18n="matrix.eyebrow">Chapter IV Statutory Remedies</span>
+        <h2 class="section-title" data-i18n="matrix.title">Administrative Penalty Matrix</h2>
       </div>
       <div class="info-pill">
         <svg class="icon icon-sm"><use href="#i-warning"></use></svg>
-        <span>Mandatory enforcement from 01/09/2026</span>
+        <span data-i18n="matrix.pill">Mandatory enforcement from 01/09/2026</span>
       </div>
     </div>
 
@@ -1788,10 +1931,10 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <table class="matrix-table">
           <thead>
             <tr>
-              <th scope="col">Violation Category</th>
-              <th scope="col">Applicable Entity</th>
-              <th scope="col" class="gold">Monetary Penalty</th>
-              <th scope="col">Remedial &amp; Enforcement Measures</th>
+              <th scope="col" data-i18n="matrix.th1">Violation Category</th>
+              <th scope="col" data-i18n="matrix.th2">Applicable Entity</th>
+              <th scope="col" class="gold" data-i18n="matrix.th3">Monetary Penalty</th>
+              <th scope="col" data-i18n="matrix.th4">Remedial &amp; Enforcement Measures</th>
             </tr>
           </thead>
           <tbody>
@@ -1799,60 +1942,60 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
               <td>
                 <span class="violation">
                   <span class="dot rose"></span>
-                  <strong>Operating unlicensed VASP / exchange services</strong>
+                  <strong data-i18n="matrix.r1.violation">Operating unlicensed VASP / exchange services</strong>
                 </span>
-                <span class="violation-ref">Article 34, Clause 2 — Decree 284</span>
+                <span class="violation-ref" data-i18n="matrix.r1.ref">Article 34, Clause 2 — Decree 284</span>
               </td>
-              <td>Domestic &amp; international enterprises offering services in Vietnam</td>
+              <td data-i18n="matrix.r1.entity">Domestic &amp; international enterprises offering services in Vietnam</td>
               <td><span class="penalty">100M – 200M VND</span></td>
               <td>
-                <span class="tag tag-rose remedy-tag">Forced Action</span><br>
-                Business suspension (6–12 months); total confiscation of all illicit profits into state budget.
+                <span class="tag tag-rose remedy-tag" data-i18n="matrix.r1.remedyTag">Forced Action</span><br>
+                <span data-i18n="matrix.r1.remedy">Business suspension (6–12 months); total confiscation of all illicit profits into state budget.</span>
               </td>
             </tr>
             <tr>
               <td>
                 <span class="violation">
                   <span class="dot gold"></span>
-                  <strong>Failure to comply with KYC &amp; AML/CFT obligations</strong>
+                  <strong data-i18n="matrix.r2.violation">Failure to comply with KYC &amp; AML/CFT obligations</strong>
                 </span>
-                <span class="violation-ref">Article 36, Clauses 1 &amp; 3 — Decree 284</span>
+                <span class="violation-ref" data-i18n="matrix.r2.ref">Article 36, Clauses 1 &amp; 3 — Decree 284</span>
               </td>
-              <td>Licensed digital asset exchanges, custody platforms</td>
+              <td data-i18n="matrix.r2.entity">Licensed digital asset exchanges, custody platforms</td>
               <td><span class="penalty">80M – 150M VND</span></td>
               <td>
-                <span class="tag tag-navy remedy-tag">Technical</span><br>
-                Temporary suspension of banking API integrations; mandatory independent audit within 30 days.
+                <span class="tag tag-navy remedy-tag" data-i18n="matrix.r2.remedyTag">Technical</span><br>
+                <span data-i18n="matrix.r2.remedy">Temporary suspension of banking API integrations; mandatory independent audit within 30 days.</span>
               </td>
             </tr>
             <tr>
               <td>
                 <span class="violation">
                   <span class="dot rose"></span>
-                  <strong>Tax evasion on digital asset transaction proceeds</strong>
+                  <strong data-i18n="matrix.r3.violation">Tax evasion on digital asset transaction proceeds</strong>
                 </span>
-                <span class="violation-ref">Article 41 — Inter-Agency Tax Coordination Code</span>
+                <span class="violation-ref" data-i18n="matrix.r3.ref">Article 41 — Inter-Agency Tax Coordination Code</span>
               </td>
-              <td>Individual traders, high-net-worth investors, crypto businesses</td>
-              <td><span class="penalty rose">1x to 3x evaded tax amount</span></td>
+              <td data-i18n="matrix.r3.entity">Individual traders, high-net-worth investors, crypto businesses</td>
+              <td><span class="penalty rose" data-i18n="matrix.r3.penalty">1x to 3x evaded tax amount</span></td>
               <td>
-                <span class="tag tag-rose remedy-tag">Criminal Referral</span><br>
-                100% tax clawback + late payment surcharge; account freeze and referral for prosecution if fraud detected.
+                <span class="tag tag-rose remedy-tag" data-i18n="matrix.r3.remedyTag">Criminal Referral</span><br>
+                <span data-i18n="matrix.r3.remedy">100% tax clawback + late payment surcharge; account freeze and referral for prosecution if fraud detected.</span>
               </td>
             </tr>
             <tr>
               <td>
                 <span class="violation">
                   <span class="dot navy"></span>
-                  <strong>Advertising or promoting unlicensed crypto platforms</strong>
+                  <strong data-i18n="matrix.r4.violation">Advertising or promoting unlicensed crypto platforms</strong>
                 </span>
-                <span class="violation-ref">Article 45 — Marketing Restrictions for VASP Services</span>
+                <span class="violation-ref" data-i18n="matrix.r4.ref">Article 45 — Marketing Restrictions for VASP Services</span>
               </td>
-              <td>KOLs, influencers, media agencies, affiliate networks</td>
+              <td data-i18n="matrix.r4.entity">KOLs, influencers, media agencies, affiliate networks</td>
               <td><span class="penalty">50M – 100M VND</span></td>
               <td>
-                <span class="tag tag-navy remedy-tag">Digital Remediation</span><br>
-                Domain name seizure; mandatory video/content removal within 24h; public correction disclosure.
+                <span class="tag tag-navy remedy-tag" data-i18n="matrix.r4.remedyTag">Digital Remediation</span><br>
+                <span data-i18n="matrix.r4.remedy">Domain name seizure; mandatory video/content removal within 24h; public correction disclosure.</span>
               </td>
             </tr>
           </tbody>
@@ -1863,8 +2006,8 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     <div id="references">
       <div class="section-head">
         <div>
-          <span class="eyebrow">Official Gazette Repository &amp; Practitioner Guides</span>
-          <h2 class="section-title">Regulatory Library &amp; Compliance Handbook</h2>
+          <span class="eyebrow" data-i18n="docs.eyebrow">Official Gazette Repository &amp; Practitioner Guides</span>
+          <h2 class="section-title" data-i18n="docs.title">Regulatory Library &amp; Compliance Handbook</h2>
         </div>
       </div>
 
@@ -1872,16 +2015,16 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <article class="doc card">
           <div>
             <span class="icon-box icon-box-lg text-gold"><svg class="icon icon-lg"><use href="#i-file-pdf"></use></svg></span>
-            <span class="tag tag-mono tag-gold">Official Text</span>
-            <h3>Full Decree 284/2026/ND-CP Official Text</h3>
-            <p>Complete authentic government gazette scan containing all 8 Chapters and 52 Articles specifying legal definitions and licensing prerequisites.</p>
+            <span class="tag tag-mono tag-gold" data-i18n="docs.d1.tag">Official Text</span>
+            <h3 data-i18n="docs.d1.title">Full Decree 284/2026/ND-CP Official Text</h3>
+            <p data-i18n="docs.d1.desc">Complete authentic government gazette scan containing all 8 Chapters and 52 Articles specifying legal definitions and licensing prerequisites.</p>
           </div>
           <div class="doc-foot">
             <span class="doc-size">PDF (4.2 MB)</span>
             <!-- Thay href bằng đường dẫn file thật, ví dụ: assets/decree-284-2026.pdf -->
             <a class="btn-solid-gold" href="#references" download>
               <svg class="icon icon-sm"><use href="#i-download"></use></svg>
-              <span>Download Full Text</span>
+              <span data-i18n="docs.d1.btn">Download Full Text</span>
             </a>
           </div>
         </article>
@@ -1889,15 +2032,15 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <article class="doc card">
           <div>
             <span class="icon-box icon-box-lg text-navy"><svg class="icon icon-lg"><use href="#i-book"></use></svg></span>
-            <span class="tag tag-mono tag-navy">Executive Summary</span>
-            <h3>Executive Summary for Founders &amp; C-Level Executives</h3>
-            <p>Executive practitioner briefing detailing critical corporate obligations, the 18-month transition window, and server security standards.</p>
+            <span class="tag tag-mono tag-navy" data-i18n="docs.d2.tag">Executive Summary</span>
+            <h3 data-i18n="docs.d2.title">Executive Summary for Founders &amp; C-Level Executives</h3>
+            <p data-i18n="docs.d2.desc">Executive practitioner briefing detailing critical corporate obligations, the 18-month transition window, and server security standards.</p>
           </div>
           <div class="doc-foot">
             <span class="doc-size">PDF (1.8 MB)</span>
             <a class="btn-ghost" href="#references" download>
               <svg class="icon icon-sm"><use href="#i-download"></use></svg>
-              <span>Download Summary</span>
+              <span data-i18n="docs.d2.btn">Download Summary</span>
             </a>
           </div>
         </article>
@@ -1905,15 +2048,15 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <article class="doc card">
           <div>
             <span class="icon-box icon-box-lg text-gold"><svg class="icon icon-lg"><use href="#i-checklist"></use></svg></span>
-            <span class="tag tag-mono tag-gold">Self-Audit Toolkit</span>
-            <h3>Compliance Checklist: 85 Core VASP Audit Criteria</h3>
-            <p>Comprehensive self-audit checklist covering cold-storage infrastructure, Travel Rule integration protocols, and STR reporting workflows.</p>
+            <span class="tag tag-mono tag-gold" data-i18n="docs.d3.tag">Self-Audit Toolkit</span>
+            <h3 data-i18n="docs.d3.title">Compliance Checklist: 85 Core VASP Audit Criteria</h3>
+            <p data-i18n="docs.d3.desc">Comprehensive self-audit checklist covering cold-storage infrastructure, Travel Rule integration protocols, and STR reporting workflows.</p>
           </div>
           <div class="doc-foot">
             <span class="doc-size">XLSX / PDF (2.5 MB)</span>
             <a class="btn-ghost" href="#references" download>
               <svg class="icon icon-sm"><use href="#i-download"></use></svg>
-              <span>Download Toolkit</span>
+              <span data-i18n="docs.d3.btn">Download Toolkit</span>
             </a>
           </div>
         </article>
@@ -1929,36 +2072,36 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   <div class="registration-inner">
     <div class="reg-card">
       <div class="reg-head">
-        <span class="eyebrow">Delegate Accreditation Portal</span>
-        <h2 class="section-title">Secure Your Place</h2>
-        <p>Enter your official information to reserve an authorized seat and receive verified regulatory briefing materials.</p>
+        <span class="eyebrow" data-i18n="reg.eyebrow">Delegate Accreditation Portal</span>
+        <h2 class="section-title" data-i18n="reg.title">Secure Your Place</h2>
+        <p data-i18n="reg.lead">Enter your official information to reserve an authorized seat and receive verified regulatory briefing materials.</p>
       </div>
 
       <div class="reg-steps">
         <div class="reg-step">
           <div class="reg-step-num">1</div>
-          <div class="reg-step-label">Submit this form</div>
+          <div class="reg-step-label" data-i18n="reg.step1">Submit this form</div>
         </div>
         <div class="reg-step">
           <div class="reg-step-num">2</div>
-          <div class="reg-step-label">Receive pass by email</div>
+          <div class="reg-step-label" data-i18n="reg.step2">Receive pass by email</div>
         </div>
         <div class="reg-step">
           <div class="reg-step-num">3</div>
-          <div class="reg-step-label">Scan QR at the desk</div>
+          <div class="reg-step-label" data-i18n="reg.step3">Scan QR at the desk</div>
         </div>
       </div>
 
       <form class="reg-form" id="reg-form" novalidate>
         <div class="reg-row">
           <div class="field">
-            <label for="reg-fullname">Full Name / Họ và tên <span class="req">*</span></label>
+            <label for="reg-fullname"><span data-i18n="reg.label.fullname">Full Name / Họ và tên</span> <span class="req">*</span></label>
             <input type="text" id="reg-fullname" name="hoTen" maxlength="60" autocomplete="name"
                    placeholder="Nguyen Thanh Tung" aria-describedby="err-fullname" required>
             <div class="field-error" id="err-fullname" role="alert"></div>
           </div>
           <div class="field">
-            <label for="reg-org">Organization / Company</label>
+            <label for="reg-org" data-i18n="reg.label.org">Organization / Company</label>
             <input type="text" id="reg-org" name="donVi" maxlength="100" autocomplete="organization"
                    placeholder="Financial Tech Solutions JSC" aria-describedby="err-org">
             <div class="field-error" id="err-org" role="alert"></div>
@@ -1967,40 +2110,42 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
 
         <div class="reg-row">
           <div class="field">
-            <label for="reg-email">Work Email Address <span class="req">*</span></label>
+            <label for="reg-email"><span data-i18n="reg.label.email">Work Email Address</span> <span class="req">*</span></label>
             <input type="email" id="reg-email" name="email" maxlength="100" autocomplete="email"
                    placeholder="tung.nguyen@enterprise.vn" aria-describedby="err-email" required>
             <div class="field-error" id="err-email" role="alert"></div>
           </div>
           <div class="field">
-            <label for="reg-phone">Phone / Contact Number <span class="req">*</span></label>
+            <label for="reg-phone"><span data-i18n="reg.label.phone">Phone / Contact Number</span> <span class="req">*</span></label>
             <input type="tel" id="reg-phone" name="soDienThoai" maxlength="12" autocomplete="tel"
-                   placeholder="0912345678 or +84912345678" aria-describedby="err-phone" required>
+                   placeholder="0912345678 or +84912345678" data-i18n-placeholder="reg.ph.phone" aria-describedby="err-phone" required>
             <div class="field-error" id="err-phone" role="alert"></div>
           </div>
         </div>
 
         <div class="reg-row">
           <div class="field">
-            <label for="reg-mode">Attendance Mode <span class="req">*</span></label>
+            <label for="reg-mode"><span data-i18n="reg.label.mode">Attendance Mode</span> <span class="req">*</span></label>
             <select id="reg-mode" aria-describedby="hint-mode">
-              <option value="Offline">Offline: Hanoi Convention Center (VIP)</option>
-              <option value="Online">Online: E2E encrypted webinar</option>
+              <option value="Offline" data-i18n="reg.mode.offline">Offline: Hanoi Convention Center (VIP)</option>
+              <option value="Online" data-i18n="reg.mode.online">Online: E2E encrypted webinar</option>
             </select>
-            <span class="visually-hidden" id="hint-mode">Attendance mode is appended to your note for the organizers.</span>
+            <span class="visually-hidden" id="hint-mode" data-i18n="reg.hint.mode">Attendance mode is appended to your note for the organizers.</span>
           </div>
           <div class="field">
             <!-- value phải TRÙNG TUYỆT ĐỐI với TU_CACH_OPTIONS_ trong Registration.gs,
-                 nếu không server sẽ từ chối với "Tư cách tham dự không hợp lệ." -->
-            <label for="reg-role">Sector / Capacity <span class="req">*</span></label>
+                 nếu không server sẽ từ chối với "Tư cách tham dự không hợp lệ."
+                 CHÚ Ý: value KHÔNG đổi theo ngôn ngữ — chỉ đổi phần chữ hiển thị (text)
+                 qua data-i18n, để server luôn nhận đúng 6 giá trị tiếng Việt cố định. -->
+            <label for="reg-role"><span data-i18n="reg.label.role">Sector / Capacity</span> <span class="req">*</span></label>
             <select id="reg-role" name="tuCach" aria-describedby="err-role" required>
-              <option value="" disabled selected>— Select your capacity —</option>
-              <option value="Doanh nghiệp fintech">Founder / CEO — Fintech enterprise</option>
-              <option value="Luật sư/tư vấn pháp lý">Legal counsel / Compliance / Lawyer</option>
-              <option value="Cá nhân đầu tư crypto">Individual crypto investor</option>
-              <option value="Sinh viên/Nhà nghiên cứu">Student / Policy researcher</option>
-              <option value="Báo chí/Truyền thông">Press / Media</option>
-              <option value="Khác">Other</option>
+              <option value="" disabled selected data-i18n="reg.role.placeholder">— Select your capacity —</option>
+              <option value="Doanh nghiệp fintech" data-i18n="reg.role.opt1">Founder / CEO — Fintech enterprise</option>
+              <option value="Luật sư/tư vấn pháp lý" data-i18n="reg.role.opt2">Legal counsel / Compliance / Lawyer</option>
+              <option value="Cá nhân đầu tư crypto" data-i18n="reg.role.opt3">Individual crypto investor</option>
+              <option value="Sinh viên/Nhà nghiên cứu" data-i18n="reg.role.opt4">Student / Policy researcher</option>
+              <option value="Báo chí/Truyền thông" data-i18n="reg.role.opt5">Press / Media</option>
+              <option value="Khác" data-i18n="reg.role.opt6">Other</option>
             </select>
             <div class="field-error" id="err-role" role="alert"></div>
           </div>
@@ -2008,11 +2153,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
 
         <div class="field">
           <label for="reg-question">
-            <span>Advance Question for Panel</span>
-            <span class="optional">Optional</span>
+            <span data-i18n="reg.label.question">Advance Question for Panel</span>
+            <span class="optional" data-i18n="reg.optional">Optional</span>
           </label>
           <textarea id="reg-question" name="cauHoi" rows="3" maxlength="400"
                     placeholder="Example: Transition guidelines for tokens already listed prior to 01/09/2026…"
+                    data-i18n-placeholder="reg.ph.question"
                     aria-describedby="err-question counter-question"></textarea>
           <span class="char-counter" id="counter-question">0/400</span>
           <div class="field-error" id="err-question" role="alert"></div>
@@ -2021,8 +2167,8 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <div class="consent-row">
           <input type="checkbox" id="reg-consent" required aria-describedby="err-consent">
           <label for="reg-consent">
-            I confirm that the submitted information is accurate and agree that the organizers may process my
-            personal data for registration and event check-in, and send the delegate QR access pass by email.
+            <span data-i18n="reg.consent">I confirm that the submitted information is accurate and agree that the organizers may process my
+            personal data for registration and event check-in, and send the delegate QR access pass by email.</span>
             <span class="req">*</span>
           </label>
         </div>
@@ -2034,13 +2180,13 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
              field bị autofill nhầm sẽ khiến server tưởng là bot, âm thầm bỏ qua
              đăng ký hợp lệ mà không báo lỗi gì (Quy tắc #17 cố tình không lộ). -->
         <div class="honeypot" aria-hidden="true">
-          <label for="reg-hp-field">Leave this field empty</label>
+          <label for="reg-hp-field" data-i18n="reg.hp.label">Leave this field empty</label>
           <input type="text" id="reg-hp-field" name="hp_confirm_7f3x" tabindex="-1" autocomplete="off">
         </div>
 
         <button class="btn-gold reg-submit" id="reg-submit" type="submit">
           <svg class="icon" id="reg-submit-icon"><use href="#i-ticket"></use></svg>
-          <span id="reg-submit-label">Confirm Registration (Receive QR Access Pass)</span>
+          <span id="reg-submit-label" data-i18n="reg.submit">Confirm Registration (Receive QR Access Pass)</span>
         </button>
 
         <div class="form-status" id="reg-status" role="status" aria-live="polite"></div>
@@ -2051,9 +2197,9 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       <div class="reg-success" id="reg-success">
         <div class="reg-success-inner">
           <div>
-            <span class="kicker">Registration received</span>
-            <h3 id="success-name">Delegate</h3>
-            <p id="success-detail">
+            <span class="kicker" data-i18n="reg.success.kicker">Registration received</span>
+            <h3 id="success-name" data-i18n="reg.success.defaultName">Delegate</h3>
+            <p id="success-detail" data-i18n="reg.success.defaultDetail">
               Your verified QR access pass is on its way by email. Please also check your Spam folder.
             </p>
           </div>
@@ -2084,8 +2230,8 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   <div class="container">
     <div class="section-head">
       <div>
-        <span class="eyebrow">Frequently Asked Legal &amp; Regulatory Questions</span>
-        <h2 class="section-title">Decree 284 Regulatory Inquiries</h2>
+        <span class="eyebrow" data-i18n="faq.eyebrow">Frequently Asked Legal &amp; Regulatory Questions</span>
+        <h2 class="section-title" data-i18n="faq.title">Decree 284 Regulatory Inquiries</h2>
       </div>
     </div>
 
@@ -2094,11 +2240,11 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <summary>
           <span class="faq-q">
             <span class="faq-num">01</span>
-            <span>Are individual traders using international foreign exchanges subject to direct penalties?</span>
+            <span data-i18n="faq.q1">Are individual traders using international foreign exchanges subject to direct penalties?</span>
           </span>
           <svg class="icon"><use href="#i-chevron-down"></use></svg>
         </summary>
-        <div class="faq-a">
+        <div class="faq-a" data-i18n="faq.a1">
           Decree 284/2026/ND-CP primarily regulates corporate and legal entities operating as Virtual Asset Service
           Providers (VASPs). Individual investors are not barred from holding digital assets; however, fiat conversion
           withdrawals via domestic banking channels require proper personal tax reporting and verifiable capital
@@ -2110,11 +2256,11 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <summary>
           <span class="faq-q">
             <span class="faq-num">02</span>
-            <span>What are the core prerequisite conditions for technology companies to obtain a VASP license?</span>
+            <span data-i18n="faq.q2">What are the core prerequisite conditions for technology companies to obtain a VASP license?</span>
           </span>
           <svg class="icon"><use href="#i-chevron-down"></use></svg>
         </summary>
-        <div class="faq-a">
+        <div class="faq-a" data-i18n="faq.a2">
           Applicants must fulfill four criteria: statutory paid-in charter capital minimums per tier; local server data
           storage located within Vietnam for at least 5 years; integration of standardized eKYC and Travel Rule
           solutions; executive compliance accreditation with clean financial background verification.
@@ -2125,11 +2271,11 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         <summary>
           <span class="faq-q">
             <span class="faq-num">03</span>
-            <span>Do virtual attendees receive the blockchain-verified CPE E-Certificate?</span>
+            <span data-i18n="faq.q3">Do virtual attendees receive the blockchain-verified CPE E-Certificate?</span>
           </span>
           <svg class="icon"><use href="#i-chevron-down"></use></svg>
         </summary>
-        <div class="faq-a">
+        <div class="faq-a" data-i18n="faq.a3">
           Yes. Virtual participants maintaining at least 80% active attendance throughout conference sessions will
           receive an official Certificate of Completion (E-Certificate) encoded with a tamper-proof blockchain
           verification hash.
@@ -2141,21 +2287,21 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       <div class="contact-item">
         <span class="icon-box text-gold"><svg class="icon"><use href="#i-pin"></use></svg></span>
         <div>
-          <strong>Reception Venues</strong>
-          <p>Central Convention Hall, Dist 1, Ho Chi Minh City / Hanoi Convention Center</p>
+          <strong data-i18n="contact.venues.label">Reception Venues</strong>
+          <p data-i18n="contact.venues.value">Central Convention Hall, Dist 1, Ho Chi Minh City / Hanoi Convention Center</p>
         </div>
       </div>
       <div class="contact-item">
         <span class="icon-box text-navy"><svg class="icon"><use href="#i-building"></use></svg></span>
         <div>
-          <strong>Standing Secretariat</strong>
-          <p>Joint Ministerial Taskforce on Legal &amp; Financial Technology, Hoan Kiem Dist, Hanoi</p>
+          <strong data-i18n="contact.secretariat.label">Standing Secretariat</strong>
+          <p data-i18n="contact.secretariat.value">Joint Ministerial Taskforce on Legal &amp; Financial Technology, Hoan Kiem Dist, Hanoi</p>
         </div>
       </div>
       <div class="contact-item">
         <span class="icon-box text-gold"><svg class="icon"><use href="#i-phone"></use></svg></span>
         <div>
-          <strong>Official Hotline</strong>
+          <strong data-i18n="contact.hotline.label">Official Hotline</strong>
           <p class="mono">(+84) 028 3825 0000 | btc@nghidinh284.gov.vn</p>
         </div>
       </div>
@@ -2172,12 +2318,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   <div class="container footer-inner">
     <div class="footer-brand">
       <span class="footer-crest"><svg class="icon"><use href="#i-balance"></use></svg></span>
-      <span>© 2026 Legal Crypto Conference • Decree 284/2026/ND-CP Compliance Framework. All rights reserved.</span>
+      <span data-i18n="footer.copyright">© 2026 Legal Crypto Conference • Decree 284/2026/ND-CP Compliance Framework. All rights reserved.</span>
     </div>
     <div class="footer-links">
-      <a href="#matrix">Conference Regulations</a>
-      <a href="#registration">Data Privacy</a>
-      <a href="#speakers">Advisory Council</a>
+      <a href="#matrix" data-i18n="footer.link1">Conference Regulations</a>
+      <a href="#registration" data-i18n="footer.link2">Data Privacy</a>
+      <a href="#speakers" data-i18n="footer.link3">Advisory Council</a>
     </div>
   </div>
 </footer>
@@ -2185,6 +2331,679 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
 <script>
 (function () {
   'use strict';
+
+  /* =======================================================================
+     I18N — Song ngữ VI / EN / 中文.
+     Mọi text hiển thị đều nằm trong TRANSLATIONS; phần tử nào cần dịch
+     được gắn data-i18n="khoa" (hoặc data-i18n-placeholder cho ô nhập).
+     t(key) và applyTranslations() cũng được các đoạn JS khác (validate,
+     trạng thái submit...) dùng lại để thông báo lỗi/thành công luôn đúng
+     ngôn ngữ đang chọn.
+     ======================================================================= */
+  var TRANSLATIONS = {
+    en: {
+      'nav.home': 'Home', 'nav.overview': 'Overview', 'nav.speakers': 'Speakers',
+      'nav.agenda': 'Agenda', 'nav.registration': 'Registration', 'nav.contact': 'Contact',
+      'nav.matrix': 'Penalty Matrix', 'nav.registerCta': 'Register Now',
+      'skip': 'Skip to registration',
+
+      'hero.badge': 'Ministry of Justice & Digital Asset Council • Official Announcement',
+      'hero.title': 'Decree 284/2026 Compliance Conference',
+      'hero.lead': "Orienting Vietnam's crypto asset legal framework • Standardizing VASP licensing & Safeguarding the digital asset market",
+      'hero.location': 'Hanoi / Online Summit',
+      'hero.audience': 'Legal & Tech Experts',
+      'hero.cta': 'Register Now / Secure Your Seat',
+      'hero.note': 'Free admission • Limited to 150 in-person seats & 1,000 virtual attendees',
+
+      'about.eyebrow': 'Regulatory Context & Vital Significance',
+      'about.title': "Eliminating the legal grey area, standardizing Vietnam's digital asset market",
+      'about.lead': "Decree 284/2026/ND-CP is a milestone legal document, marking Vietnam's first comprehensive and strict legal framework for Virtual Asset Service Providers (VASPs). The decree completely ends the era of voluntary self-regulation, bringing asset transfers, custody, and digital asset trading closer to international standards of transparency, capital flow management, and end-user protection.",
+      'about.point1.title': 'FATF Compliance & Risk Mitigation',
+      'about.point1.desc': 'Bringing Vietnam off the enhanced monitoring grey list through strict AML/CFT standards.',
+      'about.point2.title': 'Safe Harbor for VASPs',
+      'about.point2.desc': 'Legally protecting investor assets, establishing clear boundaries between permitted and prohibited assets.',
+      'about.donut.title': '2026 Ecosystem Impact Allocation',
+      'about.donut.legend1': 'VASP Licensing & Charter Capital',
+      'about.donut.legend2': 'Anti-Money Laundering (AML/CFT) & Tax',
+      'about.donut.legend3': 'Data Security & Investor Protection',
+      'about.metric1.label': 'Limited In-Person Seats',
+      'about.metric2.label': 'Virtual Delegates',
+      'about.metric3.label': 'Key Sessions & Panels',
+      'about.metric4.label': 'Max Administrative Fine (VND)',
+
+      'agenda.eyebrow': 'Official Program Agenda',
+      'agenda.title': 'Thematic Conference Program',
+      'agenda.pill': 'Time: 08:00 – 12:30 | 20/09/2026',
+      'agenda.item1.tag1': 'Check-in', 'agenda.item1.tag2': 'Automated',
+      'agenda.item1.title': 'Attendee Reception & Automated QR Code Check-in',
+      'agenda.item1.desc': 'Receiving high-level delegates, smart QR pass scanning, and distributing confidential briefing materials.',
+      'agenda.item1.meta': 'Central Grand Hall',
+      'agenda.item2.tag1': 'Keynote 1', 'agenda.item2.tag2': 'Focus',
+      'agenda.item2.title': 'Decree 284/2026/ND-CP Overview: Crypto Asset Classification & VASP Licensing Framework',
+      'agenda.item2.desc': 'Legal distinction between Virtual Assets vs Crypto Currency; statutory paid-up capital requirements, server audit rules, and cryptographic key custody.',
+      'agenda.item2.meta': 'Department of Legal Affairs',
+      'agenda.item3.tag1': 'Sanction 2', 'agenda.item3.tag2': 'Legal Risk',
+      'agenda.item3.title': 'Session 2: Administrative Sanction Framework, Tax Obligations & Crypto Travel Rule',
+      'agenda.item3.desc': 'Fines up to 200,000,000 VND; mandatory eKYC customer identification obligations; personal income tax declaration on tokenomics.',
+      'agenda.item3.meta': 'Senior AML/FATF Expert',
+      'agenda.item4.tag1': 'VIP Luncheon',
+      'agenda.item4.title': 'Networking Luncheon & Closed-Door Roundtable',
+      'agenda.item4.desc': 'High-level networking luncheon between regulatory drafting officials, commercial banking leadership, and global Web3 funds.',
+      'agenda.item4.meta': 'Executive Lounge',
+      'agenda.item5.tag1': 'Panel 3', 'agenda.item5.tag2': 'Live Q&A',
+      'agenda.item5.title': 'Interactive Panel: VASP Licensing Roadmap & Enterprise Adaptation',
+      'agenda.item5.desc': 'Live Q&A town-hall resolving licensing dossier hurdles and cross-border compliance mechanisms for foreign exchanges operating in Vietnam.',
+      'agenda.item5.meta': 'Keynote Auditorium',
+      'agenda.item6.tag1': 'Closing',
+      'agenda.item6.title': 'Closing Remarks & Issuance of Blockchain-Verified E-Certificates (CPE)',
+      'agenda.item6.desc': 'Conference resolution signing and issuance of tamper-proof crypto certificates of completion for accredited professionals.',
+      'agenda.item6.meta': 'Secretariat Desk',
+
+      'speakers.eyebrow': 'Specialized Advisory Board',
+      'speakers.title': 'Distinguished Advisory & Keynote Speakers',
+      'speakers.topicLabel': 'Keynote Topic:',
+      'speakers.s1.tag': 'Drafting Committee',
+      'speakers.s1.name': 'Representative, Department of Legal Affairs',
+      'speakers.s1.role': 'Head of Drafting Committee, Digital Asset Legal Framework',
+      'speakers.s1.bio': 'Over 18 years of experience drafting financial and banking regulations, directly overseeing statutory criteria for the credit institution sector and advising on the framework of Decree 284/2026/ND-CP.',
+      'speakers.s1.topic': 'VASP Standards 2026',
+      'speakers.s2.tag': 'Corporate Counsel',
+      'speakers.s2.role': 'Managing Partner — Asia FinTech Legal Group',
+      'speakers.s2.bio': 'Advised on successful licensing for over 40 Web3 projects and cross-border digital asset exchanges in Singapore, Hong Kong, and the Vietnam domestic market.',
+      'speakers.s2.topic': 'Optimal Corporate Structuring',
+      'speakers.s3.tag': 'FATF Advisory Panel',
+      'speakers.s3.role': 'Chief AML/CFT & Financial Intelligence Expert',
+      'speakers.s3.bio': 'Member of the National Anti-Money Laundering Steering Committee, representing Vietnam in bilateral mutual evaluations and FATF virtual asset risk assessments.',
+      'speakers.s3.topic': 'Travel Rule & AML Compliance',
+
+      'matrix.eyebrow': 'Chapter IV Statutory Remedies',
+      'matrix.title': 'Administrative Penalty Matrix',
+      'matrix.pill': 'Mandatory enforcement from 01/09/2026',
+      'matrix.th1': 'Violation Category', 'matrix.th2': 'Applicable Entity',
+      'matrix.th3': 'Monetary Penalty', 'matrix.th4': 'Remedial & Enforcement Measures',
+      'matrix.r1.violation': 'Operating unlicensed VASP / exchange services',
+      'matrix.r1.ref': 'Article 34, Clause 2 — Decree 284',
+      'matrix.r1.entity': 'Domestic & international enterprises offering services in Vietnam',
+      'matrix.r1.remedyTag': 'Forced Action',
+      'matrix.r1.remedy': 'Business suspension (6–12 months); total confiscation of all illicit profits into state budget.',
+      'matrix.r2.violation': 'Failure to comply with KYC & AML/CFT obligations',
+      'matrix.r2.ref': 'Article 36, Clauses 1 & 3 — Decree 284',
+      'matrix.r2.entity': 'Licensed digital asset exchanges, custody platforms',
+      'matrix.r2.remedyTag': 'Technical',
+      'matrix.r2.remedy': 'Temporary suspension of banking API integrations; mandatory independent audit within 30 days.',
+      'matrix.r3.violation': 'Tax evasion on digital asset transaction proceeds',
+      'matrix.r3.ref': 'Article 41 — Inter-Agency Tax Coordination Code',
+      'matrix.r3.entity': 'Individual traders, high-net-worth investors, crypto businesses',
+      'matrix.r3.penalty': '1x to 3x evaded tax amount',
+      'matrix.r3.remedyTag': 'Criminal Referral',
+      'matrix.r3.remedy': '100% tax clawback + late payment surcharge; account freeze and referral for prosecution if fraud detected.',
+      'matrix.r4.violation': 'Advertising or promoting unlicensed crypto platforms',
+      'matrix.r4.ref': 'Article 45 — Marketing Restrictions for VASP Services',
+      'matrix.r4.entity': 'KOLs, influencers, media agencies, affiliate networks',
+      'matrix.r4.remedyTag': 'Digital Remediation',
+      'matrix.r4.remedy': 'Domain name seizure; mandatory video/content removal within 24h; public correction disclosure.',
+
+      'docs.eyebrow': 'Official Gazette Repository & Practitioner Guides',
+      'docs.title': 'Regulatory Library & Compliance Handbook',
+      'docs.d1.tag': 'Official Text',
+      'docs.d1.title': 'Full Decree 284/2026/ND-CP Official Text',
+      'docs.d1.desc': 'Complete authentic government gazette scan containing all 8 Chapters and 52 Articles specifying legal definitions and licensing prerequisites.',
+      'docs.d1.btn': 'Download Full Text',
+      'docs.d2.tag': 'Executive Summary',
+      'docs.d2.title': 'Executive Summary for Founders & C-Level Executives',
+      'docs.d2.desc': 'Executive practitioner briefing detailing critical corporate obligations, the 18-month transition window, and server security standards.',
+      'docs.d2.btn': 'Download Summary',
+      'docs.d3.tag': 'Self-Audit Toolkit',
+      'docs.d3.title': 'Compliance Checklist: 85 Core VASP Audit Criteria',
+      'docs.d3.desc': 'Comprehensive self-audit checklist covering cold-storage infrastructure, Travel Rule integration protocols, and STR reporting workflows.',
+      'docs.d3.btn': 'Download Toolkit',
+
+      'reg.eyebrow': 'Delegate Accreditation Portal',
+      'reg.title': 'Secure Your Place',
+      'reg.lead': 'Enter your official information to reserve an authorized seat and receive verified regulatory briefing materials.',
+      'reg.step1': 'Submit this form', 'reg.step2': 'Receive pass by email', 'reg.step3': 'Scan QR at the desk',
+      'reg.label.fullname': 'Full Name / Họ và tên',
+      'reg.label.org': 'Organization / Company',
+      'reg.label.email': 'Work Email Address',
+      'reg.label.phone': 'Phone / Contact Number',
+      'reg.label.mode': 'Attendance Mode',
+      'reg.label.role': 'Sector / Capacity',
+      'reg.label.question': 'Advance Question for Panel',
+      'reg.optional': 'Optional',
+      'reg.ph.phone': '0912345678 or +84912345678',
+      'reg.ph.question': 'Example: Transition guidelines for tokens already listed prior to 01/09/2026…',
+      'reg.mode.offline': 'Offline: Hanoi Convention Center (VIP)',
+      'reg.mode.online': 'Online: E2E encrypted webinar',
+      'reg.hint.mode': 'Attendance mode is appended to your note for the organizers.',
+      'reg.role.placeholder': '— Select your capacity —',
+      'reg.role.opt1': 'Founder / CEO — Fintech enterprise',
+      'reg.role.opt2': 'Legal counsel / Compliance / Lawyer',
+      'reg.role.opt3': 'Individual crypto investor',
+      'reg.role.opt4': 'Student / Policy researcher',
+      'reg.role.opt5': 'Press / Media',
+      'reg.role.opt6': 'Other',
+      'reg.consent': 'I confirm that the submitted information is accurate and agree that the organizers may process my personal data for registration and event check-in, and send the delegate QR access pass by email.',
+      'reg.hp.label': 'Leave this field empty',
+      'reg.submit': 'Confirm Registration (Receive QR Access Pass)',
+      'reg.submitting': 'Verifying accreditation…',
+      'reg.success.kicker': 'Registration received',
+      'reg.success.defaultName': 'Delegate',
+      'reg.success.defaultDetail': 'Your verified QR access pass is on its way by email. Please also check your Spam folder.',
+      'reg.success.detailWithEmail': 'A verified QR access pass is on its way to {email}. Please also check your Spam folder.',
+
+      'err.fullname': 'Full name must be 2–60 characters — letters, spaces and hyphens only.',
+      'err.email': 'Please enter a valid email address (max 100 characters).',
+      'err.phone': 'Enter a valid Vietnamese mobile number, e.g. 0912345678 or +84912345678.',
+      'err.org': 'Organization name must be 100 characters or fewer.',
+      'err.role': 'Please select your sector / capacity.',
+      'err.question': 'Question must be 400 characters or fewer.',
+      'err.consent': 'You must agree to the terms and personal data processing to continue.',
+      'err.formInvalid': 'Please correct the highlighted fields above.',
+      'err.insecure': 'Insecure connection (not HTTPS). Please reload this page over https://',
+      'err.invalidRequest': 'Invalid request data.',
+      'err.question500': 'Question must be 500 characters or fewer.',
+      'err.rateLimitGlobal': 'The system is busy right now. Please try again in a few minutes.',
+      'err.rateLimitEmail': 'You have submitted too many registrations. Please try again in 1 hour.',
+      'msg.defaultSuccess': 'Your pass has been emailed to you. Please check your Spam folder too.',
+      'msg.defaultError': 'Something went wrong. Please try again.',
+      'msg.unreadableSuccess': 'Your registration was submitted. Please check your email (and Spam folder) for your pass.',
+      'msg.retryFallback': 'We could not confirm your registration from this browser, but it may have gone through. Please check your email (including Spam) in a few minutes before submitting again.',
+
+      'faq.eyebrow': 'Frequently Asked Legal & Regulatory Questions',
+      'faq.title': 'Decree 284 Regulatory Inquiries',
+      'faq.q1': 'Are individual traders using international foreign exchanges subject to direct penalties?',
+      'faq.a1': 'Decree 284/2026/ND-CP primarily regulates corporate and legal entities operating as Virtual Asset Service Providers (VASPs). Individual investors are not barred from holding digital assets; however, fiat conversion withdrawals via domestic banking channels require proper personal tax reporting and verifiable capital provenance under amended AML guidelines.',
+      'faq.q2': 'What are the core prerequisite conditions for technology companies to obtain a VASP license?',
+      'faq.a2': 'Applicants must fulfill four criteria: statutory paid-in charter capital minimums per tier; local server data storage located within Vietnam for at least 5 years; integration of standardized eKYC and Travel Rule solutions; executive compliance accreditation with clean financial background verification.',
+      'faq.q3': 'Do virtual attendees receive the blockchain-verified CPE E-Certificate?',
+      'faq.a3': 'Yes. Virtual participants maintaining at least 80% active attendance throughout conference sessions will receive an official Certificate of Completion (E-Certificate) encoded with a tamper-proof blockchain verification hash.',
+
+      'contact.venues.label': 'Reception Venues',
+      'contact.venues.value': 'Central Convention Hall, Dist 1, Ho Chi Minh City / Hanoi Convention Center',
+      'contact.secretariat.label': 'Standing Secretariat',
+      'contact.secretariat.value': 'Joint Ministerial Taskforce on Legal & Financial Technology, Hoan Kiem Dist, Hanoi',
+      'contact.hotline.label': 'Official Hotline',
+
+      'footer.copyright': '© 2026 Legal Crypto Conference • Decree 284/2026/ND-CP Compliance Framework. All rights reserved.',
+      'footer.link1': 'Conference Regulations', 'footer.link2': 'Data Privacy', 'footer.link3': 'Advisory Council',
+
+      'aria.openMenu': 'Open menu', 'aria.closeMenu': 'Close menu',
+      'aria.toLight': 'Switch to light mode', 'aria.toDark': 'Switch to dark mode'
+    },
+
+    vi: {
+      'nav.home': 'Trang chủ', 'nav.overview': 'Tổng quan', 'nav.speakers': 'Diễn giả',
+      'nav.agenda': 'Chương trình', 'nav.registration': 'Đăng ký', 'nav.contact': 'Liên hệ',
+      'nav.matrix': 'Bảng Xử phạt', 'nav.registerCta': 'Đăng ký ngay',
+      'skip': 'Chuyển tới phần Đăng ký',
+
+      'hero.badge': 'Bộ Tư pháp & Hội đồng Tài sản số • Thông báo chính thức',
+      'hero.title': 'Hội nghị Tuân thủ Nghị định 284/2026',
+      'hero.lead': 'Định hướng khung pháp lý tài sản mã hóa Việt Nam • Chuẩn hóa cấp phép VASP & Bảo vệ thị trường tài sản số',
+      'hero.location': 'Hà Nội / Hội nghị trực tuyến',
+      'hero.audience': 'Chuyên gia Pháp lý & Công nghệ',
+      'hero.cta': 'Đăng ký ngay / Giữ chỗ của bạn',
+      'hero.note': 'Miễn phí tham dự • Giới hạn 150 chỗ trực tiếp & 1.000 người tham dự trực tuyến',
+
+      'about.eyebrow': 'Bối cảnh Pháp lý & Ý nghĩa Thiết yếu',
+      'about.title': 'Xóa bỏ vùng xám pháp lý, chuẩn hóa thị trường tài sản số Việt Nam',
+      'about.lead': 'Nghị định 284/2026/NĐ-CP là văn bản pháp lý mang tính bước ngoặt, đánh dấu khung pháp lý toàn diện và nghiêm ngặt đầu tiên của Việt Nam cho các Nhà cung cấp Dịch vụ Tài sản Ảo (VASP). Nghị định chính thức chấm dứt thời kỳ tự quản tự nguyện, đưa hoạt động chuyển giao tài sản, lưu ký và giao dịch tài sản số tiến gần hơn tới các chuẩn mực quốc tế về minh bạch, quản lý luồng vốn và bảo vệ người dùng cuối.',
+      'about.point1.title': 'Tuân thủ FATF & Giảm thiểu Rủi ro',
+      'about.point1.desc': 'Đưa Việt Nam ra khỏi danh sách giám sát tăng cường thông qua các chuẩn mực AML/CFT nghiêm ngặt.',
+      'about.point2.title': 'Cơ chế Bảo vệ An toàn cho VASP',
+      'about.point2.desc': 'Bảo vệ hợp pháp tài sản của nhà đầu tư, xác lập ranh giới rõ ràng giữa tài sản được phép và bị cấm.',
+      'about.donut.title': 'Phân bổ Tác động Hệ sinh thái 2026',
+      'about.donut.legend1': 'Cấp phép VASP & Vốn điều lệ',
+      'about.donut.legend2': 'Chống rửa tiền (AML/CFT) & Thuế',
+      'about.donut.legend3': 'An ninh Dữ liệu & Bảo vệ Nhà đầu tư',
+      'about.metric1.label': 'Chỗ ngồi Trực tiếp Giới hạn',
+      'about.metric2.label': 'Đại biểu Trực tuyến',
+      'about.metric3.label': 'Phiên họp & Tọa đàm Chính',
+      'about.metric4.label': 'Mức Phạt Hành chính Tối đa (VNĐ)',
+
+      'agenda.eyebrow': 'Chương trình Nghị sự Chính thức',
+      'agenda.title': 'Chương trình Hội nghị theo Chủ đề',
+      'agenda.pill': 'Thời gian: 08:00 – 12:30 | 20/09/2026',
+      'agenda.item1.tag1': 'Check-in', 'agenda.item1.tag2': 'Tự động',
+      'agenda.item1.title': 'Tiếp đón Đại biểu & Check-in tự động bằng mã QR',
+      'agenda.item1.desc': 'Tiếp đón đại biểu cấp cao, quét mã QR thông minh và phát tài liệu thông tin mật.',
+      'agenda.item1.meta': 'Đại sảnh Trung tâm',
+      'agenda.item2.tag1': 'Diễn văn 1', 'agenda.item2.tag2': 'Trọng tâm',
+      'agenda.item2.title': 'Tổng quan Nghị định 284/2026/NĐ-CP: Phân loại Tài sản mã hóa & Khung Cấp phép VASP',
+      'agenda.item2.desc': 'Phân biệt pháp lý giữa Tài sản ảo và Tiền điện tử; yêu cầu vốn điều lệ đã góp theo luật định, quy tắc kiểm toán máy chủ và lưu ký khóa mã hóa.',
+      'agenda.item2.meta': 'Vụ Pháp chế',
+      'agenda.item3.tag1': 'Chế tài 2', 'agenda.item3.tag2': 'Rủi ro Pháp lý',
+      'agenda.item3.title': 'Phiên 2: Khung Chế tài Hành chính, Nghĩa vụ Thuế & Quy tắc Travel Rule',
+      'agenda.item3.desc': 'Mức phạt lên đến 200.000.000 VNĐ; nghĩa vụ định danh khách hàng eKYC bắt buộc; kê khai thuế thu nhập cá nhân đối với tokenomics.',
+      'agenda.item3.meta': 'Chuyên gia Cấp cao AML/FATF',
+      'agenda.item4.tag1': 'Tiệc trưa VIP',
+      'agenda.item4.title': 'Tiệc trưa Giao lưu & Tọa đàm Kín',
+      'agenda.item4.desc': 'Tiệc trưa giao lưu cấp cao giữa các cán bộ soạn thảo chính sách, lãnh đạo ngân hàng thương mại và các quỹ Web3 toàn cầu.',
+      'agenda.item4.meta': 'Phòng Khách Cao cấp',
+      'agenda.item5.tag1': 'Tọa đàm 3', 'agenda.item5.tag2': 'Hỏi đáp Trực tiếp',
+      'agenda.item5.title': 'Tọa đàm Tương tác: Lộ trình Cấp phép VASP & Thích ứng của Doanh nghiệp',
+      'agenda.item5.desc': 'Buổi hỏi đáp trực tiếp giải quyết các vướng mắc hồ sơ cấp phép và cơ chế tuân thủ xuyên biên giới cho các sàn giao dịch nước ngoài hoạt động tại Việt Nam.',
+      'agenda.item5.meta': 'Hội trường Chính',
+      'agenda.item6.tag1': 'Bế mạc',
+      'agenda.item6.title': 'Phát biểu Bế mạc & Cấp Chứng chỉ điện tử Xác thực bằng Blockchain (CPE)',
+      'agenda.item6.desc': 'Ký kết nghị quyết hội nghị và cấp chứng chỉ hoàn thành khóa học mã hóa chống giả mạo cho các chuyên gia được công nhận.',
+      'agenda.item6.meta': 'Bàn Thư ký',
+
+      'speakers.eyebrow': 'Hội đồng Cố vấn Chuyên môn',
+      'speakers.title': 'Diễn giả Cố vấn & Diễn văn Danh dự',
+      'speakers.topicLabel': 'Chủ đề Diễn văn:',
+      'speakers.s1.tag': 'Ban Soạn thảo',
+      'speakers.s1.name': 'Đại diện, Vụ Pháp chế',
+      'speakers.s1.role': 'Trưởng Ban Soạn thảo, Khung Pháp lý Tài sản số',
+      'speakers.s1.bio': 'Hơn 18 năm kinh nghiệm soạn thảo các quy định tài chính và ngân hàng, trực tiếp phụ trách các tiêu chí luật định cho lĩnh vực tổ chức tín dụng và tư vấn xây dựng khung Nghị định 284/2026/NĐ-CP.',
+      'speakers.s1.topic': 'Chuẩn mực VASP 2026',
+      'speakers.s2.tag': 'Cố vấn Doanh nghiệp',
+      'speakers.s2.role': 'Đối tác Quản lý — Asia FinTech Legal Group',
+      'speakers.s2.bio': 'Tư vấn cấp phép thành công cho hơn 40 dự án Web3 và các sàn giao dịch tài sản số xuyên biên giới tại Singapore, Hồng Kông và thị trường nội địa Việt Nam.',
+      'speakers.s2.topic': 'Cấu trúc Doanh nghiệp Tối ưu',
+      'speakers.s3.tag': 'Hội đồng Cố vấn FATF',
+      'speakers.s3.role': 'Chuyên gia Trưởng AML/CFT & Tình báo Tài chính',
+      'speakers.s3.bio': 'Thành viên Ban Chỉ đạo Phòng, chống Rửa tiền Quốc gia, đại diện Việt Nam trong các đánh giá song phương và đánh giá rủi ro tài sản ảo của FATF.',
+      'speakers.s3.topic': 'Travel Rule & Tuân thủ AML',
+
+      'matrix.eyebrow': 'Chương IV: Biện pháp Khắc phục theo Luật định',
+      'matrix.title': 'Bảng Ma trận Xử phạt Hành chính',
+      'matrix.pill': 'Bắt buộc thi hành từ 01/09/2026',
+      'matrix.th1': 'Loại Vi phạm', 'matrix.th2': 'Đối tượng Áp dụng',
+      'matrix.th3': 'Mức Xử phạt Tiền', 'matrix.th4': 'Biện pháp Khắc phục & Thi hành',
+      'matrix.r1.violation': 'Vận hành dịch vụ VASP / sàn giao dịch không có giấy phép',
+      'matrix.r1.ref': 'Điều 34, Khoản 2 — Nghị định 284',
+      'matrix.r1.entity': 'Doanh nghiệp trong nước & quốc tế cung cấp dịch vụ tại Việt Nam',
+      'matrix.r1.remedyTag': 'Cưỡng chế Thi hành',
+      'matrix.r1.remedy': 'Đình chỉ hoạt động (6–12 tháng); tịch thu toàn bộ lợi nhuận bất hợp pháp vào ngân sách nhà nước.',
+      'matrix.r2.violation': 'Không tuân thủ nghĩa vụ KYC & AML/CFT',
+      'matrix.r2.ref': 'Điều 36, Khoản 1 & 3 — Nghị định 284',
+      'matrix.r2.entity': 'Sàn giao dịch tài sản số & nền tảng lưu ký được cấp phép',
+      'matrix.r2.remedyTag': 'Kỹ thuật',
+      'matrix.r2.remedy': 'Tạm ngừng kết nối API ngân hàng; bắt buộc kiểm toán độc lập trong vòng 30 ngày.',
+      'matrix.r3.violation': 'Trốn thuế trên thu nhập từ giao dịch tài sản số',
+      'matrix.r3.ref': 'Điều 41 — Quy chế Phối hợp Thuế Liên ngành',
+      'matrix.r3.entity': 'Nhà giao dịch cá nhân, nhà đầu tư có giá trị tài sản cao, doanh nghiệp tiền điện tử',
+      'matrix.r3.penalty': '1 đến 3 lần số thuế trốn',
+      'matrix.r3.remedyTag': 'Chuyển Truy tố Hình sự',
+      'matrix.r3.remedy': 'Truy thu 100% số thuế + tiền chậm nộp; phong tỏa tài khoản và chuyển truy tố nếu phát hiện gian lận.',
+      'matrix.r4.violation': 'Quảng cáo hoặc quảng bá các nền tảng tiền điện tử không phép',
+      'matrix.r4.ref': 'Điều 45 — Hạn chế Tiếp thị đối với Dịch vụ VASP',
+      'matrix.r4.entity': 'KOL, người có ảnh hưởng, công ty truyền thông, mạng lưới liên kết',
+      'matrix.r4.remedyTag': 'Khắc phục Số hóa',
+      'matrix.r4.remedy': 'Thu hồi tên miền; buộc gỡ bỏ video/nội dung trong vòng 24 giờ; công khai đính chính.',
+
+      'docs.eyebrow': 'Kho Công báo Chính thức & Hướng dẫn Hành nghề',
+      'docs.title': 'Thư viện Pháp quy & Cẩm nang Tuân thủ',
+      'docs.d1.tag': 'Văn bản Chính thức',
+      'docs.d1.title': 'Toàn văn Chính thức Nghị định 284/2026/NĐ-CP',
+      'docs.d1.desc': 'Bản scan công báo chính thức đầy đủ gồm 8 Chương và 52 Điều quy định định nghĩa pháp lý và điều kiện cấp phép.',
+      'docs.d1.btn': 'Tải Toàn văn',
+      'docs.d2.tag': 'Tóm tắt Điều hành',
+      'docs.d2.title': 'Tóm tắt Điều hành cho Nhà sáng lập & Lãnh đạo Cấp cao',
+      'docs.d2.desc': 'Bản tóm tắt hành nghề dành cho lãnh đạo, nêu chi tiết các nghĩa vụ doanh nghiệp trọng yếu, giai đoạn chuyển tiếp 18 tháng và chuẩn an ninh máy chủ.',
+      'docs.d2.btn': 'Tải Bản tóm tắt',
+      'docs.d3.tag': 'Bộ công cụ Tự Kiểm tra',
+      'docs.d3.title': 'Danh mục Tuân thủ: 85 Tiêu chí Kiểm tra Cốt lõi cho VASP',
+      'docs.d3.desc': 'Danh mục tự kiểm tra toàn diện bao gồm hạ tầng lưu trữ lạnh, quy trình tích hợp Travel Rule và luồng báo cáo giao dịch đáng ngờ (STR).',
+      'docs.d3.btn': 'Tải Bộ công cụ',
+
+      'reg.eyebrow': 'Cổng Xác thực Đại biểu',
+      'reg.title': 'Giữ chỗ của Bạn',
+      'reg.lead': 'Nhập thông tin chính thức của bạn để giữ chỗ và nhận tài liệu thông tin pháp quy đã được xác thực.',
+      'reg.step1': 'Gửi biểu mẫu này', 'reg.step2': 'Nhận vé qua email', 'reg.step3': 'Quét mã QR tại quầy',
+      'reg.label.fullname': 'Họ và tên / Full Name',
+      'reg.label.org': 'Đơn vị / Công ty',
+      'reg.label.email': 'Địa chỉ Email Công tác',
+      'reg.label.phone': 'Số điện thoại Liên hệ',
+      'reg.label.mode': 'Hình thức Tham dự',
+      'reg.label.role': 'Lĩnh vực / Vai trò',
+      'reg.label.question': 'Câu hỏi gửi trước cho Tọa đàm',
+      'reg.optional': 'Không bắt buộc',
+      'reg.ph.phone': '0912345678 hoặc +84912345678',
+      'reg.ph.question': 'Ví dụ: Hướng dẫn chuyển tiếp cho các token đã niêm yết trước ngày 01/09/2026…',
+      'reg.mode.offline': 'Trực tiếp: Trung tâm Hội nghị Hà Nội (VIP)',
+      'reg.mode.online': 'Trực tuyến: Hội thảo mã hóa đầu-cuối',
+      'reg.hint.mode': 'Hình thức tham dự sẽ được thêm vào phần ghi chú gửi cho ban tổ chức.',
+      'reg.role.placeholder': '— Chọn vai trò của bạn —',
+      'reg.role.opt1': 'Nhà sáng lập / CEO — Doanh nghiệp Fintech',
+      'reg.role.opt2': 'Cố vấn Pháp lý / Tuân thủ / Luật sư',
+      'reg.role.opt3': 'Nhà đầu tư cá nhân tiền điện tử',
+      'reg.role.opt4': 'Sinh viên / Nhà nghiên cứu Chính sách',
+      'reg.role.opt5': 'Báo chí / Truyền thông',
+      'reg.role.opt6': 'Khác',
+      'reg.consent': 'Tôi xác nhận thông tin đã gửi là chính xác và đồng ý cho ban tổ chức xử lý dữ liệu cá nhân của tôi để phục vụ đăng ký, check-in sự kiện, và gửi vé QR đại biểu qua email.',
+      'reg.hp.label': 'Để trống trường này',
+      'reg.submit': 'Xác nhận Đăng ký (Nhận vé QR)',
+      'reg.submitting': 'Đang xác thực đăng ký…',
+      'reg.success.kicker': 'Đã nhận đăng ký',
+      'reg.success.defaultName': 'Đại biểu',
+      'reg.success.defaultDetail': 'Vé QR đã được xác thực của bạn đang được gửi qua email. Vui lòng kiểm tra cả thư mục Spam.',
+      'reg.success.detailWithEmail': 'Vé QR đã được xác thực đang được gửi tới {email}. Vui lòng kiểm tra cả thư mục Spam.',
+
+      'err.fullname': 'Họ và tên phải từ 2–60 ký tự — chỉ gồm chữ cái, khoảng trắng và gạch nối.',
+      'err.email': 'Vui lòng nhập địa chỉ email hợp lệ (tối đa 100 ký tự).',
+      'err.phone': 'Nhập số điện thoại di động Việt Nam hợp lệ, ví dụ 0912345678 hoặc +84912345678.',
+      'err.org': 'Tên đơn vị/công ty không vượt quá 100 ký tự.',
+      'err.role': 'Vui lòng chọn lĩnh vực / vai trò của bạn.',
+      'err.question': 'Câu hỏi không vượt quá 400 ký tự.',
+      'err.consent': 'Bạn phải đồng ý với điều khoản và việc xử lý dữ liệu cá nhân để tiếp tục.',
+      'err.formInvalid': 'Vui lòng sửa các trường được đánh dấu ở trên.',
+      'err.insecure': 'Kết nối không an toàn (không phải HTTPS). Vui lòng tải lại trang qua https://',
+      'err.invalidRequest': 'Dữ liệu gửi lên không hợp lệ.',
+      'err.question500': 'Câu hỏi không vượt quá 500 ký tự.',
+      'err.rateLimitGlobal': 'Hệ thống đang quá tải, vui lòng thử lại sau ít phút.',
+      'err.rateLimitEmail': 'Bạn đã gửi đăng ký quá nhiều lần. Vui lòng thử lại sau 1 giờ.',
+      'msg.defaultSuccess': 'Vé của bạn đã được gửi qua email. Vui lòng kiểm tra cả thư mục Spam.',
+      'msg.defaultError': 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+      'msg.unreadableSuccess': 'Đăng ký của bạn đã được gửi đi. Vui lòng kiểm tra email (và thư mục Spam) để nhận vé.',
+      'msg.retryFallback': 'Chúng tôi không thể xác nhận đăng ký từ trình duyệt này, nhưng có thể đăng ký đã được ghi nhận. Vui lòng kiểm tra email (kể cả Spam) sau vài phút trước khi gửi lại.',
+
+      'faq.eyebrow': 'Câu hỏi Thường gặp về Pháp lý & Quy định',
+      'faq.title': 'Giải đáp Quy định Nghị định 284',
+      'faq.q1': 'Nhà giao dịch cá nhân sử dụng sàn giao dịch quốc tế có bị xử phạt trực tiếp không?',
+      'faq.a1': 'Nghị định 284/2026/NĐ-CP chủ yếu điều chỉnh các tổ chức, pháp nhân hoạt động với vai trò Nhà cung cấp Dịch vụ Tài sản Ảo (VASP). Nhà đầu tư cá nhân không bị cấm sở hữu tài sản số; tuy nhiên, việc rút tiền quy đổi qua kênh ngân hàng trong nước yêu cầu kê khai thuế cá nhân đầy đủ và chứng minh nguồn gốc vốn hợp lệ theo hướng dẫn AML sửa đổi.',
+      'faq.q2': 'Các điều kiện tiên quyết cốt lõi để công ty công nghệ được cấp phép VASP là gì?',
+      'faq.a2': 'Đơn vị nộp hồ sơ phải đáp ứng bốn tiêu chí: mức vốn điều lệ đã góp tối thiểu theo từng cấp; lưu trữ dữ liệu trên máy chủ nội địa tại Việt Nam trong ít nhất 5 năm; tích hợp giải pháp eKYC và Travel Rule theo chuẩn; lãnh đạo được công nhận tuân thủ với lý lịch tài chính minh bạch được xác minh.',
+      'faq.q3': 'Người tham dự trực tuyến có được nhận Chứng chỉ điện tử CPE xác thực bằng blockchain không?',
+      'faq.a3': 'Có. Người tham dự trực tuyến duy trì tối thiểu 80% thời lượng tham gia tích cực trong suốt các phiên hội nghị sẽ nhận được Chứng chỉ Hoàn thành chính thức (Chứng chỉ điện tử) được mã hóa bằng hash xác thực blockchain chống giả mạo.',
+
+      'contact.venues.label': 'Địa điểm Tiếp đón',
+      'contact.venues.value': 'Trung tâm Hội nghị Trung tâm, Quận 1, TP.HCM / Trung tâm Hội nghị Hà Nội',
+      'contact.secretariat.label': 'Thường trực Ban Thư ký',
+      'contact.secretariat.value': 'Tổ Công tác Liên Bộ về Pháp lý & Công nghệ Tài chính, Quận Hoàn Kiếm, Hà Nội',
+      'contact.hotline.label': 'Đường dây Nóng Chính thức',
+
+      'footer.copyright': '© 2026 Legal Crypto Conference • Khung Tuân thủ Nghị định 284/2026/NĐ-CP. Bảo lưu mọi quyền.',
+      'footer.link1': 'Quy chế Hội nghị', 'footer.link2': 'Quyền riêng tư Dữ liệu', 'footer.link3': 'Hội đồng Cố vấn',
+
+      'aria.openMenu': 'Mở menu', 'aria.closeMenu': 'Đóng menu',
+      'aria.toLight': 'Chuyển sang chế độ sáng', 'aria.toDark': 'Chuyển sang chế độ tối'
+    },
+
+    zh: {
+      'nav.home': '首页', 'nav.overview': '概览', 'nav.speakers': '演讲嘉宾',
+      'nav.agenda': '议程', 'nav.registration': '注册', 'nav.contact': '联系方式',
+      'nav.matrix': '处罚矩阵', 'nav.registerCta': '立即注册',
+      'skip': '跳转至注册区域',
+
+      'hero.badge': '司法部与数字资产委员会 • 官方公告',
+      'hero.title': '第284/2026号法令合规会议',
+      'hero.lead': '确立越南加密资产法律框架 • 规范VASP牌照制度 & 保障数字资产市场安全',
+      'hero.location': '河内 / 线上峰会',
+      'hero.audience': '法律与科技专家',
+      'hero.cta': '立即注册 / 预留席位',
+      'hero.note': '免费入场 • 现场席位限150席，线上参会限1,000人',
+
+      'about.eyebrow': '监管背景与重要意义',
+      'about.title': '消除法律灰色地带，规范越南数字资产市场',
+      'about.lead': '第284/2026号法令是一份具有里程碑意义的法律文件，标志着越南首个针对虚拟资产服务提供商（VASP）的全面、严格的法律框架正式确立。该法令彻底终结了自愿自律的时代，使资产转移、托管与数字资产交易更加接近国际标准，在透明度、资金流动管理及终端用户保护方面全面对标国际水平。',
+      'about.point1.title': 'FATF合规与风险管控',
+      'about.point1.desc': '通过严格的反洗钱/反恐融资（AML/CFT）标准，帮助越南退出强化监测灰名单。',
+      'about.point2.title': 'VASP安全港机制',
+      'about.point2.desc': '依法保护投资者资产，明确划定合法与禁止资产之间的界限。',
+      'about.donut.title': '2026年生态系统影响力分配',
+      'about.donut.legend1': 'VASP牌照与注册资本',
+      'about.donut.legend2': '反洗钱（AML/CFT）与税务',
+      'about.donut.legend3': '数据安全与投资者保护',
+      'about.metric1.label': '现场席位（限量）',
+      'about.metric2.label': '线上参会代表',
+      'about.metric3.label': '主要议程与专题论坛',
+      'about.metric4.label': '最高行政罚款（越南盾）',
+
+      'agenda.eyebrow': '官方议程安排',
+      'agenda.title': '会议主题议程',
+      'agenda.pill': '时间：08:00 – 12:30 | 2026年9月20日',
+      'agenda.item1.tag1': '签到', 'agenda.item1.tag2': '自动化',
+      'agenda.item1.title': '嘉宾接待与自动二维码签到',
+      'agenda.item1.desc': '接待高级别代表，智能扫描二维码通行证，并分发机密简报资料。',
+      'agenda.item1.meta': '中央大礼堂',
+      'agenda.item2.tag1': '主题演讲1', 'agenda.item2.tag2': '重点',
+      'agenda.item2.title': '第284/2026号法令概述：加密资产分类与VASP牌照框架',
+      'agenda.item2.desc': '虚拟资产与加密货币的法律区分；法定实缴资本要求、服务器审计规则及加密密钥托管规定。',
+      'agenda.item2.meta': '法律事务司',
+      'agenda.item3.tag1': '处罚专题2', 'agenda.item3.tag2': '法律风险',
+      'agenda.item3.title': '第二场：行政处罚框架、税务义务与加密货币旅行规则（Travel Rule）',
+      'agenda.item3.desc': '罚款最高可达2亿越南盾；强制要求eKYC客户身份识别；代币经济学相关个人所得税申报。',
+      'agenda.item3.meta': 'AML/FATF高级专家',
+      'agenda.item4.tag1': 'VIP午宴',
+      'agenda.item4.title': '交流午宴与闭门圆桌会议',
+      'agenda.item4.desc': '政策起草官员、商业银行领导层与全球Web3基金之间的高层交流午宴。',
+      'agenda.item4.meta': '行政贵宾室',
+      'agenda.item5.tag1': '专题论坛3', 'agenda.item5.tag2': '现场问答',
+      'agenda.item5.title': '互动论坛：VASP牌照路线图与企业适应策略',
+      'agenda.item5.desc': '现场问答环节，解答牌照申请材料难题，并探讨在越南运营的境外交易所跨境合规机制。',
+      'agenda.item5.meta': '主会场礼堂',
+      'agenda.item6.tag1': '闭幕',
+      'agenda.item6.title': '闭幕致辞及区块链认证电子证书（CPE）颁发',
+      'agenda.item6.desc': '签署会议决议，并向认证专业人士颁发防篡改加密结业证书。',
+      'agenda.item6.meta': '秘书处服务台',
+
+      'speakers.eyebrow': '专业顾问委员会',
+      'speakers.title': '杰出顾问与主题演讲嘉宾',
+      'speakers.topicLabel': '演讲主题：',
+      'speakers.s1.tag': '起草委员会',
+      'speakers.s1.name': '法律事务司代表',
+      'speakers.s1.role': '数字资产法律框架起草委员会主任',
+      'speakers.s1.bio': '拥有18年以上金融与银行监管起草经验，直接负责信贷机构行业法定标准的制定，并为第284/2026号法令框架提供咨询意见。',
+      'speakers.s1.topic': '2026年VASP标准',
+      'speakers.s2.tag': '企业法律顾问',
+      'speakers.s2.role': '管理合伙人 — 亚洲金融科技法律集团',
+      'speakers.s2.bio': '成功为40多个Web3项目及新加坡、香港与越南本土市场的跨境数字资产交易所提供牌照申请咨询。',
+      'speakers.s2.topic': '最优企业架构设计',
+      'speakers.s3.tag': 'FATF顾问小组',
+      'speakers.s3.role': '反洗钱/反恐融资及金融情报首席专家',
+      'speakers.s3.bio': '国家反洗钱指导委员会成员，代表越南参与双边互评估及FATF虚拟资产风险评估。',
+      'speakers.s3.topic': '旅行规则与反洗钱合规',
+
+      'matrix.eyebrow': '第四章：法定补救措施',
+      'matrix.title': '行政处罚矩阵',
+      'matrix.pill': '自2026年9月1日起强制执行',
+      'matrix.th1': '违规类别', 'matrix.th2': '适用主体',
+      'matrix.th3': '罚款金额', 'matrix.th4': '补救与执行措施',
+      'matrix.r1.violation': '未经许可经营VASP/交易所服务',
+      'matrix.r1.ref': '第284号法令第34条第2款',
+      'matrix.r1.entity': '在越南提供服务的境内外企业',
+      'matrix.r1.remedyTag': '强制措施',
+      'matrix.r1.remedy': '暂停营业（6至12个月）；全部违法所得予以没收并纳入国家预算。',
+      'matrix.r2.violation': '未履行KYC及AML/CFT义务',
+      'matrix.r2.ref': '第284号法令第36条第1及第3款',
+      'matrix.r2.entity': '持牌数字资产交易所及托管平台',
+      'matrix.r2.remedyTag': '技术性措施',
+      'matrix.r2.remedy': '暂停银行API接入；须在30天内完成独立审计。',
+      'matrix.r3.violation': '数字资产交易所得逃税',
+      'matrix.r3.ref': '跨部门税务协调法第41条',
+      'matrix.r3.entity': '个人交易者、高净值投资者、加密货币企业',
+      'matrix.r3.penalty': '逃税额的1至3倍',
+      'matrix.r3.remedyTag': '移交刑事追责',
+      'matrix.r3.remedy': '全额追缴税款并加收滞纳金；如查实存在欺诈行为，将冻结账户并移交司法机关追究刑事责任。',
+      'matrix.r4.violation': '为未持牌加密货币平台进行广告或推广',
+      'matrix.r4.ref': 'VASP服务营销限制第45条',
+      'matrix.r4.entity': '关键意见领袖（KOL）、网络红人、媒体机构、联盟营销网络',
+      'matrix.r4.remedyTag': '数字化整改',
+      'matrix.r4.remedy': '查封域名；须在24小时内下架相关视频/内容；须公开更正声明。',
+
+      'docs.eyebrow': '官方公报库与从业指引',
+      'docs.title': '监管资料库与合规手册',
+      'docs.d1.tag': '官方文本',
+      'docs.d1.title': '第284/2026号法令官方全文',
+      'docs.d1.desc': '政府公报完整原文扫描件，共8章52条，详列法律定义及牌照申请前提条件。',
+      'docs.d1.btn': '下载完整文本',
+      'docs.d2.tag': '执行摘要',
+      'docs.d2.title': '面向创始人与高管的执行摘要',
+      'docs.d2.desc': '面向高管的实务简报，详述关键企业义务、18个月过渡期及服务器安全标准。',
+      'docs.d2.btn': '下载摘要',
+      'docs.d3.tag': '自查工具包',
+      'docs.d3.title': '合规检查清单：85项VASP核心审计标准',
+      'docs.d3.desc': '全面自查清单，涵盖冷存储基础设施、旅行规则（Travel Rule）集成协议及可疑交易报告（STR）流程。',
+      'docs.d3.btn': '下载工具包',
+
+      'reg.eyebrow': '代表认证门户',
+      'reg.title': '锁定您的席位',
+      'reg.lead': '请填写您的正式信息以预留席位，并获取经核实的监管简报资料。',
+      'reg.step1': '提交此表格', 'reg.step2': '通过邮件接收通行证', 'reg.step3': '到场扫描二维码',
+      'reg.label.fullname': '姓名 / Họ và tên',
+      'reg.label.org': '单位 / 公司',
+      'reg.label.email': '工作邮箱地址',
+      'reg.label.phone': '联系电话',
+      'reg.label.mode': '参会方式',
+      'reg.label.role': '行业 / 身份',
+      'reg.label.question': '提前提交给论坛的问题',
+      'reg.optional': '选填',
+      'reg.ph.phone': '0912345678 或 +84912345678',
+      'reg.ph.question': '示例：关于2026年9月1日前已上线代币的过渡指引……',
+      'reg.mode.offline': '线下：河内会议中心（VIP）',
+      'reg.mode.online': '线上：端到端加密网络研讨会',
+      'reg.hint.mode': '参会方式将附加至发送给主办方的备注中。',
+      'reg.role.placeholder': '— 请选择您的身份 —',
+      'reg.role.opt1': '创始人 / CEO — 金融科技企业',
+      'reg.role.opt2': '法律顾问 / 合规专员 / 律师',
+      'reg.role.opt3': '个人加密货币投资者',
+      'reg.role.opt4': '学生 / 政策研究员',
+      'reg.role.opt5': '新闻 / 媒体',
+      'reg.role.opt6': '其他',
+      'reg.consent': '本人确认所提交信息真实准确，并同意主办方处理本人的个人数据用于注册及活动签到，并通过邮件发送代表二维码通行证。',
+      'reg.hp.label': '请留空此项',
+      'reg.submit': '确认注册（获取二维码通行证）',
+      'reg.submitting': '正在验证资质……',
+      'reg.success.kicker': '已收到注册申请',
+      'reg.success.defaultName': '代表',
+      'reg.success.defaultDetail': '您的二维码通行证已通过邮件发送，请同时查看垃圾邮件文件夹。',
+      'reg.success.detailWithEmail': '经核实的二维码通行证正在发送至 {email}，请同时查看垃圾邮件文件夹。',
+
+      'err.fullname': '姓名长度须为2–60个字符，仅可包含字母、空格及连字符。',
+      'err.email': '请输入有效的电子邮箱地址（最多100个字符）。',
+      'err.phone': '请输入有效的越南手机号码，例如0912345678或+84912345678。',
+      'err.org': '单位/公司名称不得超过100个字符。',
+      'err.role': '请选择您的行业/身份。',
+      'err.question': '问题内容不得超过400个字符。',
+      'err.consent': '您必须同意条款及个人数据处理方可继续。',
+      'err.formInvalid': '请更正上方标出的字段。',
+      'err.insecure': '连接不安全（非HTTPS）。请通过https://重新加载本页面。',
+      'err.invalidRequest': '请求数据无效。',
+      'err.question500': '问题内容不得超过500个字符。',
+      'err.rateLimitGlobal': '系统当前繁忙，请稍后几分钟再试。',
+      'err.rateLimitEmail': '您提交注册的次数过多，请1小时后再试。',
+      'msg.defaultSuccess': '您的通行证已通过邮件发送，请同时查看垃圾邮件文件夹。',
+      'msg.defaultError': '发生错误，请重试。',
+      'msg.unreadableSuccess': '您的注册已提交。请查看邮箱（及垃圾邮件文件夹）以获取通行证。',
+      'msg.retryFallback': '我们无法从此浏览器确认您的注册，但注册可能已经成功。请在几分钟后查看邮箱（包括垃圾邮件文件夹），再决定是否重新提交。',
+
+      'faq.eyebrow': '常见法律与监管问题',
+      'faq.title': '第284号法令监管问答',
+      'faq.q1': '使用境外交易所的个人交易者是否会受到直接处罚？',
+      'faq.a1': '第284/2026号法令主要规范作为虚拟资产服务提供商（VASP）运营的企业及法人实体。个人投资者持有数字资产不受禁止；但通过国内银行渠道进行法币兑换提现时，须依据修订后的反洗钱指引进行完整的个人税务申报并证明资金来源合法。',
+      'faq.q2': '科技公司获得VASP牌照的核心先决条件是什么？',
+      'faq.a2': '申请方须满足四项条件：按等级达到最低法定实缴注册资本；本地服务器数据须存储于越南境内至少5年；须集成标准化eKYC及旅行规则（Travel Rule）解决方案；高管须获得合规认证且财务背景经核实清白。',
+      'faq.q3': '线上参会者是否可获得区块链认证的CPE电子证书？',
+      'faq.a3': '是的。线上参会者若在会议全程保持不低于80%的有效出席率，将获得官方结业证书（电子证书），该证书带有防篡改的区块链验证哈希编码。',
+
+      'contact.venues.label': '接待场地',
+      'contact.venues.value': '中央会展中心（胡志明市第1区）/ 河内会议中心',
+      'contact.secretariat.label': '常设秘书处',
+      'contact.secretariat.value': '法律与金融科技联合部级工作组，河内还剑区',
+      'contact.hotline.label': '官方热线',
+
+      'footer.copyright': '© 2026 Legal Crypto Conference • 第284/2026号法令合规框架。保留所有权利。',
+      'footer.link1': '会议规则', 'footer.link2': '数据隐私', 'footer.link3': '顾问理事会',
+
+      'aria.openMenu': '打开菜单', 'aria.closeMenu': '关闭菜单',
+      'aria.toLight': '切换至浅色模式', 'aria.toDark': '切换至深色模式'
+    }
+  };
+
+  var LANG_KEY = 'nd284-lang';
+
+  function getLang() {
+    var s = null;
+    try { s = localStorage.getItem(LANG_KEY); } catch (e) {}
+    return (s && TRANSLATIONS[s]) ? s : 'en';
+  }
+  function setLang(l) { try { localStorage.setItem(LANG_KEY, l); } catch (e) {} }
+
+  function t(key) {
+    var dict = TRANSLATIONS[getLang()] || TRANSLATIONS.en;
+    if (key in dict) return dict[key];
+    return TRANSLATIONS.en[key] || key;
+  }
+  window.t = t; // dùng lại ở phần validate/submit form phía dưới
+
+  function applyTranslations() {
+    var lang = getLang();
+    document.documentElement.setAttribute('lang', lang);
+
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      el.textContent = t(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+      el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+    });
+
+    // .lang-switch: gồm cả bản desktop (id="lang-switch") và bản trong menu
+    // mobile (.lang-switch-mobile) — cùng cập nhật trạng thái "đang chọn".
+    document.querySelectorAll('.lang-switch button').forEach(function (btn) {
+      btn.setAttribute('aria-current', String(btn.getAttribute('data-lang') === lang));
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', applyTranslations);
+  if (document.readyState === 'interactive' || document.readyState === 'complete') applyTranslations();
+
+  document.querySelectorAll('.lang-switch').forEach(function (langSwitch) {
+    langSwitch.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-lang]');
+      if (!btn) return;
+      setLang(btn.getAttribute('data-lang'));
+      applyTranslations();
+    });
+  });
+
+  /* =======================================================================
+     THEME — sáng / tối. Không chọn gì thì theo prefers-color-scheme của hệ
+     điều hành (xử lý hoàn toàn bằng CSS ở phần <style>); bấm nút mới ghi đè
+     thủ công + lưu localStorage cho lần sau.
+     ======================================================================= */
+  var THEME_KEY = 'nd284-theme';
+
+  function storedTheme() {
+    var s = null;
+    try { s = localStorage.getItem(THEME_KEY); } catch (e) {}
+    return (s === 'light' || s === 'dark') ? s : null;
+  }
+  function systemPrefersDark() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+  function effectiveTheme() { return storedTheme() || (systemPrefersDark() ? 'dark' : 'light'); }
+
+  function applyThemeAttr() {
+    var s = storedTheme();
+    if (s) document.documentElement.setAttribute('data-theme', s);
+    else document.documentElement.removeAttribute('data-theme');
+
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      var isDark = effectiveTheme() === 'dark';
+      btn.setAttribute('aria-pressed', String(isDark));
+      btn.setAttribute('aria-label', t(isDark ? 'aria.toLight' : 'aria.toDark'));
+    }
+  }
+  applyThemeAttr();
+
+  var themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+      applyThemeAttr();
+    });
+  }
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+        if (!storedTheme()) applyThemeAttr();
+      });
+    } catch (e) { /* Safari cũ không hỗ trợ addEventListener trên MediaQueryList — bỏ qua, không chặn trang */ }
+  }
 
   /* =======================================================================
      ⚠️ BƯỚC BẮT BUỘC TRƯỚC KHI DÙNG THẬT
@@ -2208,14 +3027,14 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   function closeMobileNav() {
     mobileNav.classList.remove('is-open');
     navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.setAttribute('aria-label', 'Open menu');
+    navToggle.setAttribute('aria-label', t('aria.openMenu'));
   }
 
   navToggle.addEventListener('click', function () {
     var willOpen = !mobileNav.classList.contains('is-open');
     mobileNav.classList.toggle('is-open', willOpen);
     navToggle.setAttribute('aria-expanded', String(willOpen));
-    navToggle.setAttribute('aria-label', willOpen ? 'Close menu' : 'Open menu');
+    navToggle.setAttribute('aria-label', t(willOpen ? 'aria.closeMenu' : 'aria.openMenu'));
   });
 
   mobileNav.addEventListener('click', function (e) {
@@ -2267,8 +3086,6 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
   var questionEl = document.getElementById('reg-question');
   var counterEl  = document.getElementById('counter-question');
 
-  var SUBMIT_LABEL = submitLbl.textContent;
-
   // Quy tắc #13: mốc thời gian form hiển thị. Submit nhanh hơn 3 giây → server nghi bot.
   var formRenderedAt = Date.now();
 
@@ -2304,33 +3121,33 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     var name = val('reg-fullname');
     ok = setError('reg-fullname', 'err-fullname',
       (!name || !NAME_REGEX.test(name))
-        ? 'Full name must be 2–60 characters — letters, spaces and hyphens only.'
+        ? t('err.fullname')
         : '') && ok;
 
     var email = val('reg-email');
     ok = setError('reg-email', 'err-email',
       (!email || email.length > 100 || !EMAIL_REGEX.test(email))
-        ? 'Please enter a valid email address (max 100 characters).'
+        ? t('err.email')
         : '') && ok;
 
     var phone = val('reg-phone');
     ok = setError('reg-phone', 'err-phone',
       (!phone || !PHONE_REGEX.test(phone))
-        ? 'Enter a valid Vietnamese mobile number, e.g. 0912345678 or +84912345678.'
+        ? t('err.phone')
         : '') && ok;
 
     ok = setError('reg-org', 'err-org',
-      val('reg-org').length > 100 ? 'Organization name must be 100 characters or fewer.' : '') && ok;
+      val('reg-org').length > 100 ? t('err.org') : '') && ok;
 
     ok = setError('reg-role', 'err-role',
-      !val('reg-role') ? 'Please select your sector / capacity.' : '') && ok;
+      !val('reg-role') ? t('err.role') : '') && ok;
 
     ok = setError('reg-question', 'err-question',
-      questionEl.value.trim().length > 400 ? 'Question must be 400 characters or fewer.' : '') && ok;
+      questionEl.value.trim().length > 400 ? t('err.question') : '') && ok;
 
     ok = setError(null, 'err-consent',
       !document.getElementById('reg-consent').checked
-        ? 'You must agree to the terms and personal data processing to continue.'
+        ? t('err.consent')
         : '') && ok;
 
     return ok;
@@ -2350,7 +3167,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     submitBtn.disabled = busy;
     submitIcon.classList.toggle('spinner', busy);
     submitIcon.firstElementChild.setAttribute('href', busy ? '#i-loader' : '#i-ticket');
-    submitLbl.textContent = busy ? 'Verifying accreditation…' : SUBMIT_LABEL;
+    submitLbl.textContent = busy ? t('reg.submitting') : t('reg.submit');
   }
 
   form.addEventListener('submit', function (evt) {
@@ -2362,12 +3179,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
                   location.hostname === '127.0.0.1' ||
                   location.protocol === 'file:';
     if (location.protocol !== 'https:' && !isLocal) {
-      showStatus('Insecure connection (not HTTPS). Please reload this page over https://', false);
+      showStatus(t('err.insecure'), false);
       return;
     }
 
     if (!validate()) {
-      showStatus('Please correct the highlighted fields above.', false);
+      showStatus(t('err.formInvalid'), false);
       var firstInvalid = form.querySelector('[aria-invalid="true"]');
       if (firstInvalid) firstInvalid.focus();
       return;
@@ -2402,6 +3219,30 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
     // chung ("Failed to fetch") khi đi qua chuỗi chuyển hướng khác-origin này
     // dù server đã xử lý xong request thành công (đã ghi Sheet, đã gửi mail) —
     // XMLHttpRequest xử lý đúng chuỗi chuyển hướng này ổn định hơn.
+    // Server (Registration.gs) luôn trả message bằng tiếng Anh — bản dịch
+    // dưới đây map đúng nguyên văn từng thông báo server có thể trả về sang
+    // khóa từ điển, để hiển thị đúng ngôn ngữ đang chọn. Thông báo lạ không
+    // nằm trong danh sách (không nên xảy ra) thì hiện nguyên văn tiếng Anh —
+    // vẫn còn hơn để trống.
+    function translateServerMessage(msg) {
+      if (getLang() === 'en' || !msg) return msg;
+      var map = {
+        'Invalid request data.': 'err.invalidRequest',
+        'Full name must be 2–60 characters — letters, spaces and hyphens only.': 'err.fullname',
+        'Please enter a valid email address (max 100 characters).': 'err.email',
+        'Enter a valid Vietnamese mobile number, e.g. 0912345678 or +84912345678.': 'err.phone',
+        'Organization name must be 100 characters or fewer.': 'err.org',
+        'Please select a valid sector / capacity.': 'err.role',
+        'Question must be 500 characters or fewer.': 'err.question500',
+        'You must agree to the terms and personal data processing to continue.': 'err.consent',
+        'The system is busy right now. Please try again in a few minutes.': 'err.rateLimitGlobal',
+        'You have submitted too many registrations. Please try again in 1 hour.': 'err.rateLimitEmail',
+        'Something went wrong. Please try again later.': 'msg.defaultError'
+      };
+      var key = map[msg];
+      return key ? t(key) : msg;
+    }
+
     function handleResponseText(responseText) {
       setBusy(false);
 
@@ -2409,14 +3250,16 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
       try { data = JSON.parse(responseText); } catch (parseErr) { data = null; }
 
       if (data && data.ok) {
-        showStatus(data.message || 'Your pass has been emailed to you. Please check your Spam folder too.', true);
+        // Mọi phản hồi ok:true của server đều dùng CÙNG 1 câu cố định
+        // (Quy tắc #17) — nên hiện thẳng bản dịch theo ngôn ngữ đang chọn,
+        // không cần map lại data.message.
+        showStatus(t('msg.defaultSuccess'), true);
 
         // Chỉ hiển thị dữ liệu người dùng vừa nhập — backend cố tình KHÔNG
         // trả về mã vé (Quy tắc #17), nên không bịa "PASS ID" ở đây.
         document.getElementById('success-name').textContent = payload.hoTen;
         document.getElementById('success-detail').textContent =
-          'A verified QR access pass is on its way to ' + payload.email +
-          '. Please also check your Spam folder.';
+          t('reg.success.detailWithEmail').replace('{email}', payload.email);
         successEl.classList.add('is-shown');
         successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
@@ -2424,12 +3267,12 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         counterEl.textContent = '0/400';
         formRenderedAt = Date.now();
       } else if (data) {
-        showStatus(data.message || 'Something went wrong. Please try again.', false);
+        showStatus(translateServerMessage(data.message) || t('msg.defaultError'), false);
       } else {
         // Request tới được server (không phải lỗi mạng) nhưng phản hồi không
         // đọc được — rất hiếm gặp. Vẫn báo cho khách kiểm tra email thay vì
         // báo "lỗi kết nối" gây hoang mang khi thực ra đăng ký có thể đã thành công.
-        showStatus('Your registration was submitted. Please check your email (and Spam folder) for your pass.', true);
+        showStatus(t('msg.unreadableSuccess'), true);
       }
     }
 
@@ -2455,7 +3298,7 @@ main { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
         // KHÔNG dùng "Could not reach the server" ở đây nữa — trên thực tế
         // request hầu như luôn tới server thành công dù trình duyệt báo lỗi
         // đọc phản hồi, nên thông báo "mất kết nối" gây hoang mang sai sự thật.
-        showStatus('We could not confirm your registration from this browser, but it may have gone through. Please check your email (including Spam) in a few minutes before submitting again.', true);
+        showStatus(t('msg.retryFallback'), true);
       };
       xhr.send(JSON.stringify(payload));
     }
