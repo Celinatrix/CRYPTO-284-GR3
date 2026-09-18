@@ -38,6 +38,12 @@
   animation: preloaderAutoHide .6s ease forwards;
   animation-delay: 2.2s;
 }
+#site-preloader .preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
 #site-preloader .preloader-crest {
   width: 64px;
   height: 64px;
@@ -51,6 +57,29 @@
   clip-path: inset(0% round 999px);
 }
 #site-preloader .preloader-crest svg { width: 32px; height: 32px; }
+/* Số % đếm lên thật theo tiến độ nạp thư viện GSAP/Lenis + timeline preloader
+   (animations.js mục B) — dùng --font-mono/--navy đã có sẵn (chỗ khác trong
+   trang cũng dùng font-mono cho số liệu), không phải font/màu mới. */
+#site-preloader .preloader-percent {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--navy);
+  opacity: .7;
+}
+#site-preloader .preloader-bar {
+  width: 140px;
+  height: 2px;
+  background: var(--slate-200);
+  overflow: hidden;
+  border-radius: 999px;
+}
+#site-preloader .preloader-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--gold);
+}
 @keyframes preloaderAutoHide { to { opacity: 0; visibility: hidden; pointer-events: none; } }
 /* JS không chạy được (bị chặn hoàn toàn) → ẩn preloader ngay, không chờ animation-delay */
 html:not(.js-ready) #site-preloader { display: none; }
@@ -88,6 +117,23 @@ html:not(.js-ready) #site-preloader { display: none; }
   width: 100%;
   height: 0%;
   background: var(--gold);
+}
+/* Chấm mốc theo từng agenda-item, sáng dần lên (đổi từ --slate-200 sang
+   --gold) khi thanh fill phía trên chạy qua — chỉ đổi màu 1 biến đã có sẵn,
+   không thêm màu mới. */
+.agenda-progress-dot {
+  position: absolute;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--slate-200);
+  transform: translate(-50%, -50%);
+  transition: background-color .3s ease, box-shadow .3s ease;
+}
+.agenda-progress-dot.is-lit {
+  background: var(--gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 25%, transparent);
 }
 html.agenda-timeline-on .agenda-list { position: relative; }
 html.agenda-timeline-on .agenda-progress-track { display: block; }
@@ -137,16 +183,52 @@ html.footer-reveal-on .site-footer {
   background: var(--gold);
   pointer-events: none;
   z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: translate(-50%, -50%);
   transition: width .25s ease, height .25s ease, opacity .2s ease, background-color .25s ease;
   opacity: 0;
 }
 html.has-custom-cursor #custom-cursor { opacity: .9; }
 html.has-custom-cursor #custom-cursor.is-hover { width: 36px; height: 36px; opacity: .3; }
+/* Nhãn nhỏ hiện giữa cursor khi hover mục có ý nghĩa thao tác rõ (tải file,
+   đăng ký) — chỉ dùng ký hiệu mũi tên, không cần dịch theo ngôn ngữ trang.
+   Dùng lại màu --navy có sẵn, không phải màu mới. */
+#custom-cursor .cursor-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  opacity: 0;
+  transition: opacity .2s ease;
+  white-space: nowrap;
+}
+html.has-custom-cursor #custom-cursor.is-hover.has-label { width: 44px; height: 44px; opacity: .95; background: var(--gold-muted); }
+html.has-custom-cursor #custom-cursor.has-label .cursor-label { opacity: 1; }
 /* Ẩn con trỏ hệ thống chỉ khi custom cursor thực sự đang chạy */
 html.has-custom-cursor, html.has-custom-cursor a, html.has-custom-cursor button {
   cursor: none;
 }
+
+/* -----------------------------------------------------------------------
+   9) THANH CUỘN TUỲ CHỈNH — dùng lại --navy/--bg/--gold-muted đã có sẵn.
+   Chỉ ảnh hưởng giao diện thanh cuộn của trình duyệt (Chrome/Edge/Firefox),
+   không đổi bố cục/nội dung trang. Trình duyệt không hỗ trợ sẽ dùng thanh
+   cuộn mặc định — không lỗi, không mất chức năng cuộn.
+   ----------------------------------------------------------------------- */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-muted) var(--bg);
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background-color: var(--gold-muted);
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--gold); }
 
 /* -----------------------------------------------------------------------
    Tôn trọng "giảm chuyển động": tắt sạch mọi hiệu ứng trong file này,

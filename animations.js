@@ -59,6 +59,8 @@
        ========================================================================= */
     var preloader = document.getElementById('site-preloader');
     var preloaderCrest = preloader ? preloader.querySelector('.preloader-crest') : null;
+    var preloaderPercent = preloader ? preloader.querySelector('.preloader-percent') : null;
+    var preloaderBarFill = preloader ? preloader.querySelector('.preloader-bar-fill') : null;
 
     function runHero() { /* định nghĩa ở mục C, gọi lại sau khi preloader xong */ }
 
@@ -76,6 +78,21 @@
         if (preloaderCrest) {
           tlPre.fromTo(preloaderCrest, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5 });
         }
+        // Số % + thanh chạy đếm thật theo tiến độ của chính timeline này
+        // (0 -> 100 khớp lúc preloader biến mất) — không phải số giả định.
+        if (preloaderPercent || preloaderBarFill) {
+          var pctProxy = { v: 0 };
+          tlPre.to(pctProxy, {
+            v: 100,
+            duration: 0.85,
+            ease: 'power1.inOut',
+            onUpdate: function () {
+              var v = Math.round(pctProxy.v);
+              if (preloaderPercent) preloaderPercent.textContent = v + '%';
+              if (preloaderBarFill) preloaderBarFill.style.width = v + '%';
+            }
+          }, 0);
+        }
         tlPre.to(preloader, { opacity: 0, duration: 0.5 }, '+=0.35');
       }
     }
@@ -92,6 +109,18 @@
     var heroTitle = hero ? hero.querySelector('.hero-title') : null;
     var heroInner = hero ? hero.querySelector('.hero-inner') : null;
 
+    // Dùng chung cho mục L (đổi ngôn ngữ sau khi tải xong) — khai báo sớm để
+    // gọi được cho hero-title ngay sau khi SplitText tách xong bên dưới, và
+    // cho about-lead/section-title ở mục L (những phần tử đó tách đồng bộ,
+    // xong trước khi mục L chạy nên không cần gọi thủ công ở đó).
+    function watchI18nFlash(el) {
+      if (!el || prefersReduce || typeof MutationObserver === 'undefined') return;
+      var mo = new MutationObserver(function () {
+        gsap.fromTo(el, { opacity: 0.25 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
+      });
+      mo.observe(el, { childList: true, characterData: true, subtree: true });
+    }
+
     runHero = function () {
       if (!hero) return;
 
@@ -107,6 +136,10 @@
         gsap.set(heroTitle, { opacity: 0, y: 24 });
         tl.to(heroTitle, { opacity: 1, y: 0, duration: 0.9 }, 0.1);
       }
+      // Gọi SAU khi SplitText đã tách xong (đồng bộ ở trên) — nếu gọi ở mục L
+      // như about-lead/section-title thì sẽ bắt nhầm chính thao tác tách chữ
+      // này làm "đổi ngôn ngữ", chớp sai lúc hero vừa mới chạy xong.
+      watchI18nFlash(heroTitle);
 
       ['.hero-badge', '.hero-lead', '.hero-facts', '.hero-cta-wrap'].forEach(function (sel, i) {
         var el = hero.querySelector(sel);
@@ -201,16 +234,57 @@
       var fill = document.createElement('div');
       fill.className = 'agenda-progress-fill';
       track.appendChild(fill);
+
+      // Chấm mốc theo từng agenda-item — sáng dần (đổi --slate-200 sang
+      // --gold, xem animations.css) khi thanh fill phía trên chạy qua vị
+      // trí của item đó. Vị trí tính theo offsetTop thật của từng item nên
+      // luôn đúng dù đổi ngôn ngữ làm chiều cao item khác nhau.
+      var agendaItems = agendaList.querySelectorAll(':scope > .agenda-item');
+      var dots = [];
+      agendaItems.forEach(function (item) {
+        var dot = document.createElement('div');
+        dot.className = 'agenda-progress-dot';
+        track.appendChild(dot);
+        dots.push({ el: dot, item: item });
+      });
+
       agendaList.appendChild(track);
+
+      function layoutDots() {
+        var trackH = track.clientHeight;
+        if (!trackH) return;
+        dots.forEach(function (d) {
+          var ratio = (d.item.offsetTop + d.item.offsetHeight / 2 - 6) / trackH;
+          ratio = Math.max(0, Math.min(1, ratio));
+          d.ratio = ratio;
+          d.el.style.top = (ratio * 100) + '%';
+        });
+      }
 
       gsap.matchMedia().add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', function () {
         document.documentElement.classList.add('agenda-timeline-on');
+        layoutDots();
+        window.addEventListener('resize', layoutDots);
+
         gsap.to(fill, {
           height: '100%',
           ease: 'none',
-          scrollTrigger: { trigger: agendaList, start: 'top 70%', end: 'bottom 60%', scrub: true }
+          scrollTrigger: {
+            trigger: agendaList,
+            start: 'top 70%',
+            end: 'bottom 60%',
+            scrub: true,
+            onUpdate: function (self) {
+              dots.forEach(function (d) {
+                d.el.classList.toggle('is-lit', self.progress >= (d.ratio || 0));
+              });
+            }
+          }
         });
-        return function () { document.documentElement.classList.remove('agenda-timeline-on'); };
+        return function () {
+          document.documentElement.classList.remove('agenda-timeline-on');
+          window.removeEventListener('resize', layoutDots);
+        };
       });
     }
 
@@ -284,6 +358,9 @@
       gsap.matchMedia().add('(hover: hover) and (pointer: fine)', function () {
         var cursor = document.createElement('div');
         cursor.id = 'custom-cursor';
+        var cursorLabel = document.createElement('span');
+        cursorLabel.className = 'cursor-label';
+        cursor.appendChild(cursorLabel);
         document.body.appendChild(cursor);
         document.documentElement.classList.add('has-custom-cursor');
 
@@ -293,9 +370,28 @@
         function onMove(e) { xTo(e.clientX); yTo(e.clientY); }
         document.addEventListener('mousemove', onMove);
 
+        // Nhãn nhỏ trong cursor cho 2 nhóm mục có hành động rõ ràng: tải tài
+        // liệu (a[download]) và đăng ký/gửi form (.btn-gold, .btn-solid-gold).
+        // Dùng ký hiệu mũi tên thay vì chữ để không phải thêm bản dịch mới.
+        function labelFor(el) {
+          if (el.closest('a[download]')) return '↓'; // ↓ tải xuống
+          if (el.closest('.btn-gold, .btn-solid-gold')) return '→'; // → đăng ký / gửi
+          return '';
+        }
+
         var hoverTargets = document.querySelectorAll('a, button, .card-hover, input, select, textarea');
-        function onEnter() { cursor.classList.add('is-hover'); }
-        function onLeave() { cursor.classList.remove('is-hover'); }
+        function onEnter(e) {
+          cursor.classList.add('is-hover');
+          var label = labelFor(e.currentTarget);
+          if (label) {
+            cursorLabel.textContent = label;
+            cursor.classList.add('has-label');
+          }
+        }
+        function onLeave() {
+          cursor.classList.remove('is-hover', 'has-label');
+          cursorLabel.textContent = '';
+        }
         hoverTargets.forEach(function (el) {
           el.addEventListener('mouseenter', onEnter);
           el.addEventListener('mouseleave', onLeave);
@@ -312,6 +408,61 @@
         };
       });
     }
+
+    /* =========================================================================
+       K) MAGNETIC BUTTON — nút chính (Register/Submit) hơi "hút" theo con trỏ
+       trong bán kính gần, thay cho hiệu ứng scale CSS khi hover. Chỉ transform,
+       không đổi màu/kích thước thật/layout xung quanh.
+       Gắn vào: mọi .btn-gold, .btn-solid-gold — chỉ thiết bị có chuột thật.
+       (Nâng cấp thêm ngoài 17 hiệu ứng gốc, theo yêu cầu nâng cấp motion design.)
+       ========================================================================= */
+    if (!prefersReduce) {
+      gsap.matchMedia().add('(hover: hover) and (pointer: fine)', function () {
+        var magnets = document.querySelectorAll('.btn-gold, .btn-solid-gold');
+        var cleanups = [];
+
+        magnets.forEach(function (btn) {
+          var xTo = gsap.quickTo(btn, 'x', { duration: 0.35, ease: 'power3.out' });
+          var yTo = gsap.quickTo(btn, 'y', { duration: 0.35, ease: 'power3.out' });
+          var scaleTo = gsap.quickTo(btn, 'scale', { duration: 0.35, ease: 'power3.out' });
+
+          function onMove(e) {
+            var r = btn.getBoundingClientRect();
+            xTo((e.clientX - (r.left + r.width / 2)) * 0.25);
+            yTo((e.clientY - (r.top + r.height / 2)) * 0.25);
+            scaleTo(1.04);
+          }
+          function onLeave() {
+            gsap.to(btn, {
+              x: 0, y: 0, scale: 1, duration: 0.4, ease: 'power3.out',
+              onComplete: function () { gsap.set(btn, { clearProps: 'transform' }); }
+            });
+          }
+          btn.addEventListener('mousemove', onMove);
+          btn.addEventListener('mouseleave', onLeave);
+          cleanups.push(function () {
+            btn.removeEventListener('mousemove', onMove);
+            btn.removeEventListener('mouseleave', onLeave);
+            gsap.set(btn, { clearProps: 'transform' });
+          });
+        });
+
+        return function () { cleanups.forEach(function (fn) { fn(); }); };
+      });
+    }
+
+    /* =========================================================================
+       L) ĐỔI NGÔN NGỮ SAU KHI TẢI XONG — about-lead/section-title dùng
+       SplitText lúc tải trang (đã tách xong đồng bộ ở mục D/E phía trên);
+       nếu người dùng đổi VI/EN/中文 sau đó, applyTranslations() (script
+       chính) ghi đè textContent, làm chữ đổi tức thì không hiệu ứng. Dùng
+       watchI18nFlash() (khai báo ở mục C) để chớp mờ→rõ nhẹ (0.3s, chỉ đổi
+       opacity) cho đỡ giật — không tự tách lại chữ (tránh 2 hệ thống tranh
+       chấp DOM). hero-title đã tự gọi hàm này riêng ở mục C, sau khi
+       SplitText của nó tách xong (bất đồng bộ, sau preloader).
+       ========================================================================= */
+    watchI18nFlash(aboutLead);
+    document.querySelectorAll('.section-title').forEach(watchI18nFlash);
 
     /* =========================================================================
        BỎ QUA (không có section phù hợp trong trang này — không tự tạo section
