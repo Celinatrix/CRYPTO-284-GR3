@@ -20,7 +20,7 @@
 const SHEET_NAME_DANGKY = 'DangKy';
 const SHEET_NAME_CHECKIN = 'CheckIn';
 const EVENT_NAME = 'Hội thảo Nghị định 284/2026 — Tiền điện tử & Tài sản mã hóa'; // Dùng nội bộ: trang Check-in, email thông báo cho admin
-const EVENT_NAME_EN = 'Decree 284/2026 Compliance Conference'; // Dùng cho nội dung gửi khách (hội thảo quốc tế) — khớp tiêu đề trên website
+const EVENT_NAME_EN = 'Decree 284/2026 Compliance Seminar'; // Dùng cho nội dung gửi khách (hội thảo quốc tế) — khớp tiêu đề trên website
 const EVENT_DATE_TEXT = 'September 20, 2026, 08:00 AM – 12:30 PM (ICT)';
 const TICKET_PREFIX = 'ND284-';
 const ADMIN_EMAIL = 'kiethuynh.31241024506@st.ueh.edu.vn'; // Email nhận thông báo mỗi khi có đăng ký mới — đổi nếu cần
